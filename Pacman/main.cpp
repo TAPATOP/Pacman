@@ -11,12 +11,12 @@ int main()
 	const unsigned int mapHeight = 5;
 	const unsigned int mapWidth = 5;
 
-	char origMap[mapHeight][gv::maxLoadedMapWidth] = {
+	char* origMap[] = {
 		"#.#.#",
 		".....",
 		"#.#.#",
 		".....",
-		"#.#.#",
+		"#.#.#" 
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
@@ -31,6 +31,8 @@ int main()
 		}
 		std::cout << std::endl;
 	}
+
+	loadedMap.printMap();
 
 	return 0;
 }

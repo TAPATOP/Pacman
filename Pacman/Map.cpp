@@ -6,15 +6,22 @@ Map::Map()
 {
 }
 
-Map::Map(char origMap[][gv::maxLoadedMapWidth], unsigned int mapHeight, unsigned int mapWidth)
+Map::Map(char** origMap, unsigned int mapHeight, unsigned int mapWidth)
 {
-	for (unsigned int i = 0; i < mapHeight; i++)
+	unsigned int i = 0;
+	unsigned int j = 0;
+
+	for (i; i < mapHeight; i++)
 	{
-		for (unsigned int j = 0; j < mapWidth; j++)
+		for (j = 0; j < mapWidth; j++)
 		{
 			map[i][j] = origMap[i][j];
 		}
+		map[i][j] = '\0';
 	}
+
+	this->height = i;
+	this->width = j;
 }
 
 unsigned int Map::countNearbyWalkableSquares(unsigned int mapHeight, unsigned int mapWidth, unsigned int i, unsigned int j)
@@ -29,6 +36,18 @@ unsigned int Map::countNearbyWalkableSquares(unsigned int mapHeight, unsigned in
 	if (j + 1 < mapWidth && map[i][j + 1] == gv::walkableSquare) br++; // square downwards
 
 	return br;
+}
+
+void Map::printMap()
+{
+	for (unsigned int i = 0; i < height; i++)
+	{
+		for (unsigned int j = 0; j < width; j++)
+		{
+			std::cout << map[i][j];
+		}
+		std::cout << std::endl;
+	}
 }
 
 Map::~Map()
