@@ -45,3 +45,19 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.suo
+*.docx
+Pacman/Pacman.vcxproj.filters
+*.vcxproj
+Pacman/Debug/vc140.pdb
+*.idb
+Pacman/Debug/Pacman.tlog/link.write.1.tlog
+*.tlog
+Pacman/Debug/Pacman.log
+*.obj
+Pacman.VC.VC.opendb
+*.sln
+Debug/Pacman.pdb
+*.ilk
+Pacman.VC.db
+Debug/Pacman.exe
