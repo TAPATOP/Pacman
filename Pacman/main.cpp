@@ -27,13 +27,7 @@ int main()
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
-
-	Bot b;
-
-	b.setX(5);
-
-	std::cout << b.getX() << std::endl;
-
+	Bot(1, 1, 0, 0, 100, 0);
 	Map loadedMap(origMap, mapHeight, mapWidth);
 
 	loadedMap.printMap();

@@ -4,6 +4,7 @@ class Actor
 {
 public:
 	Actor();
+	Actor(int x, int y, int dx, int dy, float movementSpeed);
 
 	virtual int move() = 0;
 	virtual void die() = 0;
@@ -14,6 +15,8 @@ public:
 	void setDX(int dx);
 	void setDY(int dy);
 
+	float getMovementSpeed();
+	float getMovementProgress();
 	int getX();
 	int getY();
 	int getDX();
@@ -30,5 +33,5 @@ private:
 	float movementSpeed; // lower is faster
 	float movementProgress; // should always be lower than movementSpeed
 
-	//Node* lastVisitedNode;
+	//Node* lastVisitedNode; // future implementation
 };
