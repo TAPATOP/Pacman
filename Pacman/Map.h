@@ -6,16 +6,21 @@
 class Map
 {
 public:
-	Map();
+	Map();// not really supposed to be used, yet
 	Map(char**, unsigned int height, unsigned int width);
 	
-	unsigned int countNearbyWalkableSquares(unsigned int mapHeight, unsigned int mapWidth, unsigned int i, unsigned int j);
+	unsigned int countNearbyWalkableSquares(unsigned int i, unsigned int j) const;
 	
-	void printMap();
+	void printMap() const;
 
 	~Map();
 private:
-	char map[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
-	unsigned int height;
-	unsigned int width;
+	void processMap();
+
+private:
+	char baseMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+	char processedMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+
+	unsigned int mapHeight;
+	unsigned int mapWidth;
 };

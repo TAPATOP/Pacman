@@ -3,34 +3,38 @@
 #include"Global_Variables.h"
 
 #include"Actor.h"
+#include"Bot.h"
 #include"Map.h"
 
 
 int main()
 {
-	const unsigned int mapHeight = 5;
-	const unsigned int mapWidth = 5;
+	const unsigned int mapHeight = 11;
+	const unsigned int mapWidth = 19;
 
 	char* origMap[] = {
-		"#.#.#",
-		".....",
-		"#.#.#",
-		".....",
-		"#.#.#" 
+		"#.#############.#",
+		".................",
+		"#.######.######.#",
+		"..######.######..",
+		"#.######.######.#",
+		".................",
+		"#.######.######.#",
+		"..######.######..",
+		"#.######.######.#",
+		".................",
+		"#.#############.#"
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
 
-	Map loadedMap(origMap, mapHeight, mapWidth);
+	Bot b;
 
-	for (unsigned int i = 0; i < mapHeight; i++)
-	{
-		for (unsigned int j = 0; j < mapWidth; j++)
-		{
-			std::cout << i << " " << j << ": " << loadedMap.countNearbyWalkableSquares(mapHeight, mapWidth, i, j) << std::endl;
-		}
-		std::cout << std::endl;
-	}
+	b.setX(5);
+
+	std::cout << b.getX() << std::endl;
+
+	Map loadedMap(origMap, mapHeight, mapWidth);
 
 	loadedMap.printMap();
 
