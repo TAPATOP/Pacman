@@ -61,3 +61,11 @@ Debug/Pacman.pdb
 *.ilk
 Pacman.VC.db
 Debug/Pacman.exe
+*.dll
+SFML/include/SFML/Audio/AlResource.hpp
+*.hpp
+*.inl
+SFML/lib/flac.lib
+*.lib
+SFML/lib/sfml-audio-d.pdb
+*.pdb
