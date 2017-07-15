@@ -8,20 +8,21 @@ class Actor
 {
 public:
 	Actor();
-	//Actor(Actor&);
-	Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed);
+	//Actor(Actor&); // "when should i define copy constructor
+	Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed, Map* map);
 
-	virtual void move() = 0;
+	virtual bool move() = 0;
 	virtual void die() = 0;
 
 	void setMovementSpeed(float movementSpeed);
-	void setX(unsigned int x);
+	void setX(unsigned int x, std::ostream& out = std::cout);
 	void setY(unsigned int y);
 	void setDX(int dx);
 	void setDY(int dy);
+	void setMap(Map*);
 
-	float getMovementSpeed() const;
-	float getMovementProgress() const;
+	unsigned int getMovementSpeed() const;
+	unsigned int getMovementProgress() const;
 	unsigned int getX() const;
 	unsigned int getY() const;
 	int getDX() const;
@@ -29,7 +30,10 @@ public:
 
 	virtual ~Actor(); 
 protected:
-		int canMove() const;
+		bool canMove() const; // decides whether the actor can move with the current x, y, dx and dy
+		void executeMoving();
+protected:
+	static Map* map; // all Actors will use the same map to traverse
 private:
 	unsigned int x; // how high
 	unsigned int y; // how wide
@@ -37,9 +41,7 @@ private:
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 
-	float movementSpeed; // lower is faster
-	float movementProgress = 0; // should always be lower than movementSpeed
-
-	static Map* map; // all Bots will use the same map to traverse
+	unsigned int movementSpeed; // lower is faster
+	unsigned int movementProgress = 0; // should always be lower than movementSpeed
 	//Node* lastVisitedNode; // future implementation
 };

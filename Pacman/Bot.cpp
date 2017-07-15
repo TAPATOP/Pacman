@@ -9,27 +9,13 @@ Bot::Bot()
 	isGhost = 0;
 }
 
-Bot::Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackRange) : Actor(x, y, dx, dy, movementSpeed)
+Bot::Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackRange, Map* map) : Actor(x, y, dx, dy, movementSpeed, map)
 {
 	this->attackRange = attackRange;
 }
-
-
-void Bot::move()
-{
-	if (!canMove())
-	{
-		std::cout << "I can keep moving!" << std::endl;
-	}
-	else
-	{
-		std::cout << "Nope, can't keep moving... Better change directions somehow" << std::endl;
-	}
-}
-
-void Bot::die()
-{
-}
+// CONSTRUCTORS above
+//
+//
 
 void Bot::setIsVulnerable(bool isVulnerable)
 {
@@ -40,7 +26,9 @@ void Bot::setIsGhost(bool isGhost)
 {
 	this->isGhost = isGhost;
 }
-
+// SETTTERS above
+//
+//
 
 bool Bot::getIsVulnerable()
 {
@@ -50,6 +38,37 @@ bool Bot::getIsVulnerable()
 bool Bot::getIsGhost()
 {
 	return isGhost;
+}
+// GETTERS above
+//
+//
+
+bool Bot::move()
+{
+	/*if (map->getBaseMap(getX(), getY()) == gv::knotSquare)
+	{
+		std::srand((unsigned int)time(NULL));
+		__int8 randomNum = rand() % 4;
+
+	}
+	else*/
+	{
+		if (canMove())
+		{
+			executeMoving();
+			return 1; // success
+		}
+		else
+		{
+			return 0; // not success
+			//std::cout << "Nope, can't keep moving... Better change directions somehow" << std::endl;
+		}
+	}
+	return 0;
+}
+
+void Bot::die()
+{
 }
 
 Bot::~Bot()

@@ -1,4 +1,7 @@
 #pragma once
+#include<cstdlib>
+#include<ctime>
+
 #include "Actor.h"
 
 class Bot :
@@ -6,16 +9,16 @@ class Bot :
 {
 public:
 	Bot();
-	Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackRange);
-
-	void move();
-	void die();
+	Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackRange, Map* map);
 
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
 
 	bool getIsVulnerable();
 	bool getIsGhost();
+
+	bool move();
+	void die();
 
 	~Bot();
 private:

@@ -53,7 +53,34 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 
 	processMap(); // creates processedMap
 }
+// CONSTRUCTORS above
+//
+//
 
+void Map::setBaseMap(int x, int y, char changeTo)
+{
+	baseMap[y][x] = changeTo;
+}
+// SETTERS above
+//
+//
+
+unsigned int Map::getMapHeight() const
+{
+	return mapHeight;
+}
+
+unsigned int Map::getMapWidth() const
+{
+	return mapWidth;
+}
+char Map::getBaseMap(int x, int y) const
+{
+	return baseMap[y][x];
+}
+// GETTERS above
+//
+//
 
 unsigned int Map::countNearbyWalkableSquares(unsigned int i, unsigned int j) const
 {
@@ -80,7 +107,6 @@ unsigned int Map::countNearbyWalkableSquares(unsigned int i, unsigned int j) con
 
 	return br;
 }
-
 
 void Map::printMap() const
 {
@@ -122,7 +148,7 @@ void Map::processMap()
 		{
 			if (countNearbyWalkableSquares(i, j) > 2)
 			{
-				processedMap[i][j] = gv::knot;
+				processedMap[i][j] = gv::knotSquare;
 			}
 			else
 			{
