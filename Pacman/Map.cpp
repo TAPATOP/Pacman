@@ -129,6 +129,7 @@ void Map::printMap() const
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 

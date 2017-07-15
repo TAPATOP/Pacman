@@ -69,3 +69,4 @@ SFML/lib/flac.lib
 *.lib
 SFML/lib/sfml-audio-d.pdb
 *.pdb
+*.log

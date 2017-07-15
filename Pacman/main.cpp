@@ -38,5 +38,18 @@ int main()
 
 	loadedMap.printMap();
 
+	bot1.setDX(1);
+	bot1.setDY(0);
+	
+	while (bot1.move());
+	
+	loadedMap.printMap();
+
+	bot1.setDX(0);
+	bot1.setDY(-1);
+
+	while (bot1.move());
+
+	loadedMap.printMap();
 	return 0;
 }
