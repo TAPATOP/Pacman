@@ -57,7 +57,7 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 //
 //
 
-void Map::setBaseMap(int x, int y, char changeTo)
+void Map::setBaseMap(int y, int x, char changeTo)
 {
 	baseMap[y][x] = changeTo;
 }
@@ -74,7 +74,7 @@ unsigned int Map::getMapWidth() const
 {
 	return mapWidth;
 }
-char Map::getBaseMap(int x, int y) const
+char Map::getBaseMap(int y, int x) const
 {
 	return baseMap[y][x];
 }

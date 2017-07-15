@@ -9,7 +9,7 @@ Bot::Bot()
 	isGhost = 0;
 }
 
-Bot::Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackRange, Map* map) : Actor(x, y, dx, dy, movementSpeed, map)
+Bot::Bot(int y, int x, int dy, int dx, float movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
 {
 	this->attackRange = attackRange;
 }

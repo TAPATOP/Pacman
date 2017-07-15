@@ -9,7 +9,7 @@ class Actor
 public:
 	Actor();
 	//Actor(Actor&); // "when should i define copy constructor
-	Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed, Map* map);
+	Actor(unsigned int y, unsigned int x, int dy, int dx, float movementSpeed, Map* map);
 
 	virtual bool move() = 0;
 	virtual void die() = 0;
@@ -35,8 +35,8 @@ protected:
 protected:
 	static Map* map; // all Actors will use the same map to traverse
 private:
-	unsigned int x; // how high
-	unsigned int y; // how wide
+	unsigned int x; // how wide
+	unsigned int y; // how high
 
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho

@@ -14,7 +14,7 @@ Actor::Actor()
 	map = nullptr;
 }
 
-Actor::Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed, Map* map)
+Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, float movementSpeed, Map* map)
 {
 	if (x < 0 || x > map->getMapWidth() - 1)
 	{
@@ -145,7 +145,7 @@ bool Actor::canMove() const
 	if (
 		(getX() + getDX()) < 0 ||
 		(getX() + getDX()) > map->getMapWidth() - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getBaseMap(getX() + getDX(), getY()) == gv::wallSquare
+		map->getBaseMap(getY(), getX() + getDX()) == gv::wallSquare
 	   )
 	{
 		return 0; // error, e.g. can't move
@@ -154,7 +154,7 @@ bool Actor::canMove() const
 	if (
 		(getY() + getDY()) < 0 ||
 		(getY() + getDY()) > map->getMapHeight() - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getBaseMap(getX(),getY() + getDY()) == gv::wallSquare
+		map->getBaseMap(getY() + getDY(), getX()) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -172,7 +172,7 @@ void Actor::executeMoving()
 		y += dy;
 		map->setBaseMap(y, x, 1);
 		movementProgress = 0;
-		std::cout << "I have moved to: [" << x << "][" << y << "] !" << std::endl;
+		std::cout << "I have moved to: [" << y << "][" << x << "] !" << std::endl;
 		return;
 	}
 	movementProgress++;
