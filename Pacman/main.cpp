@@ -32,7 +32,7 @@ int main()
 	
 	Map loadedMap(origMap, mapHeight, mapWidth);
 
-	Bot bot1(0, 1, 0, 1, 2, 0, &loadedMap);
+	Bot bot1(1, 0, 1, 0, 2, 0, &loadedMap);
 
 	while (bot1.move());
 
