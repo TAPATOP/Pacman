@@ -1,6 +1,6 @@
 #include "Actor.h"
 
-
+Map* Actor::map;
 
 Actor::Actor()
 {
@@ -11,12 +11,12 @@ Actor::Actor()
 	dy = 0; 
 
 	movementSpeed = gv::defaultMovementSpeed;
-	//movementProgress = 0;
+	map = nullptr;
 }
 
-Actor::Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed)
+Actor::Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed, Map* map)
 {
-	if (x < 0 || x > gv::maxLoadedMapWidth - 1)
+	if (x < 0 || x > map->getMapWidth() - 1)
 	{
 		std::cout << "Warning, given x for Actor isn't a legit one. Automatically fixing this..." << std::endl;
 		this->x = gv::defaultX;
@@ -26,7 +26,7 @@ Actor::Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed
 		this->x = x;
 	}
 
-	if (y < 0 || y > gv::maxLoadedMapHeight - 1)
+	if (y < 0 || y > map->getMapHeight() - 1)
 	{
 		std::cout << "Warning, given x for Actor isn't a legit one. Automatically fixing this..." << std::endl;
 		this->y = gv::defaultY;
@@ -41,11 +41,19 @@ Actor::Actor(unsigned int x, unsigned int y, int dx, int dy, float movementSpeed
 	
 	if (movementSpeed < 0)
 	{
-		std::cout << "Warning: movementSpeed is set as negative. Fixing it automatically..." << std::endl;
+		std::cout << "Warning: movementSpeed is set as negative. Fixing this automatically..." << std::endl;
 		movementSpeed = -movementSpeed;
 	}
-	//this->movementProgress = 0;
+	else
+	{
+		this->movementSpeed = movementSpeed;
+	}
+	
+	this->map = map;
 }
+// CONSTRUCTORS above
+//
+//
 
 void Actor::setMovementSpeed(float movementSpeed)
 {
@@ -57,11 +65,11 @@ void Actor::setMovementSpeed(float movementSpeed)
 	this->movementSpeed = movementSpeed;
 }
 
-void Actor::setX(unsigned int x)
+void Actor::setX(unsigned int x, std::ostream& out)
 {
 	if (x >= gv::maxLoadedMapWidth)
 	{
-		std::cout << "Error assigning x value, it's " << x <<" while maxLoadedMapWidth is" << gv::maxLoadedMapWidth << std::endl;
+		out << "Error assigning x value, it's " << x << " while maxLoadedMapWidth is " << gv::maxLoadedMapWidth << "\n";
 		return;
 	}
 	this->x = x;
@@ -71,7 +79,7 @@ void Actor::setY(unsigned int y)
 {
 	if (y >= gv::maxLoadedMapHeight)
 	{
-		std::cout << "Error assigning y value, it's " << y << " while maxLoadedMapHeight is" << gv::maxLoadedMapHeight << std::endl;
+		std::cout << "Error assigning y value, it's " << y << " while maxLoadedMapHeight is " << gv::maxLoadedMapHeight << std::endl;
 		return;
 	}
 	this->y = y;
@@ -87,12 +95,20 @@ void Actor::setDY(int dy)
 	this->dy = dy;
 }
 
-float Actor::getMovementSpeed() const
+void Actor::setMap(Map * map)
+{
+	this->map = map;
+}
+// SETTERS above
+//
+//
+
+unsigned int Actor::getMovementSpeed() const
 {
 	return movementSpeed;
 }
 
-float Actor::getMovementProgress() const
+unsigned int Actor::getMovementProgress() const
 {
 	return movementProgress;
 }
@@ -116,29 +132,48 @@ int Actor::getDY() const
 {
 	return dy;
 }
-
+// GETTERS above
+//
+//
 
 Actor::~Actor()
 {
 }
 
-int Actor::canMove() const
+bool Actor::canMove() const
 {
-	if ( 
-		(getX() + getDX()) < 0 || 
-		(getX() + getDX()) > gv::maxLoadedMapWidth
+	if (
+		(getX() + getDX()) < 0 ||
+		(getX() + getDX()) > map->getMapWidth() - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		map->getBaseMap(getX() + getDX(), getY()) == gv::wallSquare
 	   )
 	{
-		return 1; // error, e.g. can't move
+		return 0; // error, e.g. can't move
 	}
 
 	if (
 		(getY() + getDY()) < 0 ||
-		(getY() + getDY()) > gv::maxLoadedMapHeight
+		(getY() + getDY()) > map->getMapHeight() - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		map->getBaseMap(getX(),getY() + getDY()) == gv::wallSquare
 		)
 	{
-		return 1; // error, e.g. can't move
+		return 0; // error, e.g. can't move
 	}
 
-	return 0; // no errors, e.g. can move
+	return 1; // no errors, e.g. can move
+}
+
+void Actor::executeMoving()
+{
+	if (movementProgress >= movementSpeed)
+	{
+		map->setBaseMap(y, x, '.');
+		x += dx;
+		y += dy;
+		map->setBaseMap(y, x, 1);
+		movementProgress = 0;
+		std::cout << "I have moved to: [" << x << "][" << y << "] !" << std::endl;
+		return;
+	}
+	movementProgress++;
 }
