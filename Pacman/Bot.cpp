@@ -14,13 +14,17 @@ Bot::Bot(int x, int y, int dx, int dy, float movementSpeed, unsigned int attackR
 	this->attackRange = attackRange;
 }
 
-int Bot::move()
-{
-	if ( (getX() + getDX() ) )
-	{
 
+void Bot::move()
+{
+	if (!canMove())
+	{
+		std::cout << "I can keep moving!" << std::endl;
 	}
-	return 0;
+	else
+	{
+		std::cout << "Nope, can't keep moving... Better change directions somehow" << std::endl;
+	}
 }
 
 void Bot::die()

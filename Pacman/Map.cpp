@@ -11,41 +11,72 @@ Map::Map()
 			baseMap[i][j] = gv::walkableSquare;
 		}
 	}
+
+	this->mapHeight = 10;
+	this->mapWidth = 10;
+
+	processMap();
 }
 // this isnt really supposed to be created, yet
 //
 
-Map::Map(char** origMap, unsigned int mapHeight, unsigned int mapWidth)
+Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 {
-	unsigned int i = 0;
-	unsigned int j;
-
-	for (i; i < mapHeight; i++)
+	if (mapHeight > gv::maxLoadedMapHeight)
 	{
-		for (j = 0; j < mapWidth; j++)
+		std::cout << "Warning: Given map height higher than allowed! Automatic fix incoming..." << std::endl;
+		mapHeight = gv::maxLoadedMapHeight;
+	}
+	
+	if (mapWidth > gv::maxLoadedMapWidth)
+	{
+		std::cout << "Warning: Given map width higher than allowed! Automatic fix incoming..." << std::endl;
+		mapWidth = gv::maxLoadedMapWidth;
+	}
+	// Bounds checks
+	//
+	//
+
+	for (unsigned int i = 0; i < mapHeight; i++)
+	{
+		for (unsigned int j = 0; j < mapWidth; j++)
 		{
 			baseMap[i][j] = origMap[i][j];
 		}
-		baseMap[i][j] = '\0';
+		baseMap[i][mapWidth] = '\0';
 	}
+	// copy map
+	//
 
-	this->mapHeight = i;
-	this->mapWidth = j;
+	this->mapHeight = mapHeight;
+	this->mapWidth = mapWidth;
 
-	processMap();
+	processMap(); // creates processedMap
 }
 
 
 unsigned int Map::countNearbyWalkableSquares(unsigned int i, unsigned int j) const
 {
+	if (i < 0 || i > mapHeight - 1)
+	{
+		std::cout << "Error while counting nearby walkable squares for i: " << i << std::endl;
+		return 0;
+	}
+
+	if (j < 0 || j > mapWidth - 1)
+	{
+		std::cout << "Error while counting nearby walkable squares for j: " << j << std::endl;
+		return 0;
+	}
+
 	unsigned int br = 0;
 
 	if (baseMap[i][j] == gv::wallSquare) return 0;
 
-	if (i + 1 < mapHeight && baseMap[i + 1][j] == gv::walkableSquare) br++; // square to the left
-	if (i - 1 >= 0 && baseMap[i - 1][j] == gv::walkableSquare) br++; // square to the right
-	if (j - 1 >= 0 && baseMap[i][j - 1] == gv::walkableSquare) br++; // square upwards
-	if (j + 1 < mapWidth && baseMap[i][j + 1] == gv::walkableSquare) br++; // square downwards
+	if (i + 1 < mapHeight && baseMap[i + 1][j] == gv::walkableSquare) br++; // square downwards
+	if (i - 1 >= 0 && baseMap[i - 1][j] == gv::walkableSquare) br++; // square upwards
+	if (j - 1 >= 0 && baseMap[i][j - 1] == gv::walkableSquare) br++; // square to the left
+	if (j + 1 < mapWidth && baseMap[i][j + 1] == gv::walkableSquare) br++; // square to the right
 
 	return br;
 }
@@ -82,16 +113,16 @@ Map::~Map()
 
 void Map::processMap()
 {
-	unsigned int i = 0;
+	unsigned int i;
 	unsigned int j;
 
-	for (i; i < mapHeight; i++)
+	for (i = 0; i < mapHeight; i++)
 	{
 		for (j = 0; j < mapWidth; j++)
 		{
 			if (countNearbyWalkableSquares(i, j) > 2)
 			{
-				processedMap[i][j] = 'k'; // this means that it's a knot
+				processedMap[i][j] = gv::knot;
 			}
 			else
 			{
