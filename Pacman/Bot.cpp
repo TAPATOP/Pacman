@@ -59,7 +59,7 @@ int Bot::getID()
 bool Bot::move()
 {
 	if (getMovementProgress() == 0 && // the bot hasn't started moving yet( prevents cycling the same knot)
-		map->getProcessedMap(getY(), getX()) == gv::knotSquare) // square the bot is on is a 'knot'
+		map->getLogical(getY(), getX()) == gv::knotSquare) // square the bot is on is a 'knot'
 	{
 		pickRandomDirection();
 		executeMoving();
@@ -104,8 +104,8 @@ Bot::~Bot()
 void Bot::pickRandomDirection()
 {
 	unsigned int br = 0;
-	unsigned int origDX = -getDX();
-	unsigned int origDY = -getDY();
+	unsigned int origDX = -getDX();	// these make sure the bots do not go back to their old
+	unsigned int origDY = -getDY();	// position when coming across a knot
 
 	do
 	{

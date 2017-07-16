@@ -148,7 +148,7 @@ bool Actor::canMove() const
 	if (
 		(getX() + getDX()) < 0 ||
 		(getX() + getDX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getBaseMap(getY(), getX() + getDX()) == gv::wallSquare
+		map->getWalkable(getY(), getX() + getDX()) == gv::wallSquare
 	   )
 	{
 		return 0; // error, e.g. can't move
@@ -157,7 +157,7 @@ bool Actor::canMove() const
 	if (
 		(getY() + getDY()) < 0 ||
 		(getY() + getDY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getBaseMap(getY() + getDY(), getX()) == gv::wallSquare
+		map->getWalkable(getY() + getDY(), getX()) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -170,10 +170,10 @@ void Actor::executeMoving()
 {
 	if (movementProgress >= movementSpeed)
 	{
-		map->setBaseMap(y, x, '.');
+		map->setWalkable(y, x, '.');
 		x += dx;
 		y += dy;
-		map->setBaseMap(y, x, 1);
+		map->setWalkable(y, x, 1);
 		movementProgress = 0;
 		//std::cout << "I have moved to: [" << y << "][" << x << "] !" << std::endl;
 		return;

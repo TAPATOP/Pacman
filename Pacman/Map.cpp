@@ -8,7 +8,7 @@ Map::Map()
 	{
 		for (unsigned int j = 0; j < 10; j++)
 		{
-			baseMap[i][j] = gv::walkableSquare;
+			nodes[i][j].walkable = gv::walkableSquare;
 		}
 	}
 
@@ -41,9 +41,8 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
-			baseMap[i][j] = origMap[i][j];
+			nodes[i][j].walkable = origMap[i][j];
 		}
-		baseMap[i][mapWidth] = '\0';
 	}
 	// copy map
 	//
@@ -57,9 +56,9 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 //
 //
 
-void Map::setBaseMap(int y, int x, char changeTo)
+void Map::setWalkable(int y, int x, char changeTo)
 {
-	baseMap[y][x] = changeTo;
+	nodes[y][x].walkable = changeTo;
 }
 // SETTERS above
 //
@@ -74,13 +73,15 @@ unsigned int Map::getMapWidth() const
 {
 	return mapWidth;
 }
-char Map::getBaseMap(int y, int x) const
+
+char Map::getWalkable(int y, int x) const
 {
-	return baseMap[y][x];
+	return nodes[y][x].walkable;
 }
-char Map::getProcessedMap(int y, int x) const
+
+char Map::getLogical(int y, int x) const
 {
-	return processedMap[y][x];
+	return nodes[y][x].knot;
 }
 // GETTERS above
 //
@@ -102,12 +103,12 @@ unsigned int Map::countNearbyWalkableSquares(int i, int j) const
 
 	unsigned int br = 0;
 
-	if (baseMap[i][j] == gv::wallSquare) return 0;
+	if (nodes[i][j].walkable == gv::wallSquare) return 0;
 
-	if (i + 1 < mapHeight && baseMap[i + 1][j] == gv::walkableSquare) br++; // square downwards
-	if (i - 1 >= 0 && baseMap[i - 1][j] == gv::walkableSquare) br++; // square upwards
-	if (j - 1 >= 0 && baseMap[i][j - 1] == gv::walkableSquare) br++; // square to the left
-	if (j + 1 < mapWidth && baseMap[i][j + 1] == gv::walkableSquare) br++; // square to the right
+	if (i + 1 < mapHeight && nodes[i + 1][j].walkable == gv::walkableSquare) br++; // square downwards
+	if (i - 1 >= 0 && nodes[i - 1][j].walkable == gv::walkableSquare) br++; // square upwards
+	if (j - 1 >= 0 && nodes[i][j - 1].walkable == gv::walkableSquare) br++; // square to the left
+	if (j + 1 < mapWidth && nodes[i][j + 1].walkable == gv::walkableSquare) br++; // square to the right
 
 	return br;
 }
@@ -118,7 +119,7 @@ void Map::printMap() const
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
-			std::cout << baseMap[i][j];
+			std::cout << (char)nodes[i][j].walkable;
 		}
 		std::cout << std::endl;
 	}
@@ -153,13 +154,12 @@ void Map::processMap()
 		{
 			if (countNearbyWalkableSquares(i, j) > 2)
 			{
-				processedMap[i][j] = gv::knotSquare;
+				nodes[i][j].knot = gv::knotSquare;
 			}
 			else
 			{
-				processedMap[i][j] = baseMap[i][j];
+				nodes[i][j].knot = nodes[i][j].walkable;
 			}
 		}
-		processedMap[i][j] = '\0';
 	}
 }

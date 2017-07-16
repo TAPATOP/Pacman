@@ -2,8 +2,9 @@
 
 namespace gv
 {
-	const char walkableSquare = '.';
 	const char wallSquare = '#';
+	const char walkableSquare = '.';
+
 	const char knotSquare = 'k';
 
 	const unsigned int maxLoadedMapHeight = 100;
