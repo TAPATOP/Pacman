@@ -9,7 +9,7 @@ class Bot :
 {
 public:
 	Bot();
-	Bot(int botID, int y, int x, int dy, int dx, float movementSpeed, unsigned int attackRange, Map* map);
+	Bot(int botID, int y, int x, int dy, int dx, int movementSpeed, unsigned int attackRange, Map* map);
 
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);

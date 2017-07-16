@@ -9,11 +9,11 @@ Bot::Bot()
 	isGhost = 0;
 }
 
-Bot::Bot(int botID, int y, int x, int dy, int dx, float movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
+Bot::Bot(int botID, int y, int x, int dy, int dx, int movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
 {
 	this->botID = botID;
 	this->attackRange = attackRange;
-	if (getDX() == 0 && getDY() == 0)
+	while (getDX() == 0 && getDY() == 0)
 	{
 		pickRandomDirection(); // if the given dx or dy conflict with the map boudnaries, this gives the bot valid deltas
 	}
