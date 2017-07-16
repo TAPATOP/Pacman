@@ -56,23 +56,16 @@ int Bot::getID()
 //
 //
 
-bool Bot::move()
+sf::Vector2i Bot::move()
 {
 	if (getMovementProgress() == 0 && // the bot hasn't started moving yet( prevents cycling the same knot)
 		map->getLogical(getY(), getX()) == gv::knotSquare) // square the bot is on is a 'knot'
 	{
 		pickRandomDirection();
-		executeMoving();
-		return 1;
 	}
 	else
 	{
-		if (canMove())
-		{
-			executeMoving();
-			return 1;
-		}
-		else
+		if (!canMove())
 		{
 			if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
 			{
@@ -84,13 +77,9 @@ bool Bot::move()
 			}
 			// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
 			//
-
-			executeMoving();
-			return 1;
-			//std::cout << "Nope, can't keep moving... Better change directions somehow" << std::endl;
 		}
 	}
-	return 0;
+	return executeMoving();
 }
 
 void Bot::die()

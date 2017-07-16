@@ -13,4 +13,11 @@ namespace gv
 	const unsigned int defaultX = 0;
 	const unsigned int defaultY = 0;
 	const unsigned int defaultMovementSpeed = 100;
+
+	////////////////////
+	/// GUI Below
+	////////////////////
+
+	const unsigned int windowWidth = 600;
+	const unsigned int windowHeight = 400;
 }

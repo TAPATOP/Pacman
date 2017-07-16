@@ -41,14 +41,21 @@ int main()
 	Bot bot4(4, 6, 6, 1, 0, 8, 0, &loadedMap);
 	
 	char keepOn = 'a';
-	
+
+	//sf::RenderWindow window(sf::VideoMode(gv::windowHeight, gv::windowWidth), "SFML works!", sf::Style::Close);
+	//sf::Event evnt;
+	//sf::RectangleShape rect(sf::Vector2f(50, 25));
+	//while (window.isOpen())
+	//{
+	//
+	//}
+
 	while (keepOn != '0')
 	{
 		if (bot1.getMovementProgress() == 0)
 		{
 			loadedMap.printMap();
-			//std::cin >> keepOn;
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		}
 		bot1.move();
 		bot2.move();

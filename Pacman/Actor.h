@@ -5,6 +5,7 @@
 
 #pragma once
 #include<iostream>
+#include<SFML/Graphics/Vertex.hpp>
 
 #include"Global_Variables.h"
 #include"Map.h"
@@ -16,7 +17,7 @@ public:
 	//Actor(Actor&); // "when should i define copy constructor"
 	Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map);
 
-	virtual bool move() = 0;
+	virtual sf::Vector2i move() = 0;
 	virtual void die() = 0;
 
 	void setMovementSpeed(unsigned int movementSpeed);
@@ -36,7 +37,7 @@ public:
 	virtual ~Actor(); 
 protected:
 		bool canMove() const; // decides whether the actor can move with the current x, y, dx and dy
-		void executeMoving(); // moves the actor according to x, y, dx, dy and his speed
+		sf::Vector2i executeMoving(); // moves the actor according to x, y, dx, dy and his speed
 protected:
 	Map* map; // all Actors will use the same map to traverse
 private:

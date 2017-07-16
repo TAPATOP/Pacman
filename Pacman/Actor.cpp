@@ -166,7 +166,7 @@ bool Actor::canMove() const
 	return 1; // no errors, e.g. can move
 }
 
-void Actor::executeMoving()
+sf::Vector2i Actor::executeMoving()
 {
 	if (movementProgress >= movementSpeed)
 	{
@@ -175,8 +175,9 @@ void Actor::executeMoving()
 		y += dy;
 		map->setWalkable(y, x, 1);
 		movementProgress = 0;
-		//std::cout << "I have moved to: [" << y << "][" << x << "] !" << std::endl;
-		return;
+
+		return sf::Vector2i(getDY(), getDX());
 	}
 	movementProgress++;
+	return sf::Vector2i(0,0);
 }
