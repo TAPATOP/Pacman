@@ -10,13 +10,14 @@ public:
 	//Map(Map&);
 	Map(char** const origMap, unsigned int height, unsigned int width);
 
-	void setBaseMap(int x, int y, char changeTo);
+	void setBaseMap(int y, int x, char changeTo);
 
 	unsigned int getMapHeight() const;
 	unsigned int getMapWidth() const;
-	char getBaseMap(int x, int y) const;
+	char getBaseMap(int y, int x) const;
+	char getProcessedMap(int y, int x) const;
 
-	unsigned int countNearbyWalkableSquares(unsigned int i, unsigned int j) const;
+	unsigned int countNearbyWalkableSquares(unsigned int y, unsigned int x) const;
 
 	void printMap() const;
 

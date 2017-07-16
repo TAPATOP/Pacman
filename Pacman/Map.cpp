@@ -78,6 +78,10 @@ char Map::getBaseMap(int y, int x) const
 {
 	return baseMap[y][x];
 }
+char Map::getProcessedMap(int y, int x) const
+{
+	return processedMap[y][x];
+}
 // GETTERS above
 //
 //
@@ -121,15 +125,15 @@ void Map::printMap() const
 
 	std::cout << std::endl;
 
-	for (unsigned int i = 0; i < mapHeight; i++)
-	{
-		for (unsigned int j = 0; j < mapWidth; j++)
-		{
-			std::cout << processedMap[i][j];
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
+	//for (unsigned int i = 0; i < mapHeight; i++)
+	//{
+	//	for (unsigned int j = 0; j < mapWidth; j++)
+	//	{
+	//		std::cout << processedMap[i][j];
+	//	}
+	//	std::cout << std::endl;
+	//}
+	//std::cout << std::endl;
 }
 
 

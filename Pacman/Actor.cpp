@@ -14,7 +14,7 @@ Actor::Actor()
 	map = nullptr;
 }
 
-Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, float movementSpeed, Map* map)
+Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, Map* map)
 {
 	if (x < 0 || x > map->getMapWidth() - 1)
 	{
@@ -49,13 +49,25 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, float movementSpeed
 		this->movementSpeed = movementSpeed;
 	}
 	
+	if (x + dx < 0 || x + dx > map->getMapWidth() - 1)
+	{
+		std::cout << "Incorrect x + dx combination..." << std::endl;
+		this->dx = 0;
+	}
+
+	if (y + dy < 0 || y + dy > map->getMapHeight() - 1)
+	{
+		std::cout << "Incorrect y + dy combination..." << std::endl;
+		this->dy = 0;
+	}
+
 	this->map = map;
 }
 // CONSTRUCTORS above
 //
 //
 
-void Actor::setMovementSpeed(float movementSpeed)
+void Actor::setMovementSpeed(int movementSpeed)
 {
 	if (movementSpeed < 0)
 	{
@@ -172,7 +184,7 @@ void Actor::executeMoving()
 		y += dy;
 		map->setBaseMap(y, x, 1);
 		movementProgress = 0;
-		std::cout << "I have moved to: [" << y << "][" << x << "] !" << std::endl;
+		//std::cout << "I have moved to: [" << y << "][" << x << "] !" << std::endl;
 		return;
 	}
 	movementProgress++;

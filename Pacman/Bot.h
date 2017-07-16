@@ -9,20 +9,28 @@ class Bot :
 {
 public:
 	Bot();
-	Bot(int y, int x, int dy, int dx, float movementSpeed, unsigned int attackRange, Map* map);
+	Bot(int botID, int y, int x, int dy, int dx, float movementSpeed, unsigned int attackRange, Map* map);
 
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
+	void setID(int);
 
 	bool getIsVulnerable();
 	bool getIsGhost();
+	int getID();
 
 	bool move();
 	void die();
 
 	~Bot();
+protected:
+	void pickRandomDirection();
+	void cornerSolver(); // adjusts DX and DY in such way so the bot will traverse it properly
+	void reverseDirection();
 private:
 	bool isVulnerable;
 	bool isGhost;
 	unsigned int attackRange;
+
+	int botID; // I want it manually set for now
 };

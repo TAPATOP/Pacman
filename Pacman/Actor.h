@@ -1,3 +1,8 @@
+////////////
+/// PLEASE NOTE THAT y IS HEIGHT AND x IS WIDTH, SO YOU'LL HAVE TO
+/// USE COORDINATES AS: object[y][x]
+////////////
+
 #pragma once
 #include<iostream>
 
@@ -9,12 +14,12 @@ class Actor
 public:
 	Actor();
 	//Actor(Actor&); // "when should i define copy constructor
-	Actor(unsigned int y, unsigned int x, int dy, int dx, float movementSpeed, Map* map);
+	Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, Map* map);
 
 	virtual bool move() = 0;
 	virtual void die() = 0;
 
-	void setMovementSpeed(float movementSpeed);
+	void setMovementSpeed(int movementSpeed);
 	void setX(unsigned int x, std::ostream& out = std::cout);
 	void setY(unsigned int y);
 	void setDX(int dx);
