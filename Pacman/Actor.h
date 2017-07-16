@@ -28,8 +28,8 @@ public:
 
 	unsigned int getMovementSpeed() const;
 	unsigned int getMovementProgress() const;
-	unsigned int getX() const;
-	unsigned int getY() const;
+	int getX() const;
+	int getY() const;
 	int getDX() const;
 	int getDY() const;
 
@@ -40,8 +40,8 @@ protected:
 protected:
 	static Map* map; // all Actors will use the same map to traverse
 private:
-	unsigned int x; // how wide
-	unsigned int y; // how high
+	int x; // how wide
+	int y; // how high
 
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho

@@ -17,7 +17,7 @@ public:
 	char getBaseMap(int y, int x) const;
 	char getProcessedMap(int y, int x) const;
 
-	unsigned int countNearbyWalkableSquares(unsigned int y, unsigned int x) const;
+	unsigned int countNearbyWalkableSquares(int y, int x) const;
 
 	void printMap() const;
 

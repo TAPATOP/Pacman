@@ -125,12 +125,12 @@ unsigned int Actor::getMovementProgress() const
 	return movementProgress;
 }
 
-unsigned int Actor::getX() const
+int Actor::getX() const
 {
 	return x;
 }
 
-unsigned int Actor::getY() const
+int Actor::getY() const
 {
 	return y;
 }

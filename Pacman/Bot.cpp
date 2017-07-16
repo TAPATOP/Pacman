@@ -13,9 +13,9 @@ Bot::Bot(int botID, int y, int x, int dy, int dx, int movementSpeed, unsigned in
 {
 	this->botID = botID;
 	this->attackRange = attackRange;
-	while (getDX() == 0 && getDY() == 0)
+	while (getDX() == 0 && getDY() == 0 || !canMove())
 	{
-		pickRandomDirection(); // if the given dx or dy conflict with the map boudnaries, this gives the bot valid deltas
+		pickRandomDirection(); // if the given dx or dy conflict with the map boundaries, this gives the bot valid deltas
 	}
 }
 // CONSTRUCTORS above

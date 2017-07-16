@@ -86,7 +86,7 @@ char Map::getProcessedMap(int y, int x) const
 //
 //
 
-unsigned int Map::countNearbyWalkableSquares(unsigned int i, unsigned int j) const
+unsigned int Map::countNearbyWalkableSquares(int i, int j) const
 {
 	if (i < 0 || i > mapHeight - 1)
 	{
