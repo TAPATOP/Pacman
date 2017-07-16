@@ -12,51 +12,75 @@
 
 int main()
 {
-	const unsigned int mapHeight = 13;
-	const unsigned int mapWidth = 20;
+	const unsigned int mapHeight = 26;
+	const unsigned int mapWidth = 40;
 
 	char* origMap[] = {
-		"#...........##.#...#",
-		"..#.#.#.#.#..#.#.#.#",
-		".##.#...#.##.#.#.#.#",
-		"....#####......#.#.#",
-		"#.#.......#.##.#.#.#",
-		"#.#.##.##.#.##.#.#.#",
-		"#.#.#...#.#.##.#.#.#",
-		"....#####....#.#.#.#",
-		".##.......##.#.#.#.#",
-		".#####.#.###.#.#.#.#",
-		".#...........#.#.#.#",
-		".###.###.###.#.#.#.#",
-		".#...###.........#.."
+		"#...........##.#...##...........##.#...#",
+		"..#.#.#.#.#..#.#.#.#..#.#.#.#.#..#.#.#.#",
+		".##.#...#.##.#.#.#.#.##.#...#.##.#.#.#.#",
+		"....#####......#.#.#....#####......#.#.#",
+		"#.#.......#.##.#.#.##.#.......#.##.#.#.#",
+		"#.#.##.##.#.##.#.#.##.#.##.##.#.##.#.#.#",
+		"#.#.#...#.#.##.#.#.##.#.#...#.#.##.#.#.#",
+		"....#####....#.#.#.#....#####....#.#.#.#",
+		".##.......##.#.#.#.#.##.......##.#.#.#.#",
+		".#####.#.###.#.#.#.#.#####.#.###.#.#.#.#",
+		".#...........#.#.#.#.#...........#.#.#.#",
+		".###.###.###.#.#.#.#.###.###.###.#.#.#.#",
+		".#...###.......#.#...#...###.......#.#..",
+		"#...........##.....##...........##.#...#",
+		"..#.#.#.#.#..#.#.#.#..#.#.#.#.#..#.#.#.#",
+		".##.#...#.##.#.#.#.#.##.#...#.##.#.#.#.#",
+		"....#####......#.#.#....#####......#.#.#",
+		"#.#.......#.##.#.#.##.#.......#.##.#.#.#",
+		"#.#.##.##.#.##.#.#.##.#.##.##.#.##.#.#.#",
+		"#.#.#...#.#.##.#.#.##.#.#...#.#.##.#.#.#",
+		"....#####....#.#.#.#....#####....#.#.#.#",
+		".##.......##.#.#.#.#.##.......##.#.#.#.#",
+		".#####.#.###.#.#.#.#.#####.#.###.#.#.#.#",
+		".#...........#.#.#.#.#...........#.#.#.#",
+		".###.###.###.#.#.#.#.###.###.###.#.#.#.#",
+		".#...###.......#.#...#...###.......#.#.."
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
-	
+
 	Map loadedMap(origMap, mapHeight, mapWidth);
 
-	Bot bot1(1, 0, 1, 1, 0, 1, 0, &loadedMap); // id, y, x, dy, dx, speed
-	Bot bot2(19, 6, 5, 0, 1, 2, 0, &loadedMap);
-	Bot bot3(3, 6, 7, 1, 0, 5, 0, &loadedMap);
-	Bot bot4(4, 6, 6, -1, 0, 8, 0, &loadedMap);
-	
-	char keepOn = 'a';
+	Bot bot1(1, 5, 6, -1, 0, 1, 0, &loadedMap); // id, y, x, dy, dx, speed
+	Bot bot2(19, 6, 5, 0, 1, 1, 0, &loadedMap);
+	Bot bot3(3, 6, 7, 1, 0, 1, 0, &loadedMap);
+	Bot bot4(4, 6, 6, -1, 0, 1, 0, &loadedMap);
 
+	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Beta!", sf::Style::Close);
 	sf::Event evnt;
 
-	// unsigned int squareDisplaySize = gv::windowHeight / (mapHeight);
-	float squareDisplaySize = 25;
+	//unsigned int squareDisplaySize = gv::windowWidth / (mapWidth);
+	unsigned int squareDisplaySize;
 
-	sf::RectangleShape rect1(sf::Vector2f(squareDisplaySize, squareDisplaySize));
-	sf::RectangleShape rect2(sf::Vector2f(squareDisplaySize, squareDisplaySize));
-	sf::RectangleShape rect3(sf::Vector2f(squareDisplaySize, squareDisplaySize));
-	sf::RectangleShape rect4(sf::Vector2f(squareDisplaySize, squareDisplaySize));
+	if (gv::windowHeight > gv::windowWidth)
+	{
+		squareDisplaySize = gv::windowWidth / mapWidth;
+	}
+	else
+	{
+		squareDisplaySize = gv::windowHeight / mapHeight;
+	}
+	//float squareDisplaySize = 25;
 
-	float offsetX = 50;
-	float offsetY = 50;
+	sf::Vector2f squareSize(squareDisplaySize, squareDisplaySize);
 
-	rect1.setPosition(offsetX, offsetY);
+	sf::RectangleShape rect1(squareSize);
+	sf::RectangleShape rect2(squareSize);
+	sf::RectangleShape rect3(squareSize);
+	sf::RectangleShape rect4(squareSize);
+
+	float offsetX = squareDisplaySize;
+	float offsetY = 0;
+
+	rect1.setPosition(offsetX + 5 * squareDisplaySize, offsetY + 5 * squareDisplaySize);
 	rect2.setPosition(offsetX + 4 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
 	rect3.setPosition(offsetX + 6 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
 	rect4.setPosition(offsetX + 5 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
@@ -70,6 +94,25 @@ int main()
 
 	sf::Vector2f movement;
 
+	sf::RectangleShape* squares[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+
+	for (int i = 0; i < mapHeight; i++)
+	{
+		for (int j = 0; j < mapWidth; j++)
+		{
+			squares[i][j] = new sf::RectangleShape(squareSize);
+			if (loadedMap.getWalkable(i, j) == '.')
+			{
+				squares[i][j]->setFillColor(sf::Color::White);
+			}
+			else
+				if(loadedMap.getWalkable(i, j) == '#')
+				{
+					squares[i][j]->setFillColor(sf::Color::Black);
+				}
+			squares[i][j]->setPosition(j * squareDisplaySize, i * squareDisplaySize);
+		}
+	}
 	while (window.isOpen())
 	{
 		while (window.pollEvent(evnt))
@@ -104,14 +147,22 @@ int main()
 		{
 			rect4.move(movement);
 		}
-		//window.clear();
+		
+		window.clear();
+		for (int i = 0; i < mapHeight; i++)
+		{
+			for (int j = 0; j < mapWidth; j++)
+			{
+				window.draw(*squares[i][j]);
+			}
+		}
 		window.draw(rect1);
 		window.draw(rect2);
 		window.draw(rect3);
 		window.draw(rect4);
 
 		window.display();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		std::this_thread::sleep_for(std::chrono::milliseconds(36));
 	}
 
 	//while (keepOn != '0')

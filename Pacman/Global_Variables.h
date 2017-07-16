@@ -18,6 +18,6 @@ namespace gv
 	/// GUI Below
 	////////////////////
 
-	const unsigned int windowWidth = 600;
-	const unsigned int windowHeight = 400;
+	const unsigned int windowWidth = 1000;
+	const unsigned int windowHeight = 600;
 }
