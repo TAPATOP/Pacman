@@ -35,10 +35,10 @@ int main()
 	
 	Map loadedMap(origMap, mapHeight, mapWidth);
 
-	Bot bot1(1, 0, 1, 1, 0, 0, 0, &loadedMap);
-	Bot bot2(19, 12, 0, 0, 1, 0, 0, &loadedMap);
-	Bot bot3(3, 12, 19, 1, 0, 0, 0, &loadedMap);
-	Bot bot4(4, 6, 6, 1, 0, 0, 0, &loadedMap);
+	Bot bot1(1, 0, 1, 1, 0, 2, 0, &loadedMap); // id, y, x, dy, dx, speed
+	Bot bot2(19, 12, 0, 0, 2, 0, 0, &loadedMap);
+	Bot bot3(3, 12, 19, 1, 5, 0, 0, &loadedMap);
+	Bot bot4(4, 6, 6, 1, 0, 8, 0, &loadedMap);
 	
 	char keepOn = 'a';
 	

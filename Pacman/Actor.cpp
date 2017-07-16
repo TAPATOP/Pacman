@@ -1,6 +1,5 @@
 #include "Actor.h"
 
-Map* Actor::map;
 
 Actor::Actor()
 {
@@ -14,7 +13,7 @@ Actor::Actor()
 	map = nullptr;
 }
 
-Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, Map* map)
+Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map)
 {
 	if (x < 0 || x > map->getMapWidth() - 1)
 	{
@@ -38,16 +37,8 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, 
 
 	this->dx = dx;
 	this->dy = dy;
-	
-	if (movementSpeed < 0)
-	{
-		std::cout << "Warning: movementSpeed is set as negative. Fixing this automatically..." << std::endl;
-		movementSpeed = -movementSpeed;
-	}
-	else
-	{
-		this->movementSpeed = movementSpeed;
-	}
+
+	this->movementSpeed = movementSpeed;
 	
 	if (x + dx < 0 || x + dx > map->getMapWidth() - 1)
 	{
@@ -67,7 +58,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, 
 //
 //
 
-void Actor::setMovementSpeed(int movementSpeed)
+void Actor::setMovementSpeed(unsigned int movementSpeed)
 {
 	if (movementSpeed < 0)
 	{
@@ -156,7 +147,7 @@ bool Actor::canMove() const
 {
 	if (
 		(getX() + getDX()) < 0 ||
-		(getX() + getDX()) > map->getMapWidth() - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		(getX() + getDX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
 		map->getBaseMap(getY(), getX() + getDX()) == gv::wallSquare
 	   )
 	{
@@ -165,7 +156,7 @@ bool Actor::canMove() const
 
 	if (
 		(getY() + getDY()) < 0 ||
-		(getY() + getDY()) > map->getMapHeight() - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		(getY() + getDY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
 		map->getBaseMap(getY() + getDY(), getX()) == gv::wallSquare
 		)
 	{

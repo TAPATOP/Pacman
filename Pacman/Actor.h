@@ -13,13 +13,13 @@ class Actor
 {
 public:
 	Actor();
-	//Actor(Actor&); // "when should i define copy constructor
-	Actor(unsigned int y, unsigned int x, int dy, int dx, int movementSpeed, Map* map);
+	//Actor(Actor&); // "when should i define copy constructor"
+	Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map);
 
 	virtual bool move() = 0;
 	virtual void die() = 0;
 
-	void setMovementSpeed(int movementSpeed);
+	void setMovementSpeed(unsigned int movementSpeed);
 	void setX(unsigned int x, std::ostream& out = std::cout);
 	void setY(unsigned int y);
 	void setDX(int dx);
@@ -36,12 +36,12 @@ public:
 	virtual ~Actor(); 
 protected:
 		bool canMove() const; // decides whether the actor can move with the current x, y, dx and dy
-		void executeMoving();
+		void executeMoving(); // moves the actor according to x, y, dx, dy and his speed
 protected:
-	static Map* map; // all Actors will use the same map to traverse
+	Map* map; // all Actors will use the same map to traverse
 private:
-	int x; // how wide
-	int y; // how high
+	unsigned int x; // how wide
+	unsigned int y; // how high
 
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho

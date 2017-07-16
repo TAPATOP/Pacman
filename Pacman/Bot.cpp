@@ -9,7 +9,7 @@ Bot::Bot()
 	isGhost = 0;
 }
 
-Bot::Bot(int botID, int y, int x, int dy, int dx, int movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
+Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
 {
 	this->botID = botID;
 	this->attackRange = attackRange;
@@ -104,6 +104,9 @@ Bot::~Bot()
 void Bot::pickRandomDirection()
 {
 	unsigned int br = 0;
+	unsigned int origDX = -getDX();
+	unsigned int origDY = -getDY();
+
 	do
 	{
 		std::srand((unsigned int)time(NULL) + br);
@@ -128,7 +131,7 @@ void Bot::pickRandomDirection()
 			setDX(0);
 			break;
 		}
-	} while (!canMove());
+	} while (!canMove() || (getDX() == origDX && getDY() == origDY));
 }
 
 void Bot::cornerSolver()
