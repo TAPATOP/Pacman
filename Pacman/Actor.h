@@ -17,10 +17,11 @@ public:
 	//Actor(Actor&); // "when should i define copy constructor"
 	Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map);
 
-	virtual sf::Vector2i move() = 0;
+	virtual sf::Vector2f move() = 0;
 	virtual void die() = 0;
 
 	void setMovementSpeed(unsigned int movementSpeed);
+	void setMovementProgress(unsigned int movementProgress);
 	void setX(unsigned int x, std::ostream& out = std::cout);
 	void setY(unsigned int y);
 	void setDX(int dx);
@@ -37,7 +38,7 @@ public:
 	virtual ~Actor(); 
 protected:
 		bool canMove() const; // decides whether the actor can move with the current x, y, dx and dy
-		sf::Vector2i executeMoving(); // moves the actor according to x, y, dx, dy and his speed
+		sf::Vector2f executeMoving(); // moves the actor according to x, y, dx, dy and his speed
 protected:
 	Map* map; // all Actors will use the same map to traverse
 private:

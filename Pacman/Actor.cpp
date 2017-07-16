@@ -68,6 +68,11 @@ void Actor::setMovementSpeed(unsigned int movementSpeed)
 	this->movementSpeed = movementSpeed;
 }
 
+void Actor::setMovementProgress(unsigned int movementProgress)
+{
+	this->movementProgress = movementProgress;
+}
+
 void Actor::setX(unsigned int x, std::ostream& out)
 {
 	if (x >= gv::maxLoadedMapWidth)
@@ -166,7 +171,7 @@ bool Actor::canMove() const
 	return 1; // no errors, e.g. can move
 }
 
-sf::Vector2i Actor::executeMoving()
+sf::Vector2f Actor::executeMoving()
 {
 	if (movementProgress >= movementSpeed)
 	{
@@ -176,8 +181,8 @@ sf::Vector2i Actor::executeMoving()
 		map->setWalkable(y, x, 1);
 		movementProgress = 0;
 
-		return sf::Vector2i(getDY(), getDX());
+		return sf::Vector2f(getDX(), getDY());
 	}
 	movementProgress++;
-	return sf::Vector2i(0,0);
+	return sf::Vector2f(0,0);
 }
