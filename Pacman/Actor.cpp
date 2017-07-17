@@ -154,6 +154,11 @@ Actor::~Actor()
 
 bool Actor::canMove() const
 {
+	if (dx == 0 && dy == 0)
+	{
+		return 0; // prevents cycling in case of no commands
+	}
+
 	if (
 		(getX() + getDX()) < 0 ||
 		(getX() + getDX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
@@ -177,10 +182,10 @@ bool Actor::canMove() const
 
 bool Actor::canMove(sf::Vector2f newDirections) const
 {
-	//if (newDirections.x == 0 && newDirections.y == 0)
-	//{
-	//	return 0; // error, e.g. can't move
-	//}
+	if (newDirections.x == 0 && newDirections.y == 0)
+	{
+		return 0; // error, e.g. can't move
+	}
 	if (
 		(getX() + newDirections.x) < 0 ||
 		(getX() + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
@@ -220,5 +225,6 @@ sf::Vector2f Actor::executeMoving()
 ////////////////////////////
 ///
 /// TO DO: MAKE THIS RETURN NULLPTR
+/// DONT CALL METHODS SUCH AS DX() AND X()
 ///
 ///////////////////////////

@@ -4,7 +4,12 @@
 
 Player::Player()
 {
+	score = 0;
+	currentCommand = controls.neutral;
+	nextCommand = controls.neutral;
+	lives = 1;
 }
+
 Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, 
 	Map * map, char displayChar, int lives, char up, char down, char left, char right)
 	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
@@ -15,6 +20,10 @@ Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int move
 	controls.down = down;
 	controls.left = left;
 	controls.right = right;
+
+	score = 0;
+	currentCommand = controls.neutral;
+	nextCommand = controls.neutral;
 }
 // CONSTRUCTORS above
 //
@@ -50,6 +59,8 @@ void Player::setNextCommand(char command)
 		nextCommand = controls.neutral;
 		executeCurrentCommand();
 	}
+	// replaces currentCommand with nextCommand if nextCommand is a reversal of currentCommand
+	//
 
 }
 //
@@ -73,7 +84,6 @@ int Player::getLives()
 
 sf::Vector2f Player::move()
 {
-	// if (map->getWalkable(getY(), getX()) == gv::knotSquare && canMove(interpretCommand(nextCommand)))
 	if (
 		nextCommand != controls.neutral &&
 		map->getLogical(getY(), getX()) == gv::knotSquare && 
@@ -86,7 +96,7 @@ sf::Vector2f Player::move()
 		return executeMoving();
 	}
 
-	if (canMove())
+	if (canMove()) // && curComm != neutral ??
 	{
 		return executeMoving();
 	}
