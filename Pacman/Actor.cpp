@@ -11,9 +11,11 @@ Actor::Actor()
 
 	movementSpeed = gv::defaultMovementSpeed;
 	map = nullptr;
+
+	displayChar = 1;
 }
 
-Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map)
+Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar)
 {
 	if (x < 0 || x > map->getMapWidth() - 1)
 	{
@@ -53,6 +55,8 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	}
 
 	this->map = map;
+
+	this->displayChar = displayChar;
 }
 // CONSTRUCTORS above
 //
@@ -171,6 +175,33 @@ bool Actor::canMove() const
 	return 1; // no errors, e.g. can move
 }
 
+bool Actor::canMove(sf::Vector2f newDirections) const
+{
+	//if (newDirections.x == 0 && newDirections.y == 0)
+	//{
+	//	return 0; // error, e.g. can't move
+	//}
+	if (
+		(getX() + newDirections.x) < 0 ||
+		(getX() + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		map->getWalkable(getY(), getX() + newDirections.x) == gv::wallSquare
+		)
+	{
+		return 0; // error, e.g. can't move
+	}
+
+	if (
+		(getY() + newDirections.y) < 0 ||
+		(getY() + newDirections.y) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		map->getWalkable(getY() + newDirections.y, getX()) == gv::wallSquare
+		)
+	{
+		return 0; // error, e.g. can't move
+	}
+
+	return 1; // no errors, e.g. can move
+}
+
 sf::Vector2f Actor::executeMoving()
 {
 	if (movementProgress >= movementSpeed)
@@ -178,7 +209,7 @@ sf::Vector2f Actor::executeMoving()
 		map->setWalkable(y, x, '.');
 		x += dx;
 		y += dy;
-		map->setWalkable(y, x, 1);
+		map->setWalkable(y, x, displayChar);
 		movementProgress = 0;
 
 		return sf::Vector2f(getDX(), getDY());
@@ -186,3 +217,8 @@ sf::Vector2f Actor::executeMoving()
 	movementProgress++;
 	return sf::Vector2f(0,0);
 }
+////////////////////////////
+///
+/// TO DO: MAKE THIS RETURN NULLPTR
+///
+///////////////////////////

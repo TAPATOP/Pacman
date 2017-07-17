@@ -9,7 +9,9 @@ Bot::Bot()
 	isGhost = 0;
 }
 
-Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, unsigned int attackRange, Map* map) : Actor(y, x, dy, dx, movementSpeed, map)
+Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed,
+	unsigned int attackRange, Map* map, char displayChar) 
+	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
 {
 	this->botID = botID;
 	this->attackRange = attackRange;
@@ -78,6 +80,8 @@ sf::Vector2f Bot::move()
 			// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
 			//
 		}
+		// this if is AI logic- related
+		//
 	}
 	return executeMoving();
 }
@@ -90,11 +94,11 @@ Bot::~Bot()
 {
 }
 
-void Bot::pickRandomDirection(bool notAtInit)
+void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 {
 	unsigned int br = 0;
-	int origDX = -getDX() * notAtInit;	// these make sure the bots do not go back to their old
-	int origDY = -getDY() * notAtInit;	// position when coming across a knot
+	int origDX = -getDX() * mustBeOppositeToOldDXDY;	// these make sure the bots do not go back to their old
+	int origDY = -getDY() * mustBeOppositeToOldDXDY;	// position when coming across a knot
 
 	do
 	{
@@ -122,6 +126,9 @@ void Bot::pickRandomDirection(bool notAtInit)
 		}
 	} while (!canMove() || (getDX() == origDX && getDY() == origDY));
 }
+// Picks random DX and DY, making sure they're different from the previous ones, unless
+// explicitly told not to make that check by giving a boolean value mustBeOppositeToOldDXDY = 0
+//
 
 void Bot::cornerSolver()
 {

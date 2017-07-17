@@ -20,4 +20,12 @@ namespace gv
 
 	const unsigned int windowWidth = 1000;
 	const unsigned int windowHeight = 600;
+
+	//////////////////
+	/// Controls Below
+	//////////////////
+	const char up = 'w';
+	const char down = 's';
+	const char left = 'a';
+	const char right = 'd';
 }
