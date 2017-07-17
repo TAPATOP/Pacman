@@ -15,7 +15,7 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int
 	this->attackRange = attackRange;
 	while (getDX() == 0 && getDY() == 0 || !canMove())
 	{
-		pickRandomDirection(); // if the given dx or dy conflict with the map boundaries, this gives the bot valid deltas
+		pickRandomDirection(0); // if the given dx or dy conflict with the map boundaries, this gives the bot valid deltas
 	}
 }
 // CONSTRUCTORS above
@@ -90,11 +90,11 @@ Bot::~Bot()
 {
 }
 
-void Bot::pickRandomDirection()
+void Bot::pickRandomDirection(bool notAtInit)
 {
 	unsigned int br = 0;
-	unsigned int origDX = -getDX();	// these make sure the bots do not go back to their old
-	unsigned int origDY = -getDY();	// position when coming across a knot
+	int origDX = -getDX() * notAtInit;	// these make sure the bots do not go back to their old
+	int origDY = -getDY() * notAtInit;	// position when coming across a knot
 
 	do
 	{

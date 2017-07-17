@@ -12,10 +12,27 @@
 
 int main()
 {
-	const unsigned int mapHeight = 26;
-	const unsigned int mapWidth = 40;
+	const unsigned int mapHeight = 13;
+	const unsigned int mapWidth = 20;
 
 	char* origMap[] = {
+		"#...........##.#...#",
+		"..#.#.#.#.#..#.#.#.#",
+		".##.#...#.##.#.#.#.#",
+		"....#####......#.#.#",
+		"#.#.......#.##.#.#.#",
+		"#.#.##.##.#.##.#.#.#",
+		"#.#.#...#.#.##.#.#.#",
+		"....#####....#.#.#.#",
+		".##.......##.#.#.#.#",
+		".#####.#.###.#.#.#.#",
+		".#...........#.#.#.#",
+		".###.###.###.#.#.#.#",
+		".#...###.......#.#..",
+		"#...........##.....#"
+	};
+
+	char* origMapBig[] = {
 		"#...........##.#...##...........##.#...#",
 		"..#.#.#.#.#..#.#.#.#..#.#.#.#.#..#.#.#.#",
 		".##.#...#.##.#.#.#.#.##.#...#.##.#.#.#.#",
@@ -48,10 +65,10 @@ int main()
 
 	Map loadedMap(origMap, mapHeight, mapWidth);
 
-	Bot bot1(1, 5, 6, -1, 0, 1, 0, &loadedMap); // id, y, x, dy, dx, speed
-	Bot bot2(19, 6, 5, 0, 1, 1, 0, &loadedMap);
-	Bot bot3(3, 6, 7, 1, 0, 1, 0, &loadedMap);
-	Bot bot4(4, 6, 6, -1, 0, 1, 0, &loadedMap);
+	Bot bot1(1, 6, 6, 0, 1, 1, 0, &loadedMap); // id, y, x, dy, dx, speed
+	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap);
+	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap);
+	Bot bot4(4, 6, 5, 0, 1, 1, 0, &loadedMap);
 
 	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Beta!", sf::Style::Close);
@@ -80,12 +97,13 @@ int main()
 	float offsetX = squareDisplaySize;
 	float offsetY = 0;
 
-	rect1.setPosition(offsetX + 5 * squareDisplaySize, offsetY + 5 * squareDisplaySize);
-	rect2.setPosition(offsetX + 4 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
-	rect3.setPosition(offsetX + 6 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
-	rect4.setPosition(offsetX + 5 * squareDisplaySize, offsetY + 6 * squareDisplaySize);
+	rect1.setPosition(offsetX + bot1.getX() * squareDisplaySize, offsetY + bot1.getY() * squareDisplaySize);
+	rect2.setPosition(offsetX + bot2.getX() * squareDisplaySize, offsetY + bot2.getY() * squareDisplaySize);
+	rect3.setPosition(offsetX + bot3.getX() * squareDisplaySize, offsetY + bot3.getY() * squareDisplaySize);
+	rect4.setPosition(offsetX + bot4.getX() * squareDisplaySize, offsetY + bot4.getY() * squareDisplaySize);
 
-	bot4.setMovementProgress(1);
+
+	//bot4.setMovementProgress(1);
 
 	rect1.setFillColor(sf::Color::Cyan);
 	rect2.setFillColor(sf::Color::Red);
@@ -148,14 +166,14 @@ int main()
 			rect4.move(movement);
 		}
 		
-		window.clear();
-		for (int i = 0; i < mapHeight; i++)
-		{
-			for (int j = 0; j < mapWidth; j++)
-			{
-				window.draw(*squares[i][j]);
-			}
-		}
+		//window.clear();
+		//for (int i = 0; i < mapHeight; i++)
+		//{
+		//	for (int j = 0; j < mapWidth; j++)
+		//	{
+		//		window.draw(*squares[i][j]);
+		//	}
+		//}
 		window.draw(rect1);
 		window.draw(rect2);
 		window.draw(rect3);

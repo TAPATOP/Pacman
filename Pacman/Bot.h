@@ -24,7 +24,7 @@ public:
 
 	~Bot();
 protected:
-	void pickRandomDirection();
+	void pickRandomDirection(bool notAtInit = 1);
 	void cornerSolver(); // adjusts DX and DY in such way so the bot will traverse it properly
 	void reverseDirection();
 private:
