@@ -91,7 +91,7 @@ int main()
 		squareDisplaySize = gv::windowHeight / mapHeight;
 	}
 
-	sf::Vector2f squareSize(squareDisplaySize, squareDisplaySize);
+	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 	
 	sf::RectangleShape rect1(squareSize);
 	sf::RectangleShape rect2(squareSize);
@@ -99,8 +99,8 @@ int main()
 	sf::RectangleShape rect4(squareSize);
 	sf::RectangleShape playerRect(squareSize);
 	
-	float offsetX = squareDisplaySize;
-	float offsetY = 0;
+	int offsetX = squareDisplaySize;
+	int offsetY = 0;
 	
 	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize);
 	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize);
@@ -138,7 +138,7 @@ int main()
 				{
 					squares[i][j]->setFillColor(sf::Color::Black);
 				}
-			squares[i][j]->setPosition( (j + 1) * squareDisplaySize, i * squareDisplaySize);
+			squares[i][j]->setPosition( (float)((j + 1) * squareDisplaySize), (float)(i * squareDisplaySize));
 		}
 	}
 
@@ -184,7 +184,7 @@ int main()
 		guiPlayer.draw(window);
 
 		window.display();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		std::this_thread::sleep_for(std::chrono::milliseconds(30));
 	}
 
 	//while (keepOn != '0')

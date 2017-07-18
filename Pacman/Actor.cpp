@@ -193,7 +193,7 @@ bool Actor::canMove() const
 	return 1; // no errors, e.g. can move
 }
 
-bool Actor::canMove(sf::Vector2f newDirections) const
+bool Actor::canMove(sf::Vector2f& newDirections) const
 {
 	if (newDirections.x == 0 && newDirections.y == 0)
 	{

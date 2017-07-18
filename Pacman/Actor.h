@@ -38,7 +38,7 @@ public:
 	virtual ~Actor(); 
 protected:
 		bool canMove() const;
-		bool canMove(sf::Vector2f newDirections) const;// decides whether the actor can move with the current x, y, dx and dy
+		bool canMove(sf::Vector2f& newDirections) const;// decides whether the actor can move with the current x, y, dx and dy
 		sf::Vector2f executeMoving(); // moves the actor according to x, y, dx, dy and his speed
 protected:
 	Map* map; // all Actors will use the same map to traverse
