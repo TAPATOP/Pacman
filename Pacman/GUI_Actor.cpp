@@ -1,25 +1,17 @@
 #include "GUI_Actor.h"
 
-
-int GUI_Actor::allGUIActorsCount = 0;
-GUI_Actor* GUI_Actor::allGUIActors[GUI_Actor::maxGUIActors];
-
 GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareSize)
+GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize)
 {
 	this->actor = actor;
 	this->shape = shape;
-	this->squareSize = squareSize;
+	this->squareDisplaySize = squareDisplaySize;
 }
-
-void GUI_Actor::move()
-{
-	sf::Vector2f movement = actor->move();
-	shape->move(movement.x * squareSize, movement.y * squareSize);
-}
+// CONSTRUCTORS above
+//
 
 void GUI_Actor::setNextCommand(char command)
 {
@@ -30,14 +22,42 @@ void GUI_Actor::setNextCommand(char command)
 	}
 }
 
-void GUI_Actor::setShapePosition(int x, int y)
+void GUI_Actor::setShapeSize(sf::Vector2f& vector)
 {
-	shape->setPosition(x, y);
+	sf::RectangleShape* temp = dynamic_cast<sf::RectangleShape*>(shape);
+
+	if (temp != nullptr)
+	{
+		temp->setSize(vector);
+	}
 }
 
 void GUI_Actor::setFillColor(sf::Color color)
 {
 	shape->setFillColor(color);
+}
+
+void GUI_Actor::setShapePosition(int x, int y)
+{
+	shape->setPosition(x, y);
+}
+
+void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
+{
+	shape->setPosition(xOffset + actor->getX() * squareDisplaySize, yOffset + actor->getY() * squareDisplaySize);
+}
+// SETTERS above
+//
+
+void GUI_Actor::move()
+{
+	sf::Vector2f movement = actor->move();
+	shape->move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
+}
+
+void GUI_Actor::draw(sf::RenderWindow& window)
+{
+	window.draw(*shape);
 }
 
 

@@ -108,12 +108,12 @@ int main()
 	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize);
 	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize);
 
-	rect1.setPosition(offsetX + bot1.getX() * squareDisplaySize, offsetY + bot1.getY() * squareDisplaySize);
-	rect2.setPosition(offsetX + bot2.getX() * squareDisplaySize, offsetY + bot2.getY() * squareDisplaySize);
-	rect3.setPosition(offsetX + bot3.getX() * squareDisplaySize, offsetY + bot3.getY() * squareDisplaySize);
-	rect4.setPosition(offsetX + bot4.getX() * squareDisplaySize, offsetY + bot4.getY() * squareDisplaySize);
+	guiBot1.setShapePositionByOffset(offsetX, offsetY);
+	guiBot2.setShapePositionByOffset(offsetX, offsetY);
+	guiBot3.setShapePositionByOffset(offsetX, offsetY);
+	guiBot4.setShapePositionByOffset(offsetX, offsetY);
 	
-	playerRect.setPosition(offsetX + player.getX() * squareDisplaySize, offsetY + player.getY() * squareDisplaySize);
+	guiPlayer.setShapePosition(offsetX + player.getX() * squareDisplaySize, offsetY + player.getY() * squareDisplaySize);
 
 	guiBot1.setFillColor(sf::Color::Cyan);
 	guiBot2.setFillColor(sf::Color::Red);
@@ -121,8 +121,6 @@ int main()
 	guiBot4.setFillColor(sf::Color::Magenta);
 
 	guiPlayer.setFillColor(sf::Color::Green);
-
-	sf::Vector2f movement;
 
 	sf::RectangleShape* squares[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
 
@@ -178,12 +176,12 @@ int main()
 				window.draw(*squares[i][j]);
 			}
 		}
-		window.draw(rect1);
-		window.draw(rect2);
-		window.draw(rect3);
-		window.draw(rect4);
+		guiBot1.draw(window);
+		guiBot2.draw(window);
+		guiBot3.draw(window);
+		guiBot4.draw(window);
 
-		window.draw(playerRect);
+		guiPlayer.draw(window);
 
 		window.display();
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));

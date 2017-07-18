@@ -11,20 +11,22 @@ public:
 	GUI_Actor();
 	GUI_Actor(Actor*, sf::Shape*, int squareSize);
 
-	void move(); // the objects calculate their own movement so we dont need to add parameters
 	void setNextCommand(char command);
-	void setShapePosition(int x, int y);
+	void setShapeSize(sf::Vector2f& vector);
 	//void setTexture();
 	void setFillColor(sf::Color color);
+	void setShapePosition(int x, int y); // relative to display, in pixels
+	void setShapePositionByOffset(int xOffset, int yOffset); 
+	// relative to the matrix/labyrinth the shape is located in( multiplies x and y by squareSize)
+	//
+
+	void move(); // the objects calculate their own movement so we dont need to add parameters
+	void draw(sf::RenderWindow&);
 
 	~GUI_Actor();
 private:
 	Actor* actor;
 	sf::Shape* shape;
-	int squareSize;
-
-	static const unsigned int maxGUIActors = 10;
-	static GUI_Actor* allGUIActors[maxGUIActors];
-	static int allGUIActorsCount;
+	int squareDisplaySize;
 };
 
