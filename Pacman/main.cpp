@@ -7,6 +7,7 @@
 #include"Actor.h"
 #include"Bot.h"
 #include"Global_Variables.h"
+#include"GUI_Actor.h"
 #include"Map.h"
 #include"Player.h"
 
@@ -70,20 +71,10 @@ int main()
 	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot4(4, 6, 5, 0, 1, 1, 0, &loadedMap, 1);
-
 	Player player(0, 1, 0, 0, 2, &loadedMap, gv::defaultPlayerDisplay, 3, gv::up, gv::down, gv::left, gv::right); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
-	std::cout << &bot2 << std::endl;
-
-	std::cout << bot1.allActors[1] << std::endl;
-
-	Actor* a = dynamic_cast<Player*> (&bot1);
-
-	if (a == nullptr)
-	{
-		std::cout << "NULLPTR" << std::endl;
-	}
+	// Bot* a = dynamic_cast<Bot*> (&player); // if player is not a Bot -> nullptr
 
 	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
@@ -106,12 +97,17 @@ int main()
 	sf::RectangleShape rect2(squareSize);
 	sf::RectangleShape rect3(squareSize);
 	sf::RectangleShape rect4(squareSize);
-	
 	sf::RectangleShape playerRect(squareSize);
 	
 	float offsetX = squareDisplaySize;
 	float offsetY = 0;
 	
+	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize);
+	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize);
+	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize);
+	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize);
+	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize);
+
 	rect1.setPosition(offsetX + bot1.getX() * squareDisplaySize, offsetY + bot1.getY() * squareDisplaySize);
 	rect2.setPosition(offsetX + bot2.getX() * squareDisplaySize, offsetY + bot2.getY() * squareDisplaySize);
 	rect3.setPosition(offsetX + bot3.getX() * squareDisplaySize, offsetY + bot3.getY() * squareDisplaySize);
@@ -119,14 +115,12 @@ int main()
 	
 	playerRect.setPosition(offsetX + player.getX() * squareDisplaySize, offsetY + player.getY() * squareDisplaySize);
 
-	bot4.setMovementProgress(1);
+	guiBot1.setFillColor(sf::Color::Cyan);
+	guiBot2.setFillColor(sf::Color::Red);
+	guiBot3.setFillColor(sf::Color::Yellow);
+	guiBot4.setFillColor(sf::Color::Magenta);
 
-	rect1.setFillColor(sf::Color::Cyan);
-	rect2.setFillColor(sf::Color::Red);
-	rect3.setFillColor(sf::Color::Yellow);
-	rect4.setFillColor(sf::Color::Magenta);
-
-	playerRect.setFillColor(sf::Color::Green);
+	guiPlayer.setFillColor(sf::Color::Green);
 
 	sf::Vector2f movement;
 
@@ -152,7 +146,7 @@ int main()
 
 	char lastKey = 0;
 
-	sf::Clock clock;
+	//sf::Clock clock;
 
 	while (window.isOpen())
 	{
@@ -165,41 +159,16 @@ int main()
 				break;
 			case sf::Event::TextEntered:
 				lastKey = evnt.text.unicode;
-				player.setNextCommand(lastKey);
+				guiPlayer.setNextCommand(lastKey);
 				break;
 			}
 		}
 
-		movement = bot1.move();
-		for (int i = 0; i < squareDisplaySize; i++)
-		{
-			rect1.move(movement);
-		}
-		
-		movement = bot2.move();
-		for (int i = 0; i < squareDisplaySize; i++)
-		{
-			rect2.move(movement);
-		}
-		
-		movement = bot3.move();
-		//for (int i = 0; i < squareDisplaySize; i++)
-		{
-			rect3.move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
-		}
-		
-		movement = bot4.move();
-		for (int i = 0; i < squareDisplaySize; i++)
-		{
-			rect4.move(movement);
-		}
-
-		movement = player.move();
-
-		for (int i = 0; i < squareDisplaySize; i++)
-		{
-			playerRect.move(movement);
-		}
+		guiBot1.move();
+		guiBot2.move();
+		guiBot3.move();
+		guiBot4.move();
+		guiPlayer.move();
 
 		window.clear();
 		for (int i = 0; i < mapHeight; i++)
