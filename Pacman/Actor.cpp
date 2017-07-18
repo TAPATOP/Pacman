@@ -63,10 +63,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	this->displayChar = displayChar;
 	allActors[allActorsCount++] = this;
 }
-sf::Vector2f Actor::move()
-{
-	return sf::Vector2f();
-}
+
 // CONSTRUCTORS above
 //
 //
@@ -156,6 +153,11 @@ int Actor::getDY() const
 // GETTERS above
 //
 //
+
+sf::Vector2f Actor::move()
+{
+	return sf::Vector2f();
+}
 
 Actor::~Actor()
 {

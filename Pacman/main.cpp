@@ -130,8 +130,11 @@ int main()
 	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot4(4, 6, 5, 0, 1, 1, 0, &loadedMap, 1);
-	Player player(0, 1, 0, 0, 2, &loadedMap, gv::defaultPlayerDisplay, 3, gv::up, gv::down, gv::left, gv::right); 
+	Player player(2, 3, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3, gv::up, gv::down, gv::left, gv::right); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
+
+	player.setCurrentCommand('s');
+	player.setNextCommand('d');
 
 	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
@@ -205,11 +208,11 @@ int main()
 			{
 				squares[i][j]->setFillColor(sf::Color::White);
 			}
-			else
-				if(loadedMap.getWalkable(i, j) == '#')
-				{
-					squares[i][j]->setFillColor(sf::Color::Black);
-				}
+			else if(loadedMap.getWalkable(i, j) == '#')
+			{
+				squares[i][j]->setFillColor(sf::Color::Black);
+			}
+
 			squares[i][j]->setPosition( (float)((j + 1) * squareDisplaySize), (float)(i * squareDisplaySize));
 		}
 	}
