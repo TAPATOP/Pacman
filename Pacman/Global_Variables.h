@@ -2,10 +2,16 @@
 
 namespace gv
 {
+	///////////////////////
+	/// MAP- RELATED below
+	///////////////////////
+
 	const char wallSquare = '#';
 	const char walkableSquare = '.';
 
 	const char knotSquare = 'k';
+
+	const char defaultPlayerDisplay = 'p';
 
 	const unsigned int maxLoadedMapHeight = 100;
 	const unsigned int maxLoadedMapWidth = 100;
@@ -24,6 +30,7 @@ namespace gv
 	//////////////////
 	/// Controls Below
 	//////////////////
+
 	const char up = 'w';
 	const char down = 's';
 	const char left = 'a';

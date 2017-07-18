@@ -26,15 +26,12 @@ private:
 private:
 	struct node
 	{
-		char walkable = 0; // walkable, wall or gate
-		int knot = 0; // if it's a knot or not
+		char walkable = '.'; // walkable, wall or gate
+		char knot = 0; // if it's a knot or not
 		int value = 0; // emtpy, small ball or big ball
 	};
 
 	node nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
-
-	//char baseMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth + 1];
-	//char processedMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth + 1];
 
 	unsigned int mapHeight;
 	unsigned int mapWidth;

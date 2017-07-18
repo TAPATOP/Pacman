@@ -71,10 +71,22 @@ int main()
 	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot4(4, 6, 5, 0, 1, 1, 0, &loadedMap, 1);
 
-	Player player(0, 1, 0, 0, 2, &loadedMap, 'p', 3, 'w', 's', 'a', 'd');
+	Player player(0, 1, 0, 0, 2, &loadedMap, gv::defaultPlayerDisplay, 3, gv::up, gv::down, gv::left, gv::right); 
+	// y, x, dy, dx, speed, map, symbol, lives, keys
+
+	std::cout << &bot2 << std::endl;
+
+	std::cout << bot1.allActors[1] << std::endl;
+
+	Actor* a = dynamic_cast<Player*> (&bot1);
+
+	if (a == nullptr)
+	{
+		std::cout << "NULLPTR" << std::endl;
+	}
 
 	char keepOn = 'a';
-	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Beta!", sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
 	sf::Event evnt;
 
 	unsigned int squareDisplaySize;
@@ -140,6 +152,8 @@ int main()
 
 	char lastKey = 0;
 
+	sf::Clock clock;
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(evnt))
@@ -169,9 +183,9 @@ int main()
 		}
 		
 		movement = bot3.move();
-		for (int i = 0; i < squareDisplaySize; i++)
+		//for (int i = 0; i < squareDisplaySize; i++)
 		{
-			rect3.move(movement);
+			rect3.move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
 		}
 		
 		movement = bot4.move();

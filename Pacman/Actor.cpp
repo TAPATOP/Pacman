@@ -1,5 +1,7 @@
 #include "Actor.h"
 
+int Actor::allActorsCount = 0;
+Actor* Actor::allActors[Actor::maxActors];
 
 Actor::Actor()
 {
@@ -13,6 +15,8 @@ Actor::Actor()
 	map = nullptr;
 
 	displayChar = 1;
+
+	allActors[allActorsCount++] = this;
 }
 
 Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar)
@@ -57,6 +61,11 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	this->map = map;
 
 	this->displayChar = displayChar;
+	allActors[allActorsCount++] = this;
+}
+sf::Vector2f Actor::move()
+{
+	return sf::Vector2f();
 }
 // CONSTRUCTORS above
 //
@@ -79,9 +88,9 @@ void Actor::setMovementProgress(unsigned int movementProgress)
 
 void Actor::setX(unsigned int x, std::ostream& out)
 {
-	if (x >= gv::maxLoadedMapWidth)
+	if (x >= map->getMapWidth())
 	{
-		out << "Error assigning x value, it's " << x << " while maxLoadedMapWidth is " << gv::maxLoadedMapWidth << "\n";
+		out << "Error assigning x value, it's " << x << " while mapWidth is " << map->getMapWidth()<< "\n";
 		return;
 	}
 	this->x = x;
@@ -89,9 +98,9 @@ void Actor::setX(unsigned int x, std::ostream& out)
 
 void Actor::setY(unsigned int y)
 {
-	if (y >= gv::maxLoadedMapHeight)
+	if (y >= map->getMapHeight())
 	{
-		std::cout << "Error assigning y value, it's " << y << " while maxLoadedMapHeight is " << gv::maxLoadedMapHeight << std::endl;
+		std::cout << "Error assigning y value, it's " << y << " while mapHeight is " << map->getMapHeight() << std::endl;
 		return;
 	}
 	this->y = y;
@@ -150,7 +159,11 @@ int Actor::getDY() const
 
 Actor::~Actor()
 {
+	allActorsCount--; // im not really sure whether deletion will ever occur during runtime
 }
+////////
+/// TO DO: implement proper logging of objects into the object array
+///////
 
 bool Actor::canMove() const
 {
@@ -160,18 +173,18 @@ bool Actor::canMove() const
 	}
 
 	if (
-		(getX() + getDX()) < 0 ||
-		(getX() + getDX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getWalkable(getY(), getX() + getDX()) == gv::wallSquare
+		(x + dx) < 0 ||
+		(x + dx) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		map->getWalkable(y, x + dx) == gv::wallSquare
 	   )
 	{
 		return 0; // error, e.g. can't move
 	}
 
 	if (
-		(getY() + getDY()) < 0 ||
-		(getY() + getDY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getWalkable(getY() + getDY(), getX()) == gv::wallSquare
+		(y + dy) < 0 ||
+		(y + dy) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		map->getWalkable(y + dy, x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -187,18 +200,18 @@ bool Actor::canMove(sf::Vector2f newDirections) const
 		return 0; // error, e.g. can't move
 	}
 	if (
-		(getX() + newDirections.x) < 0 ||
-		(getX() + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getWalkable(getY(), getX() + newDirections.x) == gv::wallSquare
+		(x + newDirections.x) < 0 ||
+		(x + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		map->getWalkable(y, x + newDirections.x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
 	}
 
 	if (
-		(getY() + newDirections.y) < 0 ||
-		(getY() + newDirections.y) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getWalkable(getY() + newDirections.y, getX()) == gv::wallSquare
+		(y + newDirections.y) < 0 ||
+		(y + newDirections.y) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		map->getWalkable(y + newDirections.y, x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -217,14 +230,8 @@ sf::Vector2f Actor::executeMoving()
 		map->setWalkable(y, x, displayChar);
 		movementProgress = 0;
 
-		return sf::Vector2f(getDX(), getDY());
+		return sf::Vector2f(dx, dy);
 	}
 	movementProgress++;
 	return sf::Vector2f(0,0);
 }
-////////////////////////////
-///
-/// TO DO: MAKE THIS RETURN NULLPTR
-/// DONT CALL METHODS SUCH AS DX() AND X()
-///
-///////////////////////////

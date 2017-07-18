@@ -40,6 +40,7 @@ private:
 		char down;
 		char left;
 		char right;
+		//char stop;
 
 		char neutral; // e.g. "out of commands"
 	};

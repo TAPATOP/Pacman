@@ -17,9 +17,6 @@ public:
 	//Actor(Actor&); // "when should i define copy constructor"
 	Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
 
-	virtual sf::Vector2f move() = 0;
-	virtual void die() = 0;
-
 	void setMovementSpeed(unsigned int movementSpeed);
 	void setMovementProgress(unsigned int movementProgress);
 	void setX(unsigned int x, std::ostream& out = std::cout);
@@ -34,6 +31,9 @@ public:
 	int getY() const;
 	int getDX() const;
 	int getDY() const;
+
+	virtual sf::Vector2f move() = 0;
+	virtual void die() = 0;
 
 	virtual ~Actor(); 
 protected:
@@ -54,4 +54,8 @@ private:
 
 	char displayChar;
 	//Node* lastVisitedNode; // future implementation
+public:
+	static const unsigned int maxActors = 10;
+	static Actor* allActors[maxActors];
+	static int allActorsCount;
 };

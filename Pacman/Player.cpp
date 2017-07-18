@@ -46,7 +46,7 @@ void Player::setCurrentCommand(char command)
 
 void Player::setNextCommand(char command)
 {
-	if (!isValidControl(command)) return;
+	if (!isValidControl(command)) return; // checks if 'command' is one of the controls is in 'controls'
 
 	sf::Vector2f nextCommandInterpreter(interpretCommand(command));
 	sf::Vector2f curCommandInterpreter(interpretCommand(currentCommand));
@@ -58,13 +58,19 @@ void Player::setNextCommand(char command)
 		currentCommand = nextCommand;
 		nextCommand = controls.neutral;
 		executeCurrentCommand();
-	}
+		return;
 	// replaces currentCommand with nextCommand if nextCommand is a reversal of currentCommand
 	//
-
+	}
+	if (canMove(nextCommandInterpreter))
+	{
+		currentCommand = nextCommand;
+		nextCommand = controls.neutral;
+		executeCurrentCommand();
+	}
 }
 //
-/// check for valid movement and make next current
+/// check if the command is a valid control and make next current
 //
 
 // SETTERS above
