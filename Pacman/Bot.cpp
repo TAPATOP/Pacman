@@ -102,7 +102,7 @@ void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 
 	do
 	{
-		std::srand((unsigned int)time(NULL) + br);
+		std::srand(((unsigned int)time(NULL) + br) * br * botID - br);
 		br += botID;
 		int randomNum = rand() % 6; // 6 instead of 4 so the bots prefer to not change route as often
 		switch (randomNum)

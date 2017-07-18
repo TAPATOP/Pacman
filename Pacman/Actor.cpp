@@ -174,7 +174,7 @@ bool Actor::canMove() const
 
 	if (
 		(x + dx) < 0 ||
-		(x + dx) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		((unsigned)x + dx) > (map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
 		map->getWalkable(y, x + dx) == gv::wallSquare
 	   )
 	{
@@ -183,7 +183,7 @@ bool Actor::canMove() const
 
 	if (
 		(y + dy) < 0 ||
-		(y + dy) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		((unsigned)y + dy) > (map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
 		map->getWalkable(y + dy, x) == gv::wallSquare
 		)
 	{
@@ -202,7 +202,7 @@ bool Actor::canMove(sf::Vector2f& newDirections) const
 	if (
 		(x + newDirections.x) < 0 ||
 		(x + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getWalkable(y, x + newDirections.x) == gv::wallSquare
+		map->getWalkable(y, x + (int)newDirections.x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -211,7 +211,7 @@ bool Actor::canMove(sf::Vector2f& newDirections) const
 	if (
 		(y + newDirections.y) < 0 ||
 		(y + newDirections.y) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getWalkable(y + newDirections.y, x) == gv::wallSquare
+		map->getWalkable(y + (int)newDirections.y, x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -230,7 +230,7 @@ sf::Vector2f Actor::executeMoving()
 		map->setWalkable(y, x, displayChar);
 		movementProgress = 0;
 
-		return sf::Vector2f(dx, dy);
+		return sf::Vector2f((float)dx, (float)dy);
 	}
 	movementProgress++;
 	return sf::Vector2f(0,0);

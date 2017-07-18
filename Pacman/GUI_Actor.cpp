@@ -39,12 +39,12 @@ void GUI_Actor::setFillColor(sf::Color color)
 
 void GUI_Actor::setShapePosition(int x, int y)
 {
-	shape->setPosition(x, y);
+	shape->setPosition((float)x, (float)y);
 }
 
 void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 {
-	shape->setPosition(xOffset + actor->getX() * squareDisplaySize, yOffset + actor->getY() * squareDisplaySize);
+	shape->setPosition((float)(xOffset + actor->getX() * squareDisplaySize), (float)(yOffset + actor->getY() * squareDisplaySize));
 }
 // SETTERS above
 //
