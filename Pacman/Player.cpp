@@ -101,6 +101,8 @@ sf::Vector2f Player::move()
 		executeCurrentCommand();
 		return executeMoving();
 	}
+	// decides whether to start executing nextCommand before currentCommand reaches a dead- end
+	//
 
 	if (canMove()) // && curComm != neutral ??
 	{
@@ -110,7 +112,14 @@ sf::Vector2f Player::move()
 	{
 		makeNextCommandCurrent();
 		executeCurrentCommand();
-		return sf::Vector2f(0,0);
+		//if (canMove())
+		//{
+		//	return executeMoving();
+		//}
+		//else
+		{
+			return sf::Vector2f(0, 0);
+		}
 	}
 }
 

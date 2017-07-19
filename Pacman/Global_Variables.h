@@ -8,10 +8,15 @@ namespace gv
 
 	const char wallSquare = '#';
 	const char walkableSquare = '.';
+	const char defaultPlayerDisplay = 'p';
 
 	const char knotSquare = 'k';
 
-	const char defaultPlayerDisplay = 'p';
+	const char smallBall = '1';
+	const char bigBall = '2';
+
+	const int smallBallValue = 50;
+	const int bigBallValue = 69;
 
 	const unsigned int maxLoadedMapHeight = 100;
 	const unsigned int maxLoadedMapWidth = 100;

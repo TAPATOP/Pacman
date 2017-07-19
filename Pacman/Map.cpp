@@ -41,6 +41,19 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
+			if (origMap[i][j] == gv::smallBall)
+			{
+				nodes[i][j].value = gv::smallBallValue;
+				nodes[i][j].walkable = gv::walkableSquare;
+				continue;
+			}
+			if (origMap[i][j] == gv::bigBall)
+			{
+				nodes[i][j].value = gv::bigBallValue;
+				nodes[i][j].walkable = gv::walkableSquare;
+				continue;
+			}
+
 			nodes[i][j].walkable = origMap[i][j];
 		}
 	}
