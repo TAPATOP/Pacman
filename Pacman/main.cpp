@@ -8,6 +8,7 @@
 #include"Bot.h"
 #include"Global_Variables.h"
 #include"GUI_Actor.h"
+#include"GUI_Map.h"
 #include"Map.h"
 #include"Player.h"
 
@@ -168,7 +169,9 @@ int main()
 	std::cout << squareDisplaySize * mapHeight << std::endl;
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
-	
+
+	GUI_Map guiMap(loadedMap, squareSize);
+
 	sf::RectangleShape rect1(squareSize);
 	sf::RectangleShape rect2(squareSize);
 	sf::RectangleShape rect3(squareSize);
@@ -177,26 +180,6 @@ int main()
 	
 	int offsetX = squareDisplaySize;
 	int offsetY = 0;
-	
-	sf::RectangleShape* squares[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
-
-	for (int i = 0; i < mapHeight; i++)
-	{
-		for (int j = 0; j < mapWidth; j++)
-		{
-			squares[i][j] = new sf::RectangleShape(squareSize);
-			if (loadedMap.getWalkable(i, j) == '.')
-			{
-				squares[i][j]->setFillColor(sf::Color::White);
-			}
-			else if (loadedMap.getWalkable(i, j) == '#')
-			{
-				squares[i][j]->setFillColor(sf::Color::Black);
-			}
-
-			squares[i][j]->setPosition((float)((j + 1) * squareDisplaySize), (float)(i * squareDisplaySize));
-		}
-	}
 
 	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize);
 	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize);
@@ -245,14 +228,8 @@ int main()
 		guiBot4.move();
 		guiPlayer.move();
 
-		window.clear();
-		for (int i = 0; i < mapHeight; i++)
-		{
-			for (int j = 0; j < mapWidth; j++)
-			{
-				window.draw(*squares[i][j]);
-			}
-		}
+		guiMap.draw(window);
+
 		guiBot1.draw(window);
 		guiBot2.draw(window);
 		guiBot3.draw(window);
