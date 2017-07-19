@@ -17,6 +17,7 @@ namespace gv
 
 	const int smallBallValue = 50;
 	const int bigBallValue = 69;
+	const int defaultValue = 0;
 
 	const unsigned int maxLoadedMapHeight = 100;
 	const unsigned int maxLoadedMapWidth = 100;

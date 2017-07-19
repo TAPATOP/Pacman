@@ -11,11 +11,13 @@ public:
 	Map(char** const origMap, unsigned int height, unsigned int width);
 
 	void setWalkable(int y, int x, char changeTo);
+	void setValue(int y, int x, int value);
 
 	unsigned int getMapHeight() const;
 	unsigned int getMapWidth() const;
 	char getWalkable(int y, int x) const;
 	char getLogical(int y, int x) const;
+	int getValue(int y, int x) const;
 
 	unsigned int countNearbyWalkableSquares(int y, int x) const;
 	void printMap() const;
@@ -28,7 +30,7 @@ private:
 	{
 		char walkable = '.'; // walkable, wall or gate
 		char knot = 0; // if it's a knot or not
-		int value = 0; // emtpy, small ball or big ball
+		int value = gv::defaultValue; // emtpy, small ball or big ball
 	};
 
 	node nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];

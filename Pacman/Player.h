@@ -14,7 +14,7 @@ public:
 	void setCurrentCommand(char command);
 	void setNextCommand(char command);
 	
-	unsigned int getScore();
+	int getScore();
 	int getLives();
 
 	sf::Vector2f move();
@@ -26,8 +26,9 @@ private:
 	void executeCurrentCommand();
 	sf::Vector2f interpretCommand(char command);
 	void makeNextCommandCurrent();
+	sf::Vector2f executeMoving();
 private:
-	unsigned int score;
+	int score;
 	int lives;
 	
 	///////////////////

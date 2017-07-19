@@ -76,7 +76,7 @@ void Player::setNextCommand(char command)
 // SETTERS above
 //
 
-unsigned int Player::getScore()
+int Player::getScore()
 {
 	return score;
 }
@@ -92,7 +92,7 @@ sf::Vector2f Player::move()
 {
 	if (
 		nextCommand != controls.neutral &&
-		map->getLogical(getY(), getX()) == gv::knotSquare && 
+		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks
 		getMovementProgress() == 0 && 
 		canMove(interpretCommand(nextCommand))
 		)
@@ -112,15 +112,16 @@ sf::Vector2f Player::move()
 	{
 		makeNextCommandCurrent();
 		executeCurrentCommand();
-		//if (canMove())
-		//{
-		//	return executeMoving();
-		//}
-		//else
+		if (canMove())
+		{
+			return executeMoving();
+		}
+		else
 		{
 			return sf::Vector2f(0, 0);
 		}
 	}
+	// if canMove(), then move, else try with nextCommand
 }
 
 void Player::die()
@@ -210,4 +211,17 @@ void Player::makeNextCommandCurrent()
 {
 	currentCommand = nextCommand;
 	nextCommand = controls.neutral;
+}
+
+sf::Vector2f Player::executeMoving()
+{
+	sf::Vector2f vector = Actor::executeMoving();
+	if (getMovementProgress() == 0)
+	{
+		score += map->getValue(getY(), getX());
+		map->setValue(getY(), getX(), gv::defaultValue);
+		// this is the way it is because this way you can make nodes have
+		// negative value
+	}
+	return vector;
 }

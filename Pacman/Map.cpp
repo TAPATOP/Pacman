@@ -73,6 +73,10 @@ void Map::setWalkable(int y, int x, char changeTo)
 {
 	nodes[y][x].walkable = changeTo;
 }
+void Map::setValue(int y, int x, int value)
+{
+	nodes[y][x].value = value;
+}
 // SETTERS above
 //
 //
@@ -95,6 +99,10 @@ char Map::getWalkable(int y, int x) const
 char Map::getLogical(int y, int x) const
 {
 	return nodes[y][x].knot;
+}
+int Map::getValue(int y, int x) const
+{
+	return nodes[y][x].value;
 }
 // GETTERS above
 //
