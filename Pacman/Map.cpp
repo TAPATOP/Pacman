@@ -37,7 +37,6 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	}
 	// Bounds checks
 	//
-	//
 
 	valuableNodesCount = 0;
 

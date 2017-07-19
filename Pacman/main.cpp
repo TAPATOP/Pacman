@@ -178,6 +178,26 @@ int main()
 	int offsetX = squareDisplaySize;
 	int offsetY = 0;
 	
+	sf::RectangleShape* squares[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+
+	for (int i = 0; i < mapHeight; i++)
+	{
+		for (int j = 0; j < mapWidth; j++)
+		{
+			squares[i][j] = new sf::RectangleShape(squareSize);
+			if (loadedMap.getWalkable(i, j) == '.')
+			{
+				squares[i][j]->setFillColor(sf::Color::White);
+			}
+			else if (loadedMap.getWalkable(i, j) == '#')
+			{
+				squares[i][j]->setFillColor(sf::Color::Black);
+			}
+
+			squares[i][j]->setPosition((float)((j + 1) * squareDisplaySize), (float)(i * squareDisplaySize));
+		}
+	}
+
 	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize);
 	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize);
 	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize);
@@ -193,30 +213,11 @@ int main()
 
 	guiBot1.setFillColor(sf::Color::Cyan);
 	guiBot2.setFillColor(sf::Color::Red);
-	guiBot3.setFillColor(sf::Color::Yellow);
+	guiBot3.setFillColor(sf::Color::Blue);
 	guiBot4.setFillColor(sf::Color::Magenta);
 
 	guiPlayer.setFillColor(sf::Color::Green);
 
-	sf::RectangleShape* squares[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
-
-	for (int i = 0; i < mapHeight; i++)
-	{
-		for (int j = 0; j < mapWidth; j++)
-		{
-			squares[i][j] = new sf::RectangleShape(squareSize);
-			if (loadedMap.getWalkable(i, j) == '.')
-			{
-				squares[i][j]->setFillColor(sf::Color::White);
-			}
-			else if(loadedMap.getWalkable(i, j) == '#')
-			{
-				squares[i][j]->setFillColor(sf::Color::Black);
-			}
-
-			squares[i][j]->setPosition( (float)((j + 1) * squareDisplaySize), (float)(i * squareDisplaySize));
-		}
-	}
 
 	char lastKey = 0;
 
@@ -262,7 +263,7 @@ int main()
 		window.display();
 		std:: cout << player.getScore() << std::endl;
 		std::cout << loadedMap.getValuableNodesCount() << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(300));
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
 	//while (keepOn != '0')

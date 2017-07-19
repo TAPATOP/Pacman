@@ -53,6 +53,7 @@ void GUI_Actor::move()
 {
 	sf::Vector2f movement = actor->move();
 	shape->move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
+	//if(actor->getMovementProgress() == 0 && actor)
 }
 
 void GUI_Actor::draw(sf::RenderWindow& window)
