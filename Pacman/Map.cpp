@@ -15,7 +15,9 @@ Map::Map()
 	this->mapHeight = 10;
 	this->mapWidth = 10;
 
-	processMap();
+	valuableNodesCount = 0;
+
+	processLogicalMap();
 }
 // this isnt really supposed to be created, yet
 //
@@ -37,6 +39,8 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	//
 	//
 
+	valuableNodesCount = 0;
+
 	for (unsigned int i = 0; i < mapHeight; i++)
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
@@ -45,12 +49,14 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 			{
 				nodes[i][j].value = gv::smallBallValue;
 				nodes[i][j].walkable = gv::walkableSquare;
+				valuableNodesCount++;
 				continue;
 			}
 			if (origMap[i][j] == gv::bigBall)
 			{
 				nodes[i][j].value = gv::bigBallValue;
 				nodes[i][j].walkable = gv::walkableSquare;
+				valuableNodesCount++;
 				continue;
 			}
 
@@ -63,7 +69,7 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	this->mapHeight = mapHeight;
 	this->mapWidth = mapWidth;
 
-	processMap(); // creates processedMap
+	processLogicalMap(); // creates processedMap
 }
 // CONSTRUCTORS above
 //
@@ -76,6 +82,10 @@ void Map::setWalkable(int y, int x, char changeTo)
 void Map::setValue(int y, int x, int value)
 {
 	nodes[y][x].value = value;
+}
+void Map::setValuableNodesCount(int count)
+{
+	valuableNodesCount = count;
 }
 // SETTERS above
 //
@@ -103,6 +113,10 @@ char Map::getLogical(int y, int x) const
 int Map::getValue(int y, int x) const
 {
 	return nodes[y][x].value;
+}
+int Map::getValuableNodesCount() const
+{
+	return valuableNodesCount;
 }
 // GETTERS above
 //
@@ -164,7 +178,7 @@ Map::~Map()
 }
 
 
-void Map::processMap()
+void Map::processLogicalMap()
 {
 	unsigned int i;
 	unsigned int j;

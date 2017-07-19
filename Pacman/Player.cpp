@@ -218,7 +218,12 @@ sf::Vector2f Player::executeMoving()
 	sf::Vector2f vector = Actor::executeMoving();
 	if (getMovementProgress() == 0)
 	{
-		score += map->getValue(getY(), getX());
+		int nodeVal = map->getValue(getY(), getX());
+		if (nodeVal != gv::defaultValue)
+		{
+			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
+		}
+		score += nodeVal;
 		map->setValue(getY(), getX(), gv::defaultValue);
 		// this is the way it is because this way you can make nodes have
 		// negative value

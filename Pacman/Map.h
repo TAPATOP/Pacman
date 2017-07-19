@@ -12,19 +12,21 @@ public:
 
 	void setWalkable(int y, int x, char changeTo);
 	void setValue(int y, int x, int value);
+	void setValuableNodesCount(int count);
 
 	unsigned int getMapHeight() const;
 	unsigned int getMapWidth() const;
 	char getWalkable(int y, int x) const;
 	char getLogical(int y, int x) const;
 	int getValue(int y, int x) const;
+	int getValuableNodesCount() const;
 
 	unsigned int countNearbyWalkableSquares(int y, int x) const;
 	void printMap() const;
 
 	~Map();
 private:
-	void processMap();
+	void processLogicalMap();
 private:
 	struct node
 	{
@@ -34,6 +36,7 @@ private:
 	};
 
 	node nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+	int valuableNodesCount;
 
 	unsigned int mapHeight;
 	unsigned int mapWidth;
