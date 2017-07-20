@@ -14,6 +14,8 @@ public:
 
 	~GUI_Map();
 private:
+	void processMap(); // prepares different tiles for repesentation with different graphics
+private:
 	Map* map;
 	sf::RectangleShape* guiMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
 

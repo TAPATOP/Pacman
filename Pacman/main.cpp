@@ -238,9 +238,9 @@ int main()
 		guiPlayer.draw(window);
 
 		window.display();
-		std:: cout << player.getScore() << std::endl;
-		std::cout << loadedMap.getValuableNodesCount() << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		// std:: cout << player.getScore() << std::endl;
+		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(45));
 	}
 
 	//while (keepOn != '0')

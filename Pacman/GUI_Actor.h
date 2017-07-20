@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include "Bot.h"
+#include "GUI_Map.h"
 
 class GUI_Actor
 {
@@ -28,5 +29,6 @@ private:
 	Actor* actor;
 	sf::Shape* shape;
 	int squareDisplaySize;
+	GUI_Map guiMap;
 };
 
