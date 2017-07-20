@@ -10,11 +10,11 @@ public:
 	GUI_Map();
 	GUI_Map(Map&, sf::Vector2f&);
 
+	void setRectangleRepresentation(int y, int x, sf::Color color);
+
 	void draw(sf::RenderWindow&);
 
 	~GUI_Map();
-private:
-	void processMap(); // prepares different tiles for repesentation with different graphics
 private:
 	Map* map;
 	sf::RectangleShape* guiMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];

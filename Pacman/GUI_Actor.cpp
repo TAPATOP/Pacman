@@ -4,11 +4,12 @@ GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize)
+GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GUI_Map* map)
 {
 	this->actor = actor;
 	this->shape = shape;
 	this->squareDisplaySize = squareDisplaySize;
+	guiMap = map;
 }
 // CONSTRUCTORS above
 //
@@ -52,8 +53,12 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 void GUI_Actor::move()
 {
 	sf::Vector2f movement = actor->move();
+	if (dynamic_cast<Player*> (actor) != nullptr)
+	{
+		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
+	}
 	shape->move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
-	//if(actor->getMovementProgress() == 0 && actor)
+	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 }
 
 void GUI_Actor::draw(sf::RenderWindow& window)

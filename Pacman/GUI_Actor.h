@@ -10,7 +10,7 @@ class GUI_Actor
 {
 public:
 	GUI_Actor();
-	GUI_Actor(Actor*, sf::Shape*, int squareSize);
+	GUI_Actor(Actor*, sf::Shape*, int squareSize, GUI_Map*);
 
 	void setNextCommand(char command);
 	void setShapeSize(sf::Vector2f& vector);
@@ -29,6 +29,6 @@ private:
 	Actor* actor;
 	sf::Shape* shape;
 	int squareDisplaySize;
-	GUI_Map guiMap;
+	GUI_Map* guiMap;
 };
 

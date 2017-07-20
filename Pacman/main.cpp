@@ -181,11 +181,11 @@ int main()
 	int offsetX = squareDisplaySize;
 	int offsetY = 0;
 
-	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize);
-	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize);
-	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize);
-	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize);
-	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize);
+	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap);
+	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap);
+	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap);
+	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap);
+	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap);
 
 	guiBot1.setShapePositionByOffset(offsetX, offsetY);
 	guiBot2.setShapePositionByOffset(offsetX, offsetY);
@@ -240,7 +240,7 @@ int main()
 		window.display();
 		// std:: cout << player.getScore() << std::endl;
 		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(45));
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
 	//while (keepOn != '0')
