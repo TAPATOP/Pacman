@@ -48,12 +48,12 @@ void Player::setNextCommand(char command)
 {
 	if (!isValidControl(command)) return; // checks if 'command' is one of the controls is in 'controls'
 
-	sf::Vector2f nextCommandInterpreter(interpretCommand(command));
-	sf::Vector2f curCommandInterpreter(interpretCommand(currentCommand));
+	ItskoVector2i nextCommandInterpreter(interpretCommand(command));
+	ItskoVector2i curCommandInterpreter(interpretCommand(currentCommand));
 
 	nextCommand = command;
 
-	if (nextCommandInterpreter.x == -curCommandInterpreter.x && nextCommandInterpreter.y == -curCommandInterpreter.y)
+	if (nextCommandInterpreter.getX() == -curCommandInterpreter.getX() && nextCommandInterpreter.getY() == -curCommandInterpreter.getY())
 	{
 		currentCommand = nextCommand;
 		nextCommand = controls.neutral;
@@ -88,7 +88,7 @@ int Player::getLives()
 // GETTERS above
 //
 
-sf::Vector2f Player::move()
+ItskoVector2i Player::move()
 {
 	if (
 		nextCommand != controls.neutral &&
@@ -118,7 +118,7 @@ sf::Vector2f Player::move()
 		}
 		else
 		{
-			return sf::Vector2f(0, 0);
+			return ItskoVector2i(0, 0);
 		}
 	}
 	// if canMove(), then move, else try with nextCommand
@@ -174,7 +174,7 @@ void Player::executeCurrentCommand()
 // Changes dx and dy to match the command's effect
 //
 
-sf::Vector2f Player::interpretCommand(char command)
+ItskoVector2i Player::interpretCommand(char command)
 {
 	float returnDY;
 	float returnDX;
@@ -204,7 +204,7 @@ sf::Vector2f Player::interpretCommand(char command)
 		returnDY = 0;
 		returnDX = 0;
 	}
-	return sf::Vector2f(returnDX, returnDY);
+	return ItskoVector2i(returnDY, returnDX);
 }
 
 void Player::makeNextCommandCurrent()
@@ -213,9 +213,9 @@ void Player::makeNextCommandCurrent()
 	nextCommand = controls.neutral;
 }
 
-sf::Vector2f Player::executeMoving()
+ItskoVector2i Player::executeMoving()
 {
-	sf::Vector2f vector = Actor::executeMoving();
+	ItskoVector2i vector = Actor::executeMoving();
 	if (getMovementProgress() == 0)
 	{
 		int nodeVal = map->getValue(getY(), getX());

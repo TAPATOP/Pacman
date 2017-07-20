@@ -19,7 +19,7 @@ public:
 	bool getIsGhost();
 	int getID();
 
-	sf::Vector2f move();
+	ItskoVector2i move();
 	void die();
 
 	~Bot();

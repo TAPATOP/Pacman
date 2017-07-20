@@ -52,12 +52,12 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 
 void GUI_Actor::move()
 {
-	sf::Vector2f movement = actor->move();
+	ItskoVector2i movement = actor->move();
 	if (dynamic_cast<Player*> (actor) != nullptr)
 	{
 		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
 	}
-	shape->move(movement.x * squareDisplaySize, movement.y * squareDisplaySize);
+	shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 }
 

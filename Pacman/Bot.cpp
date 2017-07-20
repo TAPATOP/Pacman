@@ -58,7 +58,7 @@ int Bot::getID()
 //
 //
 
-sf::Vector2f Bot::move()
+ItskoVector2i Bot::move()
 {
 	if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
 		map->getLogical(getY(), getX()) == gv::knotSquare) // if the square the bot is on is a 'knot'

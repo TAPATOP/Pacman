@@ -17,16 +17,16 @@ public:
 	int getScore();
 	int getLives();
 
-	sf::Vector2f move();
+	ItskoVector2i move();
 	void die();
 	bool isValidControl(char command);
 
 	~Player();
 private:
 	void executeCurrentCommand();
-	sf::Vector2f interpretCommand(char command);
+	ItskoVector2i interpretCommand(char command);
 	void makeNextCommandCurrent();
-	sf::Vector2f executeMoving();
+	ItskoVector2i executeMoving();
 private:
 	int score;
 	int lives;

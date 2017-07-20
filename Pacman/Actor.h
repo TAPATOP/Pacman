@@ -8,6 +8,7 @@
 #include<SFML/Graphics/Vertex.hpp>
 
 #include"Global_Variables.h"
+#include"ItskoVector2i.h"
 #include"Map.h"
 
 class Actor
@@ -32,14 +33,14 @@ public:
 	int getDX() const;
 	int getDY() const;
 
-	virtual sf::Vector2f move() = 0;
+	virtual ItskoVector2i move() = 0;
 	virtual void die() = 0;
 
 	virtual ~Actor(); 
 protected:
 		bool canMove() const;
-		bool canMove(sf::Vector2f& newDirections) const;// decides whether the actor can move with the current x, y, dx and dy
-		virtual sf::Vector2f executeMoving(); // moves the actor according to x, y, dx, dy and his speed
+		bool canMove(ItskoVector2i& newDirections) const;// decides whether the actor can move with the current x, y, dx and dy
+		virtual ItskoVector2i executeMoving(); // moves the actor according to x, y, dx, dy and his speed
 protected:
 	Map* map; // all Actors will use the same map to traverse
 private:

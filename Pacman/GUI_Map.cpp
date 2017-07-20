@@ -8,7 +8,6 @@ GUI_Map::GUI_Map()
 
 GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& vector)
 {
-	std::cout << "wtf" << std::endl;
 	this->map = &origMap;
 	
 	height = map->getMapHeight();

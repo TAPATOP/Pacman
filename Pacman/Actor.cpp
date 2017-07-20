@@ -154,9 +154,9 @@ int Actor::getDY() const
 //
 //
 
-sf::Vector2f Actor::move()
+ItskoVector2i Actor::move()
 {
-	return sf::Vector2f();
+	return ItskoVector2i();
 }
 
 Actor::~Actor()
@@ -195,25 +195,25 @@ bool Actor::canMove() const
 	return 1; // no errors, e.g. can move
 }
 
-bool Actor::canMove(sf::Vector2f& newDirections) const
+bool Actor::canMove(ItskoVector2i& newDirections) const
 {
-	if (newDirections.x == 0 && newDirections.y == 0)
+	if (newDirections.getX() == 0 && newDirections.getY() == 0)
 	{
 		return 0; // error, e.g. can't move
 	}
 	if (
-		(x + newDirections.x) < 0 ||
-		(x + newDirections.x) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getWalkable(y, x + (int)newDirections.x) == gv::wallSquare
+		(x + newDirections.getX()) < 0 ||
+		(x + newDirections.getX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		map->getWalkable(y, x + (int)newDirections.getX()) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
 	}
 
 	if (
-		(y + newDirections.y) < 0 ||
-		(y + newDirections.y) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getWalkable(y + (int)newDirections.y, x) == gv::wallSquare
+		(y + newDirections.getY()) < 0 ||
+		(y + newDirections.getY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		map->getWalkable(y + (int)newDirections.getY(), x) == gv::wallSquare
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -222,7 +222,7 @@ bool Actor::canMove(sf::Vector2f& newDirections) const
 	return 1; // no errors, e.g. can move
 }
 
-sf::Vector2f Actor::executeMoving()
+ItskoVector2i Actor::executeMoving()
 {
 	if (movementProgress >= movementSpeed)
 	{
@@ -232,8 +232,8 @@ sf::Vector2f Actor::executeMoving()
 		map->setWalkable(y, x, displayChar);
 		movementProgress = 0;
 
-		return sf::Vector2f((float)dx, (float)dy);
+		return ItskoVector2i(dy, dx);
 	}
 	movementProgress++;
-	return sf::Vector2f(0,0);
+	return ItskoVector2i(0,0);
 }
