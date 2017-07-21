@@ -205,7 +205,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		if ((clock.getElapsedTime()).asMilliseconds() < 30) continue;
+		if ((clock.getElapsedTime()).asMilliseconds() < 150) continue;
 		clock.restart();
 
 		while (window.pollEvent(evnt))

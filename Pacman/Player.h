@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Actor.h"
+#include"Bot.h"
 
 class Player :
 	public Actor

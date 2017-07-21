@@ -1,5 +1,8 @@
 #include "GUI_Actor.h"
 
+int GUI_Actor::allGUIActorsCount = 0;
+GUI_Actor* GUI_Actor::allGUIActors[GUI_Actor::maxGUIActors];
+
 GUI_Actor::GUI_Actor()
 {
 }
@@ -10,6 +13,7 @@ GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GU
 	this->shape = shape;
 	this->squareDisplaySize = squareDisplaySize;
 	guiMap = map;
+	allGUIActors[allGUIActorsCount++] = this;
 }
 // CONSTRUCTORS above
 //
@@ -46,6 +50,8 @@ void GUI_Actor::setShapePosition(int x, int y)
 void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 {
 	shape->setPosition((float)(xOffset + actor->getX() * squareDisplaySize), (float)(yOffset + actor->getY() * squareDisplaySize));
+	this->xOffset = xOffset;
+	this->yOffset = yOffset;
 }
 // SETTERS above
 //
@@ -57,13 +63,30 @@ void GUI_Actor::move()
 	{
 		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
 	}
-	shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
+	if (movement.getX() == 69)
+	{
+		std::cout << "Player is kill" << std::endl;
+		for (int i = 0; i < allGUIActorsCount; i++)
+		{
+			allGUIActors[i]->resetPosition();
+		}
+	}
+	else
+	{
+		shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
+	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 }
 
 void GUI_Actor::draw(sf::RenderWindow& window)
 {
 	window.draw(*shape);
+}
+
+void GUI_Actor::resetPosition()
+{
+	actor->resetPosition();
+	setShapePositionByOffset(xOffset, yOffset);
 }
 
 

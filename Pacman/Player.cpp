@@ -67,7 +67,6 @@ void Player::setNextCommand(char command)
 
 	if (command == gv::stop)
 	{
-		std::cout << "HALT !!11" << std::endl;
 		setCurrentCommand(command);
 	}
 	
@@ -113,6 +112,30 @@ int Player::getLives()
 
 ItskoVector2i Player::move()
 {
+	if (map->getWalkable(getY(), getX()) != getDisplayChar())
+	{
+		for (int i = 0; i < allActorsCount; i++)
+		{
+			if (allActors[i] != this && allActors[i]->getX() == getX() && allActors[i]->getY() == getY())
+			{
+				if (dynamic_cast<Bot*>(allActors[i])->getIsVulnerable())
+				{
+					allActors[i]->die();
+				}
+				else
+				{
+					die();
+					return ItskoVector2i(69, 69); // improvised error code
+				}
+				// if there is a bot on the player's location: if the bot is vulnerable,
+				// the bot dies, otherwise the player dies
+				//
+			}
+		}
+		// should be replaced with an iterator
+		//
+	}
+
 	if (
 		nextCommand != controls.neutral &&
 		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks
@@ -149,6 +172,11 @@ ItskoVector2i Player::move()
 
 void Player::die()
 {
+	for (int i = 0; i < allActorsCount; i++)
+	{
+		allActors[i]->resetPosition();
+		lives--;
+	}
 }
 
 bool Player::isValidControl(char command)

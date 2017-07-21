@@ -185,6 +185,10 @@ void Actor::setMap(Map * map)
 {
 	this->map = map;
 }
+void Actor::setDisplayChar(char c)
+{
+	displayChar = c;
+}
 // SETTERS above
 //
 //
@@ -218,6 +222,10 @@ int Actor::getDY() const
 {
 	return dy;
 }
+char Actor::getDisplayChar() const
+{
+	return displayChar;
+}
 // GETTERS above
 //
 //
@@ -225,6 +233,12 @@ int Actor::getDY() const
 ItskoVector2i Actor::move()
 {
 	return ItskoVector2i();
+}
+
+void Actor::resetPosition()
+{
+	x = startingX;
+	y = startingY;
 }
 
 Actor::~Actor()

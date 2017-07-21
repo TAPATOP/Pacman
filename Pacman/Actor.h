@@ -26,6 +26,7 @@ public:
 	void setDX(int dx);
 	void setDY(int dy);
 	void setMap(Map*);
+	void setDisplayChar(char c);
 
 	unsigned int getMovementSpeed() const;
 	unsigned int getMovementProgress() const;
@@ -33,9 +34,11 @@ public:
 	int getY() const;
 	int getDX() const;
 	int getDY() const;
+	char getDisplayChar() const;
 
 	virtual ItskoVector2i move() = 0;
 	virtual void die() = 0;
+	void resetPosition();
 
 	virtual ~Actor(); 
 protected:
@@ -59,7 +62,7 @@ private:
 
 	char displayChar;
 	//Node* lastVisitedNode; // future implementation
-public:
+protected:
 	static const unsigned int maxActors = 10;
 	static Actor* allActors[maxActors];
 	static int allActorsCount;

@@ -23,12 +23,21 @@ public:
 
 	void move(); // the objects calculate their own movement so we dont need to add parameters
 	void draw(sf::RenderWindow&);
+	void resetPosition();
 
 	~GUI_Actor();
 private:
 	Actor* actor;
 	sf::Shape* shape;
+
 	int squareDisplaySize;
+	int xOffset = 0;
+	int yOffset = 0;
+
 	GUI_Map* guiMap;
+
+	static const unsigned int maxGUIActors = 10;
+	static GUI_Actor* allGUIActors[maxGUIActors];
+	static int allGUIActorsCount;
 };
 
