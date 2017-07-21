@@ -10,8 +10,24 @@ Player::Player()
 	lives = 1;
 }
 
+Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map * map, char displayChar, int lives)
+	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
+{
+	this->lives = lives;
+	
+	controls.up = gv::up;
+	controls.down = gv::down;
+	controls.left = gv::left;
+	controls.right = gv::right;
+	controls.stop = gv::stop;
+
+	score = 0;
+	currentCommand = controls.neutral;
+	nextCommand = controls.neutral;
+}
+
 Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, 
-	Map * map, char displayChar, int lives, char up, char down, char left, char right)
+	Map * map, char displayChar, int lives, char up, char down, char left, char right, char stop)
 	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
 {
 	this->lives = lives;
@@ -20,6 +36,7 @@ Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int move
 	controls.down = down;
 	controls.left = left;
 	controls.right = right;
+	controls.stop = stop;
 
 	score = 0;
 	currentCommand = controls.neutral;
@@ -48,6 +65,12 @@ void Player::setNextCommand(char command)
 {
 	if (!isValidControl(command)) return; // checks if 'command' is one of the controls is in 'controls'
 
+	if (command == gv::stop)
+	{
+		std::cout << "HALT !!11" << std::endl;
+		setCurrentCommand(command);
+	}
+	
 	ItskoVector2i nextCommandInterpreter(interpretCommand(command));
 	ItskoVector2i curCommandInterpreter(interpretCommand(currentCommand));
 
@@ -130,7 +153,8 @@ void Player::die()
 
 bool Player::isValidControl(char command)
 {
-	if (command == controls.up || command == controls.down || command == controls.left || command == controls.right)
+	if (command == controls.up || command == controls.down || command == controls.left || 
+		command == controls.right || command == controls.stop)
 	{
 		return 1;
 	}
@@ -165,7 +189,7 @@ void Player::executeCurrentCommand()
 		setDY(0);
 		setDX(1);
 	}
-	else if (currentCommand == controls.neutral)
+	else if (currentCommand == controls.neutral || currentCommand == controls.stop)
 	{
 		setDY(0);
 		setDX(0);
@@ -199,7 +223,7 @@ ItskoVector2i Player::interpretCommand(char command)
 		returnDY = 0;
 		returnDX = 1;
 	}
-	else if (command == controls.neutral)
+	else if (command == controls.neutral || command == controls.stop)
 	{
 		returnDY = 0;
 		returnDX = 0;

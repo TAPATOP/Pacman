@@ -7,8 +7,9 @@ class Player :
 {
 public:
 	Player();
+	Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar, int lives);
 	Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar, int lives,
-		char up, char down, char left, char right);
+		char up, char down, char left, char right, char stop);
 
 	void setControls(char up, char down, char left, char right);
 	void setCurrentCommand(char command);
@@ -41,7 +42,7 @@ private:
 		char down;
 		char left;
 		char right;
-		//char stop;
+		char stop;
 
 		char neutral; // e.g. "out of commands"
 	};

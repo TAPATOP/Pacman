@@ -41,4 +41,5 @@ namespace gv
 	const char down = 's';
 	const char left = 'a';
 	const char right = 'd';
+	const char stop = 32;
 }
