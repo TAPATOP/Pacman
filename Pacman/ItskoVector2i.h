@@ -11,6 +11,9 @@ public:
 	int getX();
 	int getY();
 
+	friend bool operator ==(ItskoVector2i& vector, int num);
+	friend void operator *= (ItskoVector2i& vector, int num);
+
 	~ItskoVector2i();
 private:
 	int x; // width

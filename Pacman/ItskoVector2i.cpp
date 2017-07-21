@@ -36,3 +36,15 @@ int ItskoVector2i::getY()
 ItskoVector2i::~ItskoVector2i()
 {
 }
+
+bool operator==(ItskoVector2i& vector, int num)
+{
+	return (vector.getX() == num && vector.getY() == num);
+}
+
+void operator*=(ItskoVector2i& vector, int num)
+{
+	vector.setX(vector.getX() * num);
+	vector.setY(vector.getY() * num);
+}
+
