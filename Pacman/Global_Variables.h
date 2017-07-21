@@ -42,4 +42,11 @@ namespace gv
 	const char left = 'a';
 	const char right = 'd';
 	const char stop = 32;
+
+	///////////////////////
+	/// Return Codes Below
+	//////////////////////
+
+	const int playerDied = 69;
+	const int botDied = 70;
 }

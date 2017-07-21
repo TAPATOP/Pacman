@@ -125,7 +125,7 @@ ItskoVector2i Player::move()
 				else
 				{
 					die();
-					return ItskoVector2i(69, 69); // improvised error code
+					return ItskoVector2i(0, gv::playerDied); // improvised state code
 				}
 				// if there is a bot on the player's location: if the bot is vulnerable,
 				// the bot dies, otherwise the player dies
@@ -175,6 +175,9 @@ void Player::die()
 	for (int i = 0; i < allActorsCount; i++)
 	{
 		allActors[i]->resetPosition();
+		allActors[i]->setDX(0);
+		allActors[i]->setDY(0);
+		allActors[i]->move();
 		lives--;
 	}
 }

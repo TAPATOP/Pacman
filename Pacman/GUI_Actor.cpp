@@ -56,14 +56,14 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 // SETTERS above
 //
 
-void GUI_Actor::move()
+bool GUI_Actor::move()
 {
 	ItskoVector2i movement = actor->move();
 	if (dynamic_cast<Player*> (actor) != nullptr)
 	{
 		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
 	}
-	if (movement.getX() == 69)
+	if (movement.getX() == gv::playerDied)
 	{
 		std::cout << "Player is kill" << std::endl;
 		for (int i = 0; i < allGUIActorsCount; i++)
@@ -76,6 +76,7 @@ void GUI_Actor::move()
 		shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
 	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
+	return 0;
 }
 
 void GUI_Actor::draw(sf::RenderWindow& window)

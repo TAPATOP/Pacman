@@ -69,7 +69,11 @@ ItskoVector2i Bot::move()
 	{
 		if (!canMove())
 		{
-			if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
+			if (getDX() == 0 && getDY() == 0)
+			{
+				pickRandomDirection();
+			}
+			else if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
 			{
 				cornerSolver();
 			}

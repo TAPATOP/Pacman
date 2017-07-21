@@ -137,7 +137,7 @@ int main()
 
 	player.setCurrentCommand('s');
 	player.setNextCommand(' ');
-
+	
 	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
 	sf::Event evnt;

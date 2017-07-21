@@ -21,7 +21,7 @@ public:
 	// relative to the matrix/labyrinth the shape is located in( multiplies x and y by squareSize)
 	//
 
-	void move(); // the objects calculate their own movement so we dont need to add parameters
+	bool move(); // the objects calculate their own movement so we dont need to add parameters; 0 = game over, 1 = win
 	void draw(sf::RenderWindow&);
 	void resetPosition();
 
