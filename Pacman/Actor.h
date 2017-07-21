@@ -15,8 +15,9 @@ class Actor
 {
 public:
 	Actor();
-	//Actor(Actor&); // "when should i define copy constructor"
+	//Actor(Actor&);
 	Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
+	Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned int startingX, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
 
 	void setMovementSpeed(unsigned int movementSpeed);
 	void setMovementProgress(unsigned int movementProgress);
@@ -46,6 +47,9 @@ protected:
 private:
 	unsigned int x; // how wide
 	unsigned int y; // how high
+	
+	unsigned int startingX;
+	unsigned int startingY;
 
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho

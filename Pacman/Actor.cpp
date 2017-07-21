@@ -29,6 +29,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	else
 	{
 		this->x = x;
+		startingX = x;
 	}
 
 	if (y < 0 || y > map->getMapHeight() - 1)
@@ -39,6 +40,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	else
 	{
 		this->y = y;
+		startingY = y;
 	}
 
 	this->dx = dx;
@@ -62,6 +64,72 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 
 	this->displayChar = displayChar;
 	allActors[allActorsCount++] = this;
+}
+
+Actor::Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned int startingX, int dy, int dx, unsigned int movementSpeed, Map * map, char displayChar)
+{
+	if (x < 0 || x > map->getMapWidth() - 1)
+	{
+		std::cout << "Warning, given x for Actor isn't a legit one. Automatically fixing this..." << std::endl;
+		this->x = gv::defaultX;
+	}
+	else
+	{
+		this->x = x;
+	}
+
+	if (startingX < 0 || startingX > map->getMapWidth() - 1)
+	{
+		std::cout << "Warning, given startingX for Actor isn't a legit one. Automatically fixing this..." << std::endl;
+		this->startingX = gv::defaultX;
+	}
+	else
+	{
+		this->startingX = startingX;
+	}
+
+	if (y < 0 || y > map->getMapHeight() - 1)
+	{
+		std::cout << "Warning, given y for Actor isn't a legit one. Automatically fixing this..." << std::endl;
+		this->y = gv::defaultY;
+	}
+	else
+	{
+		this->y = y;
+	}
+
+	if (startingY < 0 || startingY > map->getMapHeight() - 1)
+	{
+		std::cout << "Warning, given startingY for Actor isn't a legit one. Automatically fixing this..." << std::endl;
+		this->startingY = gv::defaultY;
+	}
+	else
+	{
+		this->startingY = startingY;
+	}
+
+	this->dx = dx;
+	this->dy = dy;
+
+	this->movementSpeed = movementSpeed;
+
+	if (x + dx < 0 || x + dx > map->getMapWidth() - 1)
+	{
+		std::cout << "Incorrect x + dx combination..." << std::endl;
+		this->dx = 0;
+	}
+
+	if (y + dy < 0 || y + dy > map->getMapHeight() - 1)
+	{
+		std::cout << "Incorrect y + dy combination..." << std::endl;
+		this->dy = 0;
+	}
+
+	this->map = map;
+
+	this->displayChar = displayChar;
+	allActors[allActorsCount++] = this;
+
 }
 
 // CONSTRUCTORS above

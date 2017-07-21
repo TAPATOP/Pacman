@@ -201,16 +201,11 @@ int main()
 
 	guiPlayer.setFillColor(sf::Color::Green);
 
-
-	char lastKey = 0;
-
 	sf::Clock clock;
-
-	sf::Time time;
 
 	while (window.isOpen())
 	{
-		if ((clock.getElapsedTime()).asMilliseconds() < 10) continue;
+		if ((clock.getElapsedTime()).asMilliseconds() < 30) continue;
 		clock.restart();
 
 		while (window.pollEvent(evnt))
@@ -221,8 +216,7 @@ int main()
 				window.close();
 				break;
 			case sf::Event::TextEntered:
-				lastKey = evnt.text.unicode;
-				guiPlayer.setNextCommand(lastKey);
+				guiPlayer.setNextCommand(evnt.text.unicode);
 				break;
 			}
 		}
