@@ -63,6 +63,9 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	this->map = map;
 
 	this->displayChar = displayChar;
+
+	map->setWalkable(y, x, displayChar);
+
 	allActors[allActorsCount++] = this;
 }
 
@@ -128,6 +131,9 @@ Actor::Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned in
 	this->map = map;
 
 	this->displayChar = displayChar;
+
+	map->setWalkable(y, x, displayChar);
+
 	allActors[allActorsCount++] = this;
 
 }

@@ -92,6 +92,8 @@ ItskoVector2i Bot::move()
 
 void Bot::die()
 {
+	isVulnerable = 0;
+	isGhost = 1;
 }
 
 Bot::~Bot()
@@ -146,7 +148,7 @@ void Bot::cornerSolver()
 		reverseDirection();
 	}
 }
-// adjusts DX and DY in such way so the bot will traverse it properly
+// adjusts DX and DY in such way so the bot will traverse corners properly
 //
 
 void Bot::reverseDirection()

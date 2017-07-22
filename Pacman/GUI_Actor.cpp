@@ -59,11 +59,15 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 bool GUI_Actor::move()
 {
 	ItskoVector2i movement = actor->move();
+
 	if (dynamic_cast<Player*> (actor) != nullptr)
 	{
 		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
 	}
-	if (movement.getX() == gv::playerDied)
+	// changes the given tile value to "collected"
+	//
+
+	if (movement.getStateCode() == gv::playerDied)
 	{
 		std::cout << "Player is kill" << std::endl;
 		for (int i = 0; i < allGUIActorsCount; i++)

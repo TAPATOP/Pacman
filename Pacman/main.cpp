@@ -205,7 +205,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		if ((clock.getElapsedTime()).asMilliseconds() < 150) continue;
+		if ((clock.getElapsedTime()).asMilliseconds() < 30) continue;
 		clock.restart();
 
 		while (window.pollEvent(evnt))
@@ -239,7 +239,7 @@ int main()
 		window.display();
 		// std:: cout << player.getScore() << std::endl;
 		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
-		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		// std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
 	//while (keepOn != '0')

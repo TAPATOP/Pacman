@@ -139,10 +139,10 @@ unsigned int Map::countNearbyWalkableSquares(int i, int j) const
 
 	if (nodes[i][j].walkable == gv::wallSquare) return 0;
 
-	if (i + 1 < (int)mapHeight && nodes[i + 1][j].walkable == gv::walkableSquare) br++; // square downwards
-	if (i - 1 >= 0 && nodes[i - 1][j].walkable == gv::walkableSquare) br++; // square upwards
-	if (j - 1 >= 0 && nodes[i][j - 1].walkable == gv::walkableSquare) br++; // square to the left
-	if (j + 1 < (int)mapWidth && nodes[i][j + 1].walkable == gv::walkableSquare) br++; // square to the right
+	if (i + 1 < (int)mapHeight && nodes[i + 1][j].walkable != gv::wallSquare) br++; // square downwards
+	if (i - 1 >= 0 && nodes[i - 1][j].walkable != gv::wallSquare) br++; // square upwards
+	if (j - 1 >= 0 && nodes[i][j - 1].walkable != gv::wallSquare) br++; // square to the left
+	if (j + 1 < (int)mapWidth && nodes[i][j + 1].walkable != gv::wallSquare) br++; // square to the right
 
 	return br;
 }

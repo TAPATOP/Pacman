@@ -28,7 +28,9 @@ private:
 	void executeCurrentCommand();
 	ItskoVector2i interpretCommand(char command);
 	void makeNextCommandCurrent();
+	
 	ItskoVector2i executeMoving();
+	int checkCollision();
 private:
 	int score;
 	int lives;

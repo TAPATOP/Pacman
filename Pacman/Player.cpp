@@ -112,33 +112,36 @@ int Player::getLives()
 
 ItskoVector2i Player::move()
 {
+	int collisionCode = 0;
+
 	if (map->getWalkable(getY(), getX()) != getDisplayChar())
 	{
-		for (int i = 0; i < allActorsCount; i++)
+		bool playerHasDied = 0;
+
+		do
 		{
-			if (allActors[i] != this && allActors[i]->getX() == getX() && allActors[i]->getY() == getY())
+			collisionCode = checkCollision();
+			if (collisionCode == gv::playerDied)
 			{
-				if (dynamic_cast<Bot*>(allActors[i])->getIsVulnerable())
-				{
-					allActors[i]->die();
-				}
-				else
-				{
-					die();
-					return ItskoVector2i(0, gv::playerDied); // improvised state code
-				}
-				// if there is a bot on the player's location: if the bot is vulnerable,
-				// the bot dies, otherwise the player dies
-				//
+				playerHasDied = 1;
 			}
+		} while (collisionCode != 0);
+
+		if (playerHasDied == 1)
+		{
+			die();
+			return ItskoVector2i(0, 0, gv::playerDied);
 		}
-		// should be replaced with an iterator
+		// 
+		/// TO DO: should be replaced with an iterator?
 		//
 	}
+	// firstly checks if there is a bot/collision on the current location
+	//
 
 	if (
 		nextCommand != controls.neutral &&
-		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks
+		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks?
 		getMovementProgress() == 0 && 
 		canMove(interpretCommand(nextCommand))
 		)
@@ -178,6 +181,11 @@ void Player::die()
 		allActors[i]->setDX(0);
 		allActors[i]->setDY(0);
 		allActors[i]->move();
+		Bot* bot = dynamic_cast<Bot*>(allActors[i]);
+		if (bot != nullptr)
+		{
+			bot->setIsGhost(0);
+		}
 		lives--;
 	}
 }
@@ -270,18 +278,73 @@ void Player::makeNextCommandCurrent()
 
 ItskoVector2i Player::executeMoving()
 {
-	ItskoVector2i vector = Actor::executeMoving();
-	if (getMovementProgress() == 0)
+	if (getMovementProgress() >= getMovementSpeed())
 	{
+		map->setWalkable(getY(), getX(), '.');
+		setX(getX() + getDX());
+		setY(getY() + getDY());
+		map->setWalkable(getY(), getX(), getDisplayChar());
+		setMovementProgress(0);
+		// moves the player
+		//
+
+		//if (map->getWalkable(getY(), getX()) != getDisplayChar())
+		//{
+		//	for (int i = 0; i < allActorsCount; i++)
+		//	{
+		//		ItskoVector2i vector = checkCollision(i);
+		//		if (vector.getX() == gv::playerDied || vector.getX() == gv::botDied)
+		//		{
+		//			return vector;
+		//		}
+		//	}
+		//	// should be replaced with an iterator?
+		//	//
+		//}
 		int nodeVal = map->getValue(getY(), getX());
+
 		if (nodeVal != gv::defaultValue)
 		{
 			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
 		}
 		score += nodeVal;
 		map->setValue(getY(), getX(), gv::defaultValue);
+		// calculates the score
 		// this is the way it is because this way you can make nodes have
-		// negative value
+		// a negative value
+		//
+
+		return ItskoVector2i(getDY(), getDX());
 	}
-	return vector;
+	setMovementProgress(getMovementProgress() + 1);
+	return ItskoVector2i(0, 0);
 }
+
+int Player::checkCollision()
+{
+	for (int i = 0; i < allActorsCount; i++)
+	{
+		if (allActors[i] != this && allActors[i]->getX() == getX() && allActors[i]->getY() == getY()) // if there is a bot on the player's location
+		{
+			Bot* bot = dynamic_cast<Bot*>(allActors[i]);
+			if (bot != nullptr && bot->getIsGhost() != 1) // check for bot nullptr in case of more than 1 player
+			{
+				if (bot->getIsVulnerable() == 1) // if the bot is vulnerable => the bot dies
+				{
+					allActors[i]->die();
+					return gv::botDied;
+				}
+				else // if the bot is not vulnerable => the player dies
+				{
+					bot->setIsGhost(1); // prevents cycling of the same bot killing the player infinitely
+					return gv::playerDied; // state code for player death; shouldnt be executed immediately
+				}
+			}
+		}
+	}
+	/// TO DO: should be replaced with an iterator?
+	//
+	return 0;
+}
+// returns what type of collision there is- either botDied or playerDied
+//
