@@ -16,7 +16,7 @@ namespace gv
 	const char bigBall = '2';
 
 	const int smallBallValue = 50;
-	const int bigBallValue = 69;
+	const int bigBallValue = 101;
 	const int defaultValue = 0;
 
 	const unsigned int maxLoadedMapHeight = 100;
@@ -30,7 +30,7 @@ namespace gv
 	/// GUI Below
 	////////////////////
 
-	const unsigned int windowWidth = 600;
+	const unsigned int windowWidth = 800;
 	const unsigned int windowHeight = 600;
 
 	//////////////////
@@ -41,7 +41,7 @@ namespace gv
 	const char down = 's';
 	const char left = 'a';
 	const char right = 'd';
-	const char stop = 32;
+	const char stop = ' ';
 
 	///////////////////////
 	/// Return Codes Below

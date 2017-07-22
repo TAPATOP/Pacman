@@ -19,6 +19,8 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int
 	{
 		pickRandomDirection(0); // if the given dx or dy conflict with the map boundaries, this gives the bot valid deltas
 	}
+	isVulnerable = 0;
+	isGhost = 0;
 }
 // CONSTRUCTORS above
 //

@@ -56,7 +56,7 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 // SETTERS above
 //
 
-bool GUI_Actor::move()
+int GUI_Actor::move()
 {
 	ItskoVector2i movement = actor->move();
 
@@ -93,7 +93,6 @@ void GUI_Actor::resetPosition()
 	actor->resetPosition();
 	setShapePositionByOffset(xOffset, yOffset);
 }
-
 
 GUI_Actor::~GUI_Actor()
 {

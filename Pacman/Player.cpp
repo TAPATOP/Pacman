@@ -276,22 +276,7 @@ ItskoVector2i Player::executeMoving()
 
 		map->setWalkable(getY(), getX(), getDisplayChar());
 		setMovementProgress(0);
-		// moves the player
-		//
 
-		//if (map->getWalkable(getY(), getX()) != getDisplayChar())
-		//{
-		//	for (int i = 0; i < allActorsCount; i++)
-		//	{
-		//		ItskoVector2i vector = checkCollision(i);
-		//		if (vector.getX() == gv::playerDied || vector.getX() == gv::botDied)
-		//		{
-		//			return vector;
-		//		}
-		//	}
-		//	// should be replaced with an iterator?
-		//	//
-		//}
 		int nodeVal = map->getValue(getY(), getX());
 
 		if (nodeVal != gv::defaultValue)
@@ -367,3 +352,5 @@ int Player::checkCollision2()
 }
 // returns what type of collision there is- either botDied or playerDied
 //
+
+/// TO DO: Think of better names for checkCollision() and checkCollision2()
