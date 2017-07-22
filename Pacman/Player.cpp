@@ -114,27 +114,10 @@ ItskoVector2i Player::move()
 {
 	int collisionCode = 0;
 
-	if (map->getWalkable(getY(), getX()) != getDisplayChar())
+	int code = checkCollision2();
+	if (code == gv::playerDied)
 	{
-		bool playerHasDied = 0;
-
-		do
-		{
-			collisionCode = checkCollision();
-			if (collisionCode == gv::playerDied)
-			{
-				playerHasDied = 1;
-			}
-		} while (collisionCode != 0);
-
-		if (playerHasDied == 1)
-		{
-			die();
-			return ItskoVector2i(0, 0, gv::playerDied);
-		}
-		// 
-		/// TO DO: should be replaced with an iterator?
-		//
+		return ItskoVector2i(0, 0, code);
 	}
 	// firstly checks if there is a bot/collision on the current location
 	//
@@ -283,6 +266,14 @@ ItskoVector2i Player::executeMoving()
 		map->setWalkable(getY(), getX(), '.');
 		setX(getX() + getDX());
 		setY(getY() + getDY());
+		int collisionCode = 0;
+
+		int code = checkCollision2();
+		if (code == gv::playerDied)
+		{
+			return ItskoVector2i(0, 0, code);
+		}
+
 		map->setWalkable(getY(), getX(), getDisplayChar());
 		setMovementProgress(0);
 		// moves the player
@@ -344,6 +335,34 @@ int Player::checkCollision()
 	}
 	/// TO DO: should be replaced with an iterator?
 	//
+	return 0;
+}
+int Player::checkCollision2()
+{
+	int collisionCode = 0;
+
+	if (map->getWalkable(getY(), getX()) != getDisplayChar())
+	{
+		bool playerHasDied = 0;
+
+		do
+		{
+			collisionCode = checkCollision();
+			if (collisionCode == gv::playerDied)
+			{
+				playerHasDied = 1;
+			}
+		} while (collisionCode != 0);
+
+		if (playerHasDied == 1)
+		{
+			die();
+			return gv::playerDied;
+		}
+		// 
+		/// TO DO: should be replaced with an iterator?
+		//
+	}
 	return 0;
 }
 // returns what type of collision there is- either botDied or playerDied

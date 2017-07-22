@@ -31,6 +31,7 @@ private:
 	
 	ItskoVector2i executeMoving();
 	int checkCollision();
+	int checkCollision2();
 private:
 	int score;
 	int lives;
