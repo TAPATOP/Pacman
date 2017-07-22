@@ -112,12 +112,10 @@ int Player::getLives()
 
 ItskoVector2i Player::move()
 {
-	int collisionCode = 0;
-
 	int code = checkCollision2();
 	if (code == gv::playerDied)
 	{
-		return ItskoVector2i(0, 0, code);
+		return ItskoVector2i(0, 0, code); // the game stops when the player dies, so no need in continuing calculating stuff
 	}
 	// firstly checks if there is a bot/collision on the current location
 	//
@@ -266,8 +264,7 @@ ItskoVector2i Player::executeMoving()
 		map->setWalkable(getY(), getX(), '.');
 		setX(getX() + getDX());
 		setY(getY() + getDY());
-		int collisionCode = 0;
-
+		
 		int code = checkCollision2();
 		if (code == gv::playerDied)
 		{
@@ -283,10 +280,10 @@ ItskoVector2i Player::executeMoving()
 		{
 			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
 		}
-		score += nodeVal;
+		increaseScore(nodeVal);
 		map->setValue(getY(), getX(), gv::defaultValue);
 		// calculates the score
-		// this is the way it is because this way you can make nodes have
+		// this is the way it is because this way you can make default nodes have
 		// a negative value
 		//
 
@@ -333,9 +330,14 @@ int Player::checkCollision2()
 		do
 		{
 			collisionCode = checkCollision();
+
 			if (collisionCode == gv::playerDied)
 			{
 				playerHasDied = 1;
+			}
+			else if (collisionCode == gv::botDied)
+			{
+				increaseScore(gv::botValue);
 			}
 		} while (collisionCode != 0);
 
@@ -349,6 +351,10 @@ int Player::checkCollision2()
 		//
 	}
 	return 0;
+}
+void Player::increaseScore(int increase)
+{
+	score += increase;
 }
 // returns what type of collision there is- either botDied or playerDied
 //
