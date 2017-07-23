@@ -2,6 +2,7 @@
 #include<iostream>
 
 #include"Global_Variables.h"
+#include"mapNode.h"
 
 class Map
 {
@@ -28,14 +29,8 @@ public:
 private:
 	void processLogicalMap();
 private:
-	struct node
-	{
-		char walkable = '.'; // walkable, wall or gate
-		char knot = 0; // if it's a knot or not
-		int value = gv::defaultValue; // emtpy, small ball or big ball
-	};
 
-	node nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+	mapNode nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
 	int valuableNodesCount;
 
 	unsigned int mapHeight;

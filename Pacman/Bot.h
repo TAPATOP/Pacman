@@ -1,8 +1,9 @@
 #pragma once
-#include<cstdlib>
-#include<ctime>
+#include <cstdlib>
+#include <ctime>
 
 #include "Actor.h"
+#include "BotStack.h"
 
 class Bot :
 	public Actor

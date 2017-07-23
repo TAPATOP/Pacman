@@ -88,13 +88,14 @@ void BotStack::copyBotStack(BotStack const &other)
 {
 	delete[] coordinates;
 
-	size_t otherSize = other.stackSize;
-	stackSize = otherSize;
-	coordinates = new coords[otherSize];
+	stackSize = other.stackSize;
 
-	for (int i = 0; i < otherSize; i++)
+	coordinates = new coords[stackSize];
+
+	for (int i = 0; i < stackSize; i++)
 	{
-		coordinates[i] = other.coordinates[i];
+		coordinates[i].x = other.coordinates[i].x;
+		coordinates[i].y = other.coordinates[i].y;
 	}
 }
 // WARNING: Untested

@@ -12,22 +12,49 @@
 #include "Player.h"
 
 #include"BotStack.h"
+#include"mapNode.h"
+#include"BotLinkedList.h"
 
 int main()
 {
-	BotStack a(2);
-	ItskoVector2i popper;
+	//BotStack a(2);
+	//ItskoVector2i popper;
+	//
+	//a.push(3, 4);
+	//a.push(4, 5);
+	//a.push(4, 6);
+	//a.push(4, 7);
 
-	a.push(3, 4);
-	a.push(4, 5);
-	a.push(4, 6);
-	a.push(4, 7);
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	popper = a.topNpop();
+	//	std::cout << popper.getY() << " " << popper.getX() << std::endl;
+	//}
 
-	for (int i = 0; i < 5; i++)
-	{
-		popper = a.topNpop();
-		std::cout << popper.getY() << " " << popper.getX() << std::endl;
-	}
+	BotLinkedList b;
+
+	mapNode f, m, n;
+	f.x = 1;
+	f.y = -1;
+
+	m.x = 2;
+	m.y = -2;
+
+	n.x = 3;
+	n.y = -3;
+
+	b.enqueue(&f);
+	b.enqueue(&m);
+	b.enqueue(&n);
+
+	b.printAll();
+	b.dequeue(&f);
+	b.dequeue(&m);
+	b.dequeue(&n);
+
+	b.dequeue(&n);
+
+	b.printAll();
 
 	const unsigned int mapHeight = 14;
 	const unsigned int mapWidth = 20;
