@@ -1,20 +1,34 @@
-#include<iostream>
-#include<SFML/Graphics.hpp>
-
+#include <iostream>
+#include <SFML/Graphics.hpp>
 #include <chrono>
 #include <thread>
 
-#include"Actor.h"
-#include"Bot.h"
-#include"Global_Variables.h"
-#include"GUI_Actor.h"
-#include"GUI_Map.h"
-#include"Map.h"
-#include"Player.h"
+#include "Actor.h"
+#include "Bot.h"
+#include "Global_Variables.h"
+#include "GUI_Actor.h"
+#include "GUI_Map.h"
+#include "Map.h"
+#include "Player.h"
 
+#include"BotStack.h"
 
 int main()
 {
+	BotStack a(2);
+	ItskoVector2i popper;
+
+	a.push(3, 4);
+	a.push(4, 5);
+	a.push(4, 6);
+	a.push(4, 7);
+
+	for (int i = 0; i < 5; i++)
+	{
+		popper = a.topNpop();
+		std::cout << popper.getY() << " " << popper.getX() << std::endl;
+	}
+
 	const unsigned int mapHeight = 14;
 	const unsigned int mapWidth = 20;
 

@@ -140,10 +140,10 @@ void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 
 void Bot::cornerSolver()
 {
-	int newDY = getDX();
-	int newDX = getDY();
-	setDY(newDY);
-	setDX(newDX);
+	int oldDX = getDX();
+	int oldDY = getDY();
+	setDY(oldDX);
+	setDX(oldDY);
 
 	if (!canMove())
 	{

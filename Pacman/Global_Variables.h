@@ -50,4 +50,5 @@ namespace gv
 
 	const int playerDied = 69;
 	const int botDied = 70;
+	const int emptyBotStack = 80;
 }
