@@ -30,9 +30,9 @@ private:
 		mapNode* mapnode;
 		listNode* next;
 	};
-
+private:
 	listNode* first;
 	listNode* current;
-	listNode* last;
+	//listNode* last;
 };
 

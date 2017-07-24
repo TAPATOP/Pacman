@@ -171,6 +171,16 @@ void Map::printMap() const
 	std::cout << std::endl;
 }
 
+void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack& destinationStack)
+{
+	if (nodes[sourceY][sourceX].walkable == gv::wallSquare)
+	{
+		std::cout << "The source tile is not walkable??" << std::endl;
+	}
+
+
+}
+
 
 Map::~Map()
 {

@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "Actor.h"
-#include "BotStack.h"
+#include"Actor.h"
+#include"BotStack.h"
 
 class Bot :
 	public Actor
@@ -24,14 +24,19 @@ public:
 	void die();
 
 	~Bot();
-protected:
-	void pickRandomDirection(bool notAtInit = 1);
+private:
+	void pickRandomDirection(bool mustBeOppositeToOldDXDY = 1);
 	void cornerSolver(); // adjusts DX and DY in such way so the bot will traverse it properly
 	void reverseDirection();
+
+public: void findRouteToDestination(int destinationY, int destinationX);
+
 private:
 	bool isVulnerable;
 	bool isGhost;
 	unsigned int attackRange;
 
 	int botID; // I want it manually set for now
+
+	BotStack* destinationStack;
 };

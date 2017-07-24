@@ -4,9 +4,8 @@
 
 BotLinkedList::BotLinkedList()
 {
-	first = new listNode();
-	current = first;
-	last = first;
+	first = nullptr;
+	//last = nullptr;
 }
 
 
@@ -15,17 +14,74 @@ BotLinkedList::BotLinkedList(mapNode* mnode)
 	first = new listNode();
 	first->mapnode = mnode;
 	current = first;
-
-	last = new listNode();
-	first->next = last;
+	//last = current;
 }
 
 
 void BotLinkedList::enqueue(mapNode* addMe)
 {
-	last->mapnode = addMe;
-	last->next = new listNode();
-	last = last->next;
+	//last->mapnode = addMe;
+	//last->next = new listNode();
+	//last = last->next;
+	listNode* parent = nullptr;
+	
+	listNode* newNode = new listNode();
+	newNode->mapnode = addMe;
+	
+	//do
+	//{
+	//	if (addMe->Fvalue() <= current->mapnode->Fvalue() || newNodeWillBeLast == 1)
+	//	{
+	//		if (parent != nullptr)
+	//		{
+	//			parent->next = newNode;
+	//			newNode->next = current;
+	//		}
+	//		else
+	//		{
+	//			first = newNode;
+	//			newNode->next = current;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		newNodeWillBeLast = !moveCurrent();
+	//	}
+	//} while (true);
+	if (first == nullptr)
+	{
+		first = newNode;
+	//	last = newNode;
+		resetCurrent();
+		return;
+	}
+
+	do
+	{
+		if (addMe->Fvalue() <= current->mapnode->Fvalue())
+		{
+			break;
+		}
+		parent = current;
+	} while (moveCurrent());
+
+	if (parent == current) // if this is true, then newNode must be last
+	{
+		current->next = newNode;
+		//last = newNode;
+	}
+	else if (parent == nullptr) // if this is true, then newNode must be first
+		{
+			first = newNode;
+			newNode->next = current;
+		}
+	else
+	{
+		parent->next = newNode;
+		newNode->next = current;
+	}
+
+	resetCurrent();
 }
 
 void BotLinkedList::dequeue(mapNode * dequeueNode)
@@ -56,15 +112,14 @@ void BotLinkedList::dequeue(mapNode * dequeueNode)
 
 void BotLinkedList::printAll()
 {
-	if (first == last)
+	if (first == nullptr)
 	{
 		return;
 	}
-	while (current->next != nullptr)
+	do
 	{
-		std::cout << current->mapnode->x << " " << current->mapnode->y << std::endl;
-		moveCurrent();
-	}
+		std::cout << current->mapnode->Hvalue << " " << current->mapnode->Gvalue << std::endl;
+	} while (moveCurrent());
 	resetCurrent();
 }
 

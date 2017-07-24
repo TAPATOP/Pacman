@@ -52,3 +52,5 @@ namespace gv
 	const int botDied = 70;
 	const int emptyBotStack = 80;
 }
+
+/// TO DO: Make controls work with capitalized letters

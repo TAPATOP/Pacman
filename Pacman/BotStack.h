@@ -17,11 +17,14 @@ public:
 	BotStack(BotStack&);
 
 	void push(int y, int x);
+
 	bool pop();
 	ItskoVector2i top();
 	ItskoVector2i topNpop();
+
 	void visualize() const;
 	bool isEmpty();
+	//void flushStack();
 
 	BotStack& operator=(BotStack const & Other);
 

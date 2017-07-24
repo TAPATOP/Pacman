@@ -17,44 +17,36 @@
 
 int main()
 {
-	//BotStack a(2);
-	//ItskoVector2i popper;
-	//
-	//a.push(3, 4);
-	//a.push(4, 5);
-	//a.push(4, 6);
-	//a.push(4, 7);
+	//Bot a;
+	//for(int i = 0;;)
+	//a.buildRouteAstar(10, 10);
 
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	popper = a.topNpop();
-	//	std::cout << popper.getY() << " " << popper.getX() << std::endl;
-	//}
+	mapNode omega;
+	omega.Gvalue = 10;
+	omega.Hvalue = 10;
 
-	BotLinkedList b;
+	BotLinkedList list(&omega);
 
-	mapNode f, m, n;
-	f.x = 1;
-	f.y = -1;
+	mapNode a, b, c;
 
-	m.x = 2;
-	m.y = -2;
+	a.Hvalue = 2;
+	a.Gvalue = 2;
 
-	n.x = 3;
-	n.y = -3;
+	b.Hvalue = 1;
+	b.Gvalue = 1;
 
-	b.enqueue(&f);
-	b.enqueue(&m);
-	b.enqueue(&n);
+	c.Hvalue = 6;
+	c.Gvalue = 9;
 
-	b.printAll();
-	b.dequeue(&f);
-	b.dequeue(&m);
-	b.dequeue(&n);
+	list.enqueue(&a);
+	list.enqueue(&b);
+	list.enqueue(&c);
+	list.enqueue(&omega);
 
-	b.dequeue(&n);
+	list.dequeue(&b);
+	list.enqueue(&b);
 
-	b.printAll();
+	list.printAll();
 
 	const unsigned int mapHeight = 14;
 	const unsigned int mapWidth = 20;

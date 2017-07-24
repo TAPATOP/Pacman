@@ -84,6 +84,12 @@ bool BotStack::isEmpty()
 	return stackSize == 0;
 }
 
+//void BotStack::flushStack()
+//{
+//	delete[] coordinates;
+//	stackSize = 0;
+//}
+
 void BotStack::copyBotStack(BotStack const &other)
 {
 	delete[] coordinates;
@@ -121,4 +127,5 @@ BotStack::~BotStack()
 {
 	delete[] coordinates;
 	stackSize = 0;
+	maxSize = 0;
 }

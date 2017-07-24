@@ -158,3 +158,13 @@ void Bot::reverseDirection()
 	setDY(-getDY());
 	setDX(-getDX());
 }
+
+void Bot::findRouteToDestination(int destinationY, int destinationX)
+{
+	if (getY() == destinationY && getX() == destinationX) return;
+
+	delete destinationStack;
+
+	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, *destinationStack);
+	// destinationStack = new BotStack(50000);
+}
