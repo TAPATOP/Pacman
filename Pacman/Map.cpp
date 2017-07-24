@@ -9,6 +9,8 @@ Map::Map()
 		for (unsigned int j = 0; j < 10; j++)
 		{
 			nodes[i][j].walkable = gv::walkableSquare;
+			nodes[i][j].y = i;
+			nodes[i][j].x = j;
 		}
 	}
 
@@ -44,6 +46,8 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
+			nodes[i][j].y = i;
+			nodes[i][j].x = j;
 			if (origMap[i][j] == gv::smallBall)
 			{
 				nodes[i][j].value = gv::smallBallValue;
@@ -164,7 +168,7 @@ void Map::printMap() const
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
-			std::cout << (char)nodes[i][j].knot;
+			std::cout << i << " " << j << " : " << nodes[i][j].y << " " << nodes[i][j].x << std::endl;
 		}
 		std::cout << std::endl;
 	}
@@ -178,6 +182,8 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		std::cout << "The source tile is not walkable??" << std::endl;
 	}
 
+	BotLinkedList openList(&nodes[sourceY][sourceX]);
+	BotLinkedList closedList;
 
 }
 

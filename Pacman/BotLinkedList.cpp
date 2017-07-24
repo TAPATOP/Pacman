@@ -58,7 +58,7 @@ void BotLinkedList::enqueue(mapNode* addMe)
 
 	do
 	{
-		if (addMe->Fvalue() <= current->mapnode->Fvalue())
+		if (addMe->Fvalue() <= current->mapnode->Fvalue()) // TO DO: in case of =, sort by H- value
 		{
 			break;
 		}
