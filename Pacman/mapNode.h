@@ -5,7 +5,7 @@ struct mapNode
 {
 	int Fvalue()
 	{
-		return Gvalue + Hvalue;
+		return Gcost + Hcost; // calculate it each time instead of storing it in yet another variable
 	}
 	char walkable = '.'; // walkable, wall or gate
 	char knot = 0; // if it's a knot or not
@@ -14,7 +14,7 @@ struct mapNode
 	int x;
 	int y;
 
-	int Gvalue = 0; // distance to home node
-	int Hvalue; // distance to destination node
+	int Gcost = 0; // distance to home node
+	int Hcost; // distance to destination node
 	mapNode* parent = nullptr;
 };

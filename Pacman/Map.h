@@ -34,6 +34,7 @@ public:
 	~Map();
 private:
 	void processLogicalMap();
+	void calculateHCost(int y, int x);
 private:
 
 	mapNode nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];

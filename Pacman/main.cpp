@@ -21,33 +21,7 @@ int main()
 	//for(int i = 0;;)
 	//a.buildRouteAstar(10, 10);
 
-	mapNode omega;
-	omega.Gvalue = 10;
-	omega.Hvalue = 10;
-
-	BotLinkedList list;
-	std::cout << list.isEmpty() << std::endl;
-	mapNode a, b, c;
-
-	a.Hvalue = 2;
-	a.Gvalue = 2;
-
-	b.Hvalue = 1;
-	b.Gvalue = 1;
-
-	c.Hvalue = 6;
-	c.Gvalue = 9;
-
-	//list.enqueue(&b);
-	//list.enqueue(&c);
-	//list.enqueue(&omega);
-
-	list.dequeueFirst();
-	list.dequeueFirst();
-	list.dequeueFirst();
-	list.enqueue(&omega);
-
-	list.printAll();
+	char keepOn;
 
 	const unsigned int mapHeight = 14;
 	const unsigned int mapWidth = 20;
@@ -162,6 +136,13 @@ int main()
 	 
 	Map loadedMap(map1, mapHeight, mapWidth);
 
+	BotStack dummie(50);
+
+	loadedMap.buildRouteAstar(0, 1, 6, 6, dummie);
+	dummie.visualize();
+
+	std::cin >> keepOn;
+
 	Bot bot1(1, 6, 6, 0, 1, 1, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
 	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);
 	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap, 1);
@@ -172,7 +153,6 @@ int main()
 	player.setCurrentCommand('s');
 	player.setNextCommand(' ');
 	
-	char keepOn = 'a';
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
 	sf::Event evnt;
 

@@ -132,7 +132,7 @@ void BotLinkedList::printAll()
 	}
 	do
 	{
-		std::cout << current->mapnode->Hvalue << " " << current->mapnode->Gvalue << std::endl;
+		std::cout << current->mapnode->Hcost << " " << current->mapnode->Gcost << std::endl;
 	} while (moveCurrent());
 	resetCurrent();
 }

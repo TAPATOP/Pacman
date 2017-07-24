@@ -189,11 +189,20 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 	if (nodes[sourceY][sourceX].walkable == gv::wallSquare)
 	{
 		std::cout << "The source tile is not walkable??" << std::endl;
+		return;
 	}
+
+	if (nodes[destinationY][destinationX].walkable == gv::wallSquare)
+	{
+		std::cout << "DESTINATION TILE NOT WALKABLE ???????????!" << std::endl;
+		return;
+	}
+
+	calculateHCost(destinationY, destinationX);
 
 	BotLinkedList openList(&nodes[sourceY][sourceX]);
 	BotLinkedList closedList;
-	mapNode* current;
+	mapNode* current = nullptr;
 	mapNode* neighbour;
 
 	while (!openList.isEmpty())
@@ -206,9 +215,9 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		}
 		closedList.enqueue(current);
 
-		for (int i = -1; i < 1; i++)
+		for (int i = -1; i <= 1; i++)
 		{
-			for (int j = -1; j < 1; j++)
+			for (int j = -1; j <= 1; j++)
 			{
 				if (!isValidCoord(current->y + i, current->x + j)) continue; // in case it tries to reach nonexistant nodes
 				if (abs(i) == abs(j) ) continue; // checks only squares, who share a wall( not a tip) with the current one
@@ -221,11 +230,11 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 					) continue; // proceed to next node
 
 				if (
-					(gv::standardMovementCost + current->Gvalue ) < neighbour->Gvalue || // if new path to neighbor is shorter
+					(gv::standardMovementCost + current->Gcost ) < neighbour->Gcost || // if new path to neighbor is shorter
 					openList.isNodeQueued(neighbour) == 0 // or if neighbor is not in openList
 					)
 				{
-					neighbour->Gvalue = current->Gvalue + gv::standardMovementCost; // set Fcost
+					neighbour->Gcost = current->Gcost + gv::standardMovementCost; // set Fcost
 					neighbour->parent = current; // set parent of neighbor to current
 
 					if (openList.isNodeQueued(neighbour) == 0) // if neighbour is not in openList
@@ -240,6 +249,19 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 	// realizes A* algorithm, now we have the address of the target node in current and it's pointing to parents
 	// what's left now is to put the parents' coords in a BotStack so he can trace his route
 	//
+	if (current == nullptr)
+	{
+		std::cout << "current in A* is null" << std::endl;
+		return;
+	}
+	mapNode* source = &nodes[sourceY][sourceX];
+	destinationStack.push(current->y, current->x);
+
+	while (current->parent != source)
+	{
+		destinationStack.push(current->parent->y, current->parent->x);
+		current = current->parent;
+	}
 }
 
 
@@ -265,6 +287,18 @@ void Map::processLogicalMap()
 			{
 				nodes[i][j].knot = nodes[i][j].walkable;
 			}
+		}
+	}
+}
+
+void Map::calculateHCost(int destinationY, int destinationX)
+{
+	for (unsigned int i = 0; i < mapHeight; i++)
+	{
+		for (unsigned int j = 0; j < mapWidth; j++)
+		{
+			nodes[i][j].Hcost = 
+				abs(destinationY - (int)i) * gv::standardMovementCost + abs(destinationX - (int)j) * gv::standardMovementCost;
 		}
 	}
 }
