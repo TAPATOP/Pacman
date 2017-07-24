@@ -25,7 +25,7 @@ int main()
 	omega.Gvalue = 10;
 	omega.Hvalue = 10;
 
-	BotLinkedList list(&omega);
+	BotLinkedList list;
 
 	mapNode a, b, c;
 
@@ -38,17 +38,14 @@ int main()
 	c.Hvalue = 6;
 	c.Gvalue = 9;
 
-	list.enqueue(&a);
-	list.enqueue(&b);
-	list.enqueue(&c);
+	//list.enqueue(&b);
+	//list.enqueue(&c);
+	//list.enqueue(&omega);
+
+	list.dequeueFirst();
+	list.dequeueFirst();
+	list.dequeueFirst();
 	list.enqueue(&omega);
-
-	list.dequeue(&b);
-	list.enqueue(&b);
-
-	list.printAll();
-
-	std::cout << (list.dequeueFirst())->Hvalue << std::endl;
 
 	list.printAll();
 

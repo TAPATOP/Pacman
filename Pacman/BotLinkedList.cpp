@@ -111,12 +111,16 @@ void BotLinkedList::dequeue(mapNode* dequeueNode)
 
 mapNode* BotLinkedList::dequeueFirst()
 {
-	mapNode* returnedMapNode = first->mapnode;
-	resetCurrent(); // just in case
-	first = first->next;
-	delete current;
-	resetCurrent();
-	return returnedMapNode;
+	if (first != nullptr)
+	{
+		mapNode* returnedMapNode = first->mapnode;
+		resetCurrent(); // just in case
+		first = first->next;
+		delete current;
+		resetCurrent();
+		return returnedMapNode;
+	}
+	return nullptr;
 }
 
 
