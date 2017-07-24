@@ -84,7 +84,7 @@ void BotLinkedList::enqueue(mapNode* addMe)
 	resetCurrent();
 }
 
-void BotLinkedList::dequeue(mapNode * dequeueNode)
+void BotLinkedList::dequeue(mapNode* dequeueNode)
 {
 	if (first->mapnode == dequeueNode)
 	{
@@ -107,6 +107,16 @@ void BotLinkedList::dequeue(mapNode * dequeueNode)
 		delete current;
 	}
 	resetCurrent();
+}
+
+mapNode* BotLinkedList::dequeueFirst()
+{
+	mapNode* returnedMapNode = first->mapnode;
+	resetCurrent(); // just in case
+	first = first->next;
+	delete current;
+	resetCurrent();
+	return returnedMapNode;
 }
 
 

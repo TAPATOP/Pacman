@@ -17,6 +17,41 @@
 
 int main()
 {
+	//Bot a;
+	//for(int i = 0;;)
+	//a.buildRouteAstar(10, 10);
+
+	mapNode omega;
+	omega.Gvalue = 10;
+	omega.Hvalue = 10;
+
+	BotLinkedList list(&omega);
+
+	mapNode a, b, c;
+
+	a.Hvalue = 2;
+	a.Gvalue = 2;
+
+	b.Hvalue = 1;
+	b.Gvalue = 1;
+
+	c.Hvalue = 6;
+	c.Gvalue = 9;
+
+	list.enqueue(&a);
+	list.enqueue(&b);
+	list.enqueue(&c);
+	list.enqueue(&omega);
+
+	list.dequeue(&b);
+	list.enqueue(&b);
+
+	list.printAll();
+
+	std::cout << (list.dequeueFirst())->Hvalue << std::endl;
+
+	list.printAll();
+
 	const unsigned int mapHeight = 14;
 	const unsigned int mapWidth = 20;
 
@@ -129,7 +164,6 @@ int main()
 	//
 	 
 	Map loadedMap(map1, mapHeight, mapWidth);
-	loadedMap.printMap();
 
 	Bot bot1(1, 6, 6, 0, 1, 1, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
 	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);

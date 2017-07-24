@@ -12,6 +12,7 @@ public:
 
 	void enqueue(mapNode*);
 	void dequeue(mapNode*);
+	mapNode* dequeueFirst();
 
 	void printAll();
 
