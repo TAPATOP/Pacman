@@ -20,6 +20,8 @@ namespace gv
 	const int defaultValue = 0;
 	const int botValue = 500;
 
+	const int standardMovementCost = 10;
+
 	const unsigned int maxLoadedMapHeight = 100;
 	const unsigned int maxLoadedMapWidth = 100;
 

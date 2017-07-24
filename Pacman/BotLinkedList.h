@@ -15,6 +15,8 @@ public:
 	mapNode* dequeueFirst();
 
 	void printAll();
+	bool isEmpty();
+	bool isNodeQueued(mapNode*);
 
 	~BotLinkedList();
 private:

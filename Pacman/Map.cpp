@@ -175,6 +175,15 @@ void Map::printMap() const
 	std::cout << std::endl;
 }
 
+bool Map::isValidCoord(int y, int x)
+{
+	if (!(y >= 0 && y < mapHeight && x >= 0 && x < mapWidth))
+	{
+		return false;
+	}
+	return true;
+}
+
 void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack& destinationStack)
 {
 	if (nodes[sourceY][sourceX].walkable == gv::wallSquare)
@@ -184,7 +193,53 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 
 	BotLinkedList openList(&nodes[sourceY][sourceX]);
 	BotLinkedList closedList;
+	mapNode* current;
+	mapNode* neighbour;
 
+	while (!openList.isEmpty())
+	{
+		current = openList.dequeueFirst();
+		if (current->x == destinationX && current->y == destinationY)
+		{
+			std::cout << "I FOUND THE NODE!" << std::endl;
+			break;
+		}
+		closedList.enqueue(current);
+
+		for (int i = -1; i < 1; i++)
+		{
+			for (int j = -1; j < 1; j++)
+			{
+				if (!isValidCoord(current->y + i, current->x + j)) continue; // in case it tries to reach nonexistant nodes
+				if (abs(i) == abs(j) ) continue; // checks only squares, who share a wall( not a tip) with the current one
+				
+				neighbour = &nodes[current->y + i][current->x + j];
+
+				if (
+					neighbour->walkable == gv::wallSquare || // if neighbour is not traversible
+					closedList.isNodeQueued(neighbour) == 1  // or neighbor is in closedList
+					) continue; // proceed to next node
+
+				if (
+					(gv::standardMovementCost + current->Gvalue ) < neighbour->Gvalue || // if new path to neighbor is shorter
+					openList.isNodeQueued(neighbour) == 0 // or if neighbor is not in openList
+					)
+				{
+					neighbour->Gvalue = current->Gvalue + gv::standardMovementCost; // set Fcost
+					neighbour->parent = current; // set parent of neighbor to current
+
+					if (openList.isNodeQueued(neighbour) == 0) // if neighbour is not in openList
+					{
+						openList.enqueue(neighbour); // put neighbor in openList
+					}
+				}
+			}
+		}
+
+	} 
+	// realizes A* algorithm, now we have the address of the target node in current and it's pointing to parents
+	// what's left now is to put the parents' coords in a BotStack so he can trace his route
+	//
 }
 
 

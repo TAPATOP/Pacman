@@ -14,7 +14,7 @@ struct mapNode
 	int x;
 	int y;
 
-	int Gvalue;
-	int Hvalue;
+	int Gvalue = 0; // distance to home node
+	int Hvalue; // distance to destination node
 	mapNode* parent = nullptr;
 };

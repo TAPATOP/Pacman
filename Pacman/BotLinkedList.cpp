@@ -137,6 +137,26 @@ void BotLinkedList::printAll()
 	resetCurrent();
 }
 
+bool BotLinkedList::isEmpty()
+{
+	return (first == nullptr);
+}
+
+bool BotLinkedList::isNodeQueued(mapNode * checkMe)
+{
+	while (current != nullptr)
+	{
+		if (current->mapnode == checkMe)
+		{
+			resetCurrent();
+			return 1;
+		}
+		current = current->next;
+	}
+	resetCurrent();
+	return 0;
+}
+
 BotLinkedList::~BotLinkedList()
 {
 	resetCurrent();

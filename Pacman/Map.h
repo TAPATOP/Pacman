@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<cmath>
 
 #include"BotLinkedList.h"
 #include"BotStack.h"
@@ -26,6 +27,7 @@ public:
 
 	unsigned int countNearbyWalkableSquares(int y, int x) const;
 	void printMap() const;
+	bool isValidCoord(int y, int x);
 
 	void buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack& destinationStack);
 

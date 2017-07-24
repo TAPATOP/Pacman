@@ -26,7 +26,7 @@ int main()
 	omega.Hvalue = 10;
 
 	BotLinkedList list;
-
+	std::cout << list.isEmpty() << std::endl;
 	mapNode a, b, c;
 
 	a.Hvalue = 2;
