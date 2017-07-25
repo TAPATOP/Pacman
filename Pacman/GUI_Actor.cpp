@@ -65,7 +65,7 @@ int GUI_Actor::move()
 
 	Bot* bot = dynamic_cast<Bot*> (actor);
 	
-	if (bot != nullptr)
+	if (bot != nullptr && bot->getCheckMe())
 	{
 		if (bot->getIsGhost())
 		{
@@ -79,6 +79,7 @@ int GUI_Actor::move()
 		{
 			shape->setFillColor(defaultColor);
 		}
+		bot->setCheckMe(0);
 	}
 
 	if (dynamic_cast<Player*> (actor) != nullptr)

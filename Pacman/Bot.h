@@ -15,10 +15,12 @@ public:
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
 	void setID(int);
+	void setCheckMe(bool);
 
 	bool getIsVulnerable();
 	bool getIsGhost();
 	int getID();
+	bool getCheckMe();
 
 	ItskoVector2i move();
 	void die();
@@ -36,6 +38,8 @@ private:
 	bool isVulnerable;
 	bool isGhost;
 	unsigned int attackRange;
+
+	bool checkMe = 0;
 
 	int botID; // I want it manually set for now
 

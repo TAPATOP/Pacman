@@ -29,15 +29,21 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int
 void Bot::setIsVulnerable(bool isVulnerable)
 {
 	this->isVulnerable = isVulnerable;
+	checkMe = 1;
 }
 
 void Bot::setIsGhost(bool isGhost)
 {
 	this->isGhost = isGhost;
+	checkMe = 1;
 }
 void Bot::setID(int botID)
 {
 	this->botID = botID;
+}
+void Bot::setCheckMe(bool val)
+{
+	checkMe = val;
 }
 // SETTTERS above
 //
@@ -55,6 +61,10 @@ bool Bot::getIsGhost()
 int Bot::getID()
 {
 	return botID;
+}
+bool Bot::getCheckMe()
+{
+	return checkMe;
 }
 // GETTERS above
 //
@@ -109,8 +119,8 @@ ItskoVector2i Bot::move()
 
 void Bot::die()
 {
-	isVulnerable = 0;
-	isGhost = 1;
+	setIsVulnerable(0);
+	setIsGhost(1);
 
 	findRouteToDestination(map->getGhostHouseY(), map->getGhostHouseX());
 	setMovementProgress(0);
