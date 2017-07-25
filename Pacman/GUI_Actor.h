@@ -10,7 +10,7 @@ class GUI_Actor
 {
 public:
 	GUI_Actor();
-	GUI_Actor(Actor*, sf::Shape*, int squareSize, GUI_Map*);
+	GUI_Actor(Actor*, sf::Shape*, int squareSize, GUI_Map*, sf::Color defaultColor);
 
 	void setNextCommand(char command);
 	void setShapeSize(sf::Vector2f& vector);
@@ -29,6 +29,7 @@ public:
 private:
 	Actor* actor;
 	sf::Shape* shape;
+	sf::Color defaultColor;
 
 	int squareDisplaySize;
 	int xOffset = 0;

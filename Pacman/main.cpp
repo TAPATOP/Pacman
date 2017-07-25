@@ -167,11 +167,11 @@ int main()
 		squareDisplaySize /= mapHeight;
 	}
 
-	std::cout << squareDisplaySize << std::endl;
-
-	std::cout << squareDisplaySize * mapWidth << std::endl;
-
-	std::cout << squareDisplaySize * mapHeight << std::endl;
+	// std::cout << squareDisplaySize << std::endl;
+	// 
+	// std::cout << squareDisplaySize * mapWidth << std::endl;
+	// 
+	// std::cout << squareDisplaySize * mapHeight << std::endl;
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
@@ -186,11 +186,11 @@ int main()
 	int offsetX = squareDisplaySize;
 	int offsetY = 0;
 
-	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap);
-	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap);
-	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap);
-	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap);
-	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap);
+	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan);
+	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red);
+	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap, sf::Color::Blue);
+	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color::Magenta);
+	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::Green);
 
 	guiBot1.setShapePositionByOffset(offsetX, offsetY);
 	guiBot2.setShapePositionByOffset(offsetX, offsetY);
@@ -198,13 +198,6 @@ int main()
 	guiBot4.setShapePositionByOffset(offsetX, offsetY);
 	
 	guiPlayer.setShapePositionByOffset(offsetX, offsetY);
-
-	guiBot1.setFillColor(sf::Color::Cyan);
-	guiBot2.setFillColor(sf::Color::Red);
-	guiBot3.setFillColor(sf::Color::Blue);
-	guiBot4.setFillColor(sf::Color::Magenta);
-
-	guiPlayer.setFillColor(sf::Color::Green);
 
 	sf::Clock clock;
 

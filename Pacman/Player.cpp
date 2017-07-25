@@ -155,12 +155,16 @@ ItskoVector2i Player::move()
 }
 
 void Player::die()
- {
+{
 	for (int i = 0; i < allActorsCount; i++)
 	{
 		allActors[i]->resetPosition();
 		allActors[i]->setDX(0);
 		allActors[i]->setDY(0);
+		allActors[i]->setMovementProgress(0);
+		// resets Actor state
+		//
+
 		// allActors[i]->move();
 		Bot* bot = dynamic_cast<Bot*>(allActors[i]);
 		if (bot != nullptr)

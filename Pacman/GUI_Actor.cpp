@@ -7,13 +7,16 @@ GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GUI_Map* map)
+GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor)
 {
 	this->actor = actor;
 	this->shape = shape;
 	this->squareDisplaySize = squareDisplaySize;
 	guiMap = map;
 	allGUIActors[allGUIActorsCount++] = this;
+	this->shape->setFillColor(defaultColor);
+	this->defaultColor = defaultColor;
+
 }
 // CONSTRUCTORS above
 //
@@ -60,6 +63,24 @@ int GUI_Actor::move()
 {
 	ItskoVector2i movement = actor->move();
 
+	Bot* bot = dynamic_cast<Bot*> (actor);
+	
+	if (bot != nullptr)
+	{
+		if (bot->getIsGhost())
+		{
+			shape->setFillColor(sf::Color(128, 128, 128));
+		}
+		else if (bot->getIsVulnerable())
+		{
+			shape->setFillColor(sf::Color(128, 0, 128));
+		}
+		else
+		{
+			shape->setFillColor(defaultColor);
+		}
+	}
+
 	if (dynamic_cast<Player*> (actor) != nullptr)
 	{
 		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
@@ -75,9 +96,28 @@ int GUI_Actor::move()
 			allGUIActors[i]->resetPosition();
 		}
 	}
+	// in case the player has died, we need to reset the board
+	//
+
 	else
 	{
 		shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
+		//std::cout << actor->getMovementProgress() << " " << actor->getMovementSpeed() << " " << actor->getDX() << " " << squareDisplaySize << std::endl;
+		//std::cout << shape->getPosition().x << " " << (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * actor->getDX()) * squareDisplaySize << std::endl;
+		//if (actor->getMovementProgress() == 0)
+		//{
+		// shape->setPosition(shape->getPosition().x + movement.getX() * squareDisplaySize, shape->getPosition().y + movement.getY() * squareDisplaySize);
+		//
+		//}
+		//else
+		//{
+		//	shape->setPosition(
+		//		shape->getPosition().x + (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * (float)actor->getDX()) * (float)squareDisplaySize,
+		//		shape->getPosition().y + (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * (float)actor->getDY()) * (float)squareDisplaySize
+		//	);
+		//}
+		//char a;
+		//std::cin >> a;
 	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 	return 0;
