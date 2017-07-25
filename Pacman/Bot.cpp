@@ -165,6 +165,6 @@ void Bot::findRouteToDestination(int destinationY, int destinationX)
 
 	delete destinationStack;
 
-	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, *destinationStack);
+	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, destinationStack);
 	// destinationStack = new BotStack(50000);
 }

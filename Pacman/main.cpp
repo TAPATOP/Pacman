@@ -17,10 +17,6 @@
 
 int main()
 {
-	//Bot a;
-	//for(int i = 0;;)
-	//a.buildRouteAstar(10, 10);
-
 	char keepOn;
 
 	const unsigned int mapHeight = 14;
@@ -33,14 +29,14 @@ int main()
 		"....#####......#.#.#",
 		"#.#.......#.##.#.#.#",
 		"#.#.##.##.#.##.#.#.#",
-		"#.#.#...#.#.##.#.#.#",
+		"#.#.#.G.#.#.##.#.#.#",
 		"....#####....#.#.#.#",
 		".##1111111##.#.#.#.#",
 		".#####.#.###.#.#.#.#",
 		".#11111111111#.#.#.#",
 		".###.###.###.#.#.#.#",
 		".#...###.......#.#..",
-		"#22222222222##.....#"
+		"#22222222222##...#.#"
 	};
 
 	char* map2[] = {
@@ -136,12 +132,19 @@ int main()
 	 
 	Map loadedMap(map1, mapHeight, mapWidth);
 
-	BotStack dummie(50);
+	BotStack *dummie = new BotStack;
+	BotStack *dummie2 = new BotStack;
 
-	loadedMap.buildRouteAstar(0, 1, 6, 6, dummie);
-	dummie.visualize();
+	loadedMap.buildRouteAstar(0, 1, loadedMap.getGhostHouseY(), loadedMap.getGhostHouseX(), dummie);
+	(*dummie).visualize();
+
+	loadedMap.buildRouteAstar(12, 19, loadedMap.getGhostHouseY(), loadedMap.getGhostHouseX(), dummie2);
+	(*dummie2).visualize();
+
+	delete dummie;
 
 	std::cin >> keepOn;
+
 
 	Bot bot1(1, 6, 6, 0, 1, 1, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
 	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);

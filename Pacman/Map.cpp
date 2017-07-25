@@ -18,6 +18,8 @@ Map::Map()
 	this->mapWidth = 10;
 
 	valuableNodesCount = 0;
+	ghostHouseX = 0;
+	ghostHouseY = 0;
 
 	processLogicalMap();
 }
@@ -48,6 +50,13 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 		{
 			nodes[i][j].y = i;
 			nodes[i][j].x = j;
+			if (origMap[i][j] == gv::ghostHouse)
+			{
+				nodes[i][j].walkable = gv::walkableSquare;
+				ghostHouseX = j;
+				ghostHouseY = i;
+				continue;
+			}
 			if (origMap[i][j] == gv::smallBall)
 			{
 				nodes[i][j].value = gv::smallBallValue;
@@ -121,6 +130,14 @@ int Map::getValuableNodesCount() const
 {
 	return valuableNodesCount;
 }
+int Map::getGhostHouseX() const
+{
+	return ghostHouseX;
+}
+int Map::getGhostHouseY() const
+{
+	return ghostHouseY;
+}
 // GETTERS above
 //
 //
@@ -184,7 +201,7 @@ bool Map::isValidCoord(int y, int x)
 	return true;
 }
 
-void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack& destinationStack)
+void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &destinationStack)
 {
 	if (nodes[sourceY][sourceX].walkable == gv::wallSquare)
 	{
@@ -198,6 +215,11 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		return;
 	}
 
+	if (sourceX == destinationX && sourceY == destinationY)
+	{
+		std::cout << "You're already at your destination" << std::endl;
+		return;
+	}
 	calculateHCost(destinationY, destinationX);
 
 	BotLinkedList openList(&nodes[sourceY][sourceX]);
@@ -247,19 +269,22 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 
 	} 
 	// realizes A* algorithm, now we have the address of the target node in current and it's pointing to parents
-	// what's left now is to put the parents' coords in a BotStack so he can trace his route
 	//
+
 	if (current == nullptr)
 	{
 		std::cout << "current in A* is null" << std::endl;
 		return;
 	}
 	mapNode* source = &nodes[sourceY][sourceX];
-	destinationStack.push(current->y, current->x);
+	if (destinationStack != nullptr) delete destinationStack;
+
+	destinationStack = new BotStack(50);
+	(*destinationStack).push(current->y, current->x);
 
 	while (current->parent != source)
 	{
-		destinationStack.push(current->parent->y, current->parent->x);
+		(*destinationStack).push(current->parent->y, current->parent->x);
 		current = current->parent;
 	}
 }

@@ -24,22 +24,26 @@ public:
 	char getLogical(int y, int x) const;
 	int getValue(int y, int x) const;
 	int getValuableNodesCount() const;
+	int getGhostHouseX() const;
+	int getGhostHouseY() const;
 
 	unsigned int countNearbyWalkableSquares(int y, int x) const;
 	void printMap() const;
 	bool isValidCoord(int y, int x);
 
-	void buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack& destinationStack);
+	void buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &destinationStack);
 
 	~Map();
 private:
 	void processLogicalMap();
 	void calculateHCost(int y, int x);
 private:
-
 	mapNode nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
 	int valuableNodesCount;
 
 	unsigned int mapHeight;
 	unsigned int mapWidth;
+
+	int ghostHouseX; // where the ghosts go after dying
+	int ghostHouseY;
 };

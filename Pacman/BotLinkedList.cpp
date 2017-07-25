@@ -185,3 +185,5 @@ void BotLinkedList::resetCurrent()
 {
 	current = first;
 }
+
+// TO DO: Copy Constructor and = operator
