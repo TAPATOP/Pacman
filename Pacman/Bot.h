@@ -22,6 +22,7 @@ public:
 
 	ItskoVector2i move();
 	void die();
+	void deleteStack();
 
 	~Bot();
 private:

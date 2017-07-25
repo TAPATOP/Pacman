@@ -62,11 +62,17 @@ int Bot::getID()
 
 ItskoVector2i Bot::move()
 {
-	if (getMovementProgress() == 0 && destinationStack != nullptr && !(destinationStack->isEmpty() ) )
+	if (getMovementProgress() == 0 && destinationStack != nullptr && !(destinationStack->isEmpty()))
 	{
 		ItskoVector2i command = destinationStack->topNpop();
-		setDX(command.getX() - getX() );
-		setDY(command.getY() - getY() );
+		setDX(command.getX() - getX());
+		setDY(command.getY() - getY());
+
+		if (getX() + getDX() == map->getGhostHouseX() && getY() + getDY() == map->getGhostHouseY())
+		{
+			setIsGhost(0);
+		}
+		
 	}
 	else
 	{
@@ -103,11 +109,20 @@ ItskoVector2i Bot::move()
 
 void Bot::die()
 {
-	// isVulnerable = 0;
+	isVulnerable = 0;
 	isGhost = 1;
 
 	findRouteToDestination(map->getGhostHouseY(), map->getGhostHouseX());
 	setMovementProgress(0);
+}
+
+void Bot::deleteStack()
+{
+	if (destinationStack != nullptr)
+	{
+		delete destinationStack;
+		destinationStack = nullptr;
+	}
 }
 
 Bot::~Bot()
