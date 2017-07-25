@@ -132,30 +132,18 @@ int main()
 	 
 	Map loadedMap(map1, mapHeight, mapWidth);
 
-	BotStack *dummie = new BotStack;
-	BotStack *dummie2 = new BotStack;
-
-	loadedMap.buildRouteAstar(0, 1, loadedMap.getGhostHouseY(), loadedMap.getGhostHouseX(), dummie);
-	(*dummie).visualize();
-
-	loadedMap.buildRouteAstar(12, 19, loadedMap.getGhostHouseY(), loadedMap.getGhostHouseX(), dummie2);
-	(*dummie2).visualize();
-
-	delete dummie;
-
-	std::cin >> keepOn;
-
-
-	Bot bot1(1, 6, 6, 0, 1, 1, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
-	Bot bot2(19, 5, 6, 0, 1, 1, 0, &loadedMap, 1);
-	Bot bot3(3, 6, 7, 0, 1, 1, 0, &loadedMap, 1);
-	Bot bot4(4, 6, 5, 0, 1, 1, 0, &loadedMap, 1);
+	Bot bot1(1, 6, 6, 0, 1, 3, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
+	Bot bot2(19, 5, 6, 0, 1, 3, 0, &loadedMap, 1);
+	Bot bot3(3, 6, 7, 0, 1, 3, 0, &loadedMap, 1);
+	Bot bot4(4, 6, 5, 0, 1, 3, 0, &loadedMap, 1);
 	Player player(2, 3, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
-	player.setCurrentCommand('s');
-	player.setNextCommand(' ');
-	
+	bot1.setIsVulnerable(1);
+	bot2.setIsVulnerable(1);
+	bot3.setIsVulnerable(1);
+	bot4.setIsVulnerable(1);
+
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
 	sf::Event evnt;
 

@@ -215,11 +215,11 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		return;
 	}
 
-	if (sourceX == destinationX && sourceY == destinationY)
-	{
-		std::cout << "You're already at your destination" << std::endl;
-		return;
-	}
+	//f (sourceX == destinationX && sourceY == destinationY)
+	//
+	//	std::cout << "You're already at your destination" << std::endl;
+	//	return;
+	//
 	calculateHCost(destinationY, destinationX);
 
 	BotLinkedList openList(&nodes[sourceY][sourceX]);
@@ -232,7 +232,6 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		current = openList.dequeueFirst();
 		if (current->x == destinationX && current->y == destinationY)
 		{
-			std::cout << "I FOUND THE NODE!" << std::endl;
 			break;
 		}
 		closedList.enqueue(current);
@@ -280,11 +279,11 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 	if (destinationStack != nullptr) delete destinationStack;
 
 	destinationStack = new BotStack(50);
-	(*destinationStack).push(current->y, current->x);
+	destinationStack->push(current->y, current->x);
 
 	while (current->parent != source)
 	{
-		(*destinationStack).push(current->parent->y, current->parent->x);
+		destinationStack->push(current->parent->y, current->parent->x);
 		current = current->parent;
 	}
 }

@@ -62,40 +62,52 @@ int Bot::getID()
 
 ItskoVector2i Bot::move()
 {
-	if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
-		map->getLogical(getY(), getX()) == gv::knotSquare) // if the square the bot is on is a 'knot'
+	if (getMovementProgress() == 0 && destinationStack != nullptr && !(destinationStack->isEmpty() ) )
 	{
-		pickRandomDirection();
+		ItskoVector2i command = destinationStack->topNpop();
+		setDX(command.getX() - getX() );
+		setDY(command.getY() - getY() );
 	}
 	else
 	{
-		if (!canMove())
+		if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
+			map->getLogical(getY(), getX()) == gv::knotSquare) // if the square the bot is on is a 'knot'
 		{
-			if (getDX() == 0 && getDY() == 0)
+			pickRandomDirection();
+		}
+		else
+		{
+			if (!canMove())
 			{
-				pickRandomDirection();
+				if (getDX() == 0 && getDY() == 0)
+				{
+					pickRandomDirection();
+				}
+				else if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
+				{
+					cornerSolver();
+				}
+				else
+				{
+					reverseDirection();
+				}
+				// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
+				//
 			}
-			else if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
-			{
-				cornerSolver();
-			}
-			else
-			{
-				reverseDirection();
-			}
-			// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
+			// this if is AI logic- related
 			//
 		}
-		// this if is AI logic- related
-		//
 	}
 	return executeMoving();
 }
 
 void Bot::die()
 {
-	isVulnerable = 0;
+	// isVulnerable = 0;
 	isGhost = 1;
+
+	findRouteToDestination(map->getGhostHouseY(), map->getGhostHouseX());
+	setMovementProgress(0);
 }
 
 Bot::~Bot()
@@ -134,7 +146,7 @@ void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 		}
 	} while (!canMove() || (getDX() == origDX && getDY() == origDY));
 }
-// Picks random DX and DY, making sure they're different from the previous ones, unless
+// Picks random DX and DY, making sure they're not the opposite of the previous ones, unless
 // explicitly told not to make that check by giving a boolean value mustBeOppositeToOldDXDY = 0
 //
 
@@ -162,8 +174,6 @@ void Bot::reverseDirection()
 void Bot::findRouteToDestination(int destinationY, int destinationX)
 {
 	if (getY() == destinationY && getX() == destinationX) return;
-
-	delete destinationStack;
 
 	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, destinationStack);
 	// destinationStack = new BotStack(50000);

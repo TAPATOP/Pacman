@@ -259,6 +259,11 @@ void Player::makeNextCommandCurrent()
 
 ItskoVector2i Player::executeMoving()
 {
+	if (getDX() == 0 && getDY() == 0)
+	{
+		setMovementProgress(0);
+		return ItskoVector2i(0, 0);
+	}
 	if (getMovementProgress() >= getMovementSpeed())
 	{
 		map->setWalkable(getY(), getX(), '.');
@@ -309,7 +314,7 @@ int Player::checkCollision()
 				}
 				else // if the bot is not vulnerable => the player dies
 				{
-					bot->setIsGhost(1); // prevents cycling of the same bot killing the player infinitely
+					bot->setIsGhost(1); // prevents cycling of the same bot killing the player infinitely, it will be reset later on
 					return gv::playerDied; // state code for player death; shouldnt be executed immediately
 				}
 			}
@@ -323,7 +328,7 @@ int Player::checkCollision2()
 {
 	int collisionCode = 0;
 
-	if (map->getWalkable(getY(), getX()) != getDisplayChar())
+	if (map->getWalkable(getY(), getX()) != getDisplayChar()) // there is someone else on the current tile
 	{
 		bool playerHasDied = 0;
 
@@ -339,7 +344,7 @@ int Player::checkCollision2()
 			{
 				increaseScore(gv::botValue);
 			}
-		} while (collisionCode != 0);
+		} while (collisionCode != 0); // this allows the player to eat all the bots on the current square
 
 		if (playerHasDied == 1)
 		{
