@@ -34,6 +34,7 @@ private:
 	int checkCollision2();
 
 	void increaseScore(int increase);
+	void collectValue();
 private:
 	int score;
 	int lives;

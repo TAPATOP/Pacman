@@ -19,7 +19,7 @@ int main()
 {
 	char keepOn;
 
-	const unsigned int mapHeight = 14;
+	const unsigned int mapHeight = 20;
 	const unsigned int mapWidth = 20;
 
 	char* map1[] = {
@@ -127,22 +127,41 @@ int main()
 		"##......................####..........##"
 		"##......................####..........##"
 	};
+
+	char* map5[] =
+	{
+		"####################",
+		"#211111111111111112#",
+		"#1##1####1#####1##1#",
+		"#1##1##111111##1##1#",
+		"#1##1111####111###1#",
+		"#1111##1###11#11111#",
+		"#1##1##1###1###1##1#",
+		"#1##1#..........##1#",
+		"#1##111##.##1##1##1#",
+		"#1111#1#.G.#1##1111#",
+		"#1##111##.##1111##1#",
+		"#1##1####.#####1##1#",
+		"#11111........11111#",
+		"#1##1##1#1#1#1##1#1#",
+		"#1##1##1#1#1#1##111#",
+		"#1111##1#1#1#1####1#",
+		"#1##1111#1#11111##1#",
+		"#1##1####1#####1##1#",
+		"#211111111111111112#",
+		"####################"
+	};
 	// i'm just simulating a file, bro, ignore me
 	//
 	 
-	Map loadedMap(map1, mapHeight, mapWidth);
+	Map loadedMap(map5, mapHeight, mapWidth);
 
-	Bot bot1(1, 6, 6, 0, 1, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
-	Bot bot2(19, 5, 6, 0, 1, 3, &loadedMap, 1);
-	Bot bot3(3, 6, 7, 0, 1, 3, &loadedMap, 1);
-	Bot bot4(4, 6, 5, 0, 1, 3, &loadedMap, 1);
-	Player player(2, 3, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
+	Bot bot1(1, 9, 9, 0, 0, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
+	Bot bot2(19, 9, 8, 0, 0, 3, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 3, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 3, &loadedMap, 1);
+	Player player(14, 9, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
-
-	bot1.setIsVulnerable(1);
-	bot2.setIsVulnerable(1);
-	bot3.setIsVulnerable(1);
-	bot4.setIsVulnerable(1);
 
 	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
 	sf::Event evnt;
@@ -201,7 +220,8 @@ int main()
 
 	sf::Clock clock;
 
-	int gameStatus;
+	int gameStatus = 0;
+	bool messagePrinted = 0;
 
 	while (window.isOpen())
 	{
@@ -216,65 +236,54 @@ int main()
 				window.close();
 				break;
 			case sf::Event::TextEntered:
+				if (evnt.text.unicode == 'p')
+				{
+					char c;
+					std::cin >> c;
+				}
 				guiPlayer.setNextCommand(evnt.text.unicode);
 				break;
 			}
 		}
 
-		guiBot1.move();
-		guiBot2.move();
-		guiBot3.move();
-		guiBot4.move();
-		gameStatus = guiPlayer.move();
 
-		guiMap.draw(window);
-
-		guiBot1.draw(window);
-		guiBot2.draw(window);
-		guiBot3.draw(window);
-		guiBot4.draw(window);
-
-		guiPlayer.draw(window);
-
-		window.display();
-
-		if (gameStatus == 1)
+		if(gameStatus == 0)
 		{
-			std::cout << "YOU WIN" << std::endl;
-			break;
+			guiBot1.move();
+			guiBot2.move();
+			guiBot3.move();
+			guiBot4.move();
+			gameStatus = guiPlayer.move();
+
+			guiMap.draw(window);
+
+			guiBot1.draw(window);
+			guiBot2.draw(window);
+			guiBot3.draw(window);
+			guiBot4.draw(window);
+
+			guiPlayer.draw(window);
+
+			window.display();
 		}
-		else if (gameStatus == -1)
+		else if (gameStatus == -1 && !messagePrinted)
 		{
 			std::cout << "YOU LOSE" << std::endl;
-			break;
+			messagePrinted = 1;
 		}
+		else if (gameStatus == 1 && !messagePrinted)
+		{
+			std::cout << "YOU WIN" << std::endl;
+			messagePrinted = 1;
+		}
+		// by checking for status == 0 first we avoid checking status
+		// twice before moving the figures, and on top of that 0
+		// will be the most common value of gameStatus
+		//
+
 		// std:: cout << player.getScore() << std::endl;
 		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
 		// std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
-
-	//while (keepOn != '0')
-	//{
-	//	if (bot1.getMovementProgress() == 0)
-	//	{
-	//		loadedMap.printMap();
-	//		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//	}
-	//	//bot1.move();
-	//	//bot2.move();
-	//	//bot3.move();
-	//	//bot4.move();
-	//	if (
-	//		(player.getDX() == 0 && player.getDY() == 0)
-	//		)
-	//	{
-	//		std::cin >> keepOn;
-	//		player.setCurrentCommand(keepOn);
-	//		std::cin >> keepOn;
-	//		player.setNextCommand(keepOn);
-	//		player.setMovementProgress(1);
-	//	}
-	//	player.move();
-	//}
 	return 0;
 }

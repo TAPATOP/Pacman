@@ -65,51 +65,6 @@ int GUI_Actor::move()
 
 	Bot* bot = dynamic_cast<Bot*> (actor);
 	
-	if (bot != nullptr)
-	{
-		if (bot->getCheckMe())
-		{
-			if (bot->getIsGhost())
-			{
-				shape->setFillColor(sf::Color(128, 128, 128));
-			}
-			else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
-			{
-				shape->setFillColor(sf::Color(128, 64, 0));
-			}
-			else if (bot->getIsVulnerable())
-			{
-				shape->setFillColor(sf::Color(128, 0, 128));
-			}
-			else
-			{
-				shape->setFillColor(defaultColor);
-			}
-			bot->setCheckMe(0);
-		}
-	}
-	else
-	{
-		Player* player = dynamic_cast<Player*>(actor);
-
-		if (player != nullptr)
-		{
-			guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
-		}
-		
-		if (guiMap->getValuableNodesCount() <= 0)
-		{
-			return 1;
-		}
-		else if (player->getLives() <= 0)
-		{
-			return -1;
-		}
-		// the structure of this if is: if the actor is a bot, check some stuff, else the actor is a player, so check some stuff
-
-	}
-	// changes the given tile value to "collected"
-	//
 
 	if (movement.getStateCode() == gv::playerDied)
 	{
@@ -143,6 +98,51 @@ int GUI_Actor::move()
 		//std::cin >> a;
 	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
+	if (bot != nullptr)
+	{
+		if (bot->getCheckMe())
+		{
+			if (bot->getIsGhost())
+			{
+				shape->setFillColor(sf::Color(128, 128, 128));
+			}
+			else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
+			{
+				shape->setFillColor(sf::Color(128, 64, 0));
+			}
+			else if (bot->getIsVulnerable())
+			{
+				shape->setFillColor(sf::Color(128, 0, 128));
+			}
+			else
+			{
+				shape->setFillColor(defaultColor);
+			}
+			bot->setCheckMe(0);
+		}
+	}
+	else
+	{
+		Player* player = dynamic_cast<Player*>(actor);
+
+		if (player != nullptr)
+		{
+			guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
+		}
+		// changes the given tile value to "collected"
+
+		if (guiMap->getValuableNodesCount() <= 0)
+		{
+			return 1;
+		}
+		else if (player->getLives() <= 0)
+		{
+			return -1;
+		}
+	}
+	// the structure of this if is: if the actor is a bot, check some stuff, else the actor is a player, so check some stuff
+	//
+
 	return 0;
 }
 

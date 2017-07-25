@@ -200,6 +200,7 @@ void Actor::resetPosition()
 {
 	x = startingX;
 	y = startingY;
+	movementProgress = 0;
 }
 
 Actor::~Actor()

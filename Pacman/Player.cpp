@@ -148,6 +148,7 @@ ItskoVector2i Player::move()
 		}
 		else
 		{
+			collectValue();
 			return ItskoVector2i(0, 0);
 		}
 	}
@@ -288,29 +289,7 @@ ItskoVector2i Player::executeMoving()
 		map->setWalkable(getY(), getX(), getDisplayChar());
 		setMovementProgress(0);
 
-		int nodeVal = map->getValue(getY(), getX());
-
-		if (nodeVal != gv::defaultValue)
-		{
-			if (nodeVal == gv::bigBallValue)
-			{
-				for (int i = 0; i < allActorsCount; i++)
-				{
-					Bot* bot = dynamic_cast<Bot*> (allActors[i]);
-					if (bot != nullptr && bot->getIsGhost() != 1)
-					{
-						bot->setIsVulnerable(1);
-					}
-				}
-			}
-			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
-		}
-		if (nodeVal != 0)
-		{
-			increaseScore(nodeVal);
-		}
-
-		map->setValue(getY(), getX(), gv::defaultValue);
+		collectValue();
 		// calculates the score
 		// this is the way it is because this way you can make default nodes have
 		// a negative value
@@ -385,6 +364,32 @@ void Player::increaseScore(int increase)
 {
 	score += increase;
 	std::cout << "Score: " << score << std::endl;
+}
+void Player::collectValue()
+{
+	int nodeVal = map->getValue(getY(), getX());
+
+	if (nodeVal != gv::defaultValue)
+	{
+		if (nodeVal == gv::bigBallValue)
+		{
+			for (int i = 0; i < allActorsCount; i++)
+			{
+				Bot* bot = dynamic_cast<Bot*> (allActors[i]);
+				if (bot != nullptr && bot->getIsGhost() != 1)
+				{
+					bot->setIsVulnerable(1);
+				}
+			}
+		}
+		map->setValuableNodesCount(map->getValuableNodesCount() - 1);
+	}
+	if (nodeVal != 0)
+	{
+		increaseScore(nodeVal);
+	}
+
+	map->setValue(getY(), getX(), gv::defaultValue);
 }
 // returns what type of collision there is- either botDied or playerDied
 //
