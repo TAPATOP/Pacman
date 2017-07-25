@@ -380,6 +380,7 @@ int Player::checkCollision2()
 void Player::increaseScore(int increase)
 {
 	score += increase;
+	std::cout << "Score: " << score << std::endl;
 }
 // returns what type of collision there is- either botDied or playerDied
 //

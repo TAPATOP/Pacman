@@ -5,16 +5,15 @@
 Bot::Bot()
 {
 	isVulnerable = 0;
-	attackRange = 0;
 	isGhost = 0;
 }
 
 Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed,
-	unsigned int attackRange, Map* map, char displayChar) 
+	Map* map, char displayChar) 
 	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
 {
 	this->botID = botID;
-	this->attackRange = attackRange;
+
 	while (getDX() == 0 && getDY() == 0 || !canMove())
 	{
 		pickRandomDirection(0); // if the given dx or dy conflict with the map boundaries, this gives the bot valid deltas
@@ -30,6 +29,7 @@ void Bot::setIsVulnerable(bool isVulnerable)
 {
 	this->isVulnerable = isVulnerable;
 	checkMe = 1;
+	vulnerabilityTimer = 0;
 }
 
 void Bot::setIsGhost(bool isGhost)
@@ -66,12 +66,32 @@ bool Bot::getCheckMe()
 {
 	return checkMe;
 }
+int Bot::getVulnerabilityTimer()
+{
+	return vulnerabilityTimer;
+}
 // GETTERS above
 //
 //
 
 ItskoVector2i Bot::move()
 {
+	if (isVulnerable)
+	{
+		if (vulnerabilityTimer >= gv::VTimer)
+		{
+			setIsVulnerable(0); // the timer resets itself in that function
+		}
+		else
+		{
+			vulnerabilityTimer++;
+			if (vulnerabilityTimer >= (gv::VTimer / 10) * gv::blinkingTimer)
+			{
+				checkMe = 1; // used for announcing the end of vulnerability
+			}
+		}
+	}
+
 	if (getMovementProgress() == 0 && destinationStack != nullptr && !(destinationStack->isEmpty()))
 	{
 		ItskoVector2i command = destinationStack->topNpop();

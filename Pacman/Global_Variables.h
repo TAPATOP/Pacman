@@ -54,6 +54,13 @@ namespace gv
 	const int playerDied = 69;
 	const int botDied = 70;
 	const int emptyBotStack = 80;
+
+	//////////////////
+	/// MISC Below
+	/////////////////
+
+	const int VTimer = 90;
+	const int blinkingTimer = 7;
 }
 
 /// TO DO: Make controls work with capitalized letters

@@ -71,6 +71,10 @@ int GUI_Actor::move()
 		{
 			shape->setFillColor(sf::Color(128, 128, 128));
 		}
+		else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
+		{
+			shape->setFillColor(sf::Color(128, 64, 0));
+		}
 		else if (bot->getIsVulnerable())
 		{
 			shape->setFillColor(sf::Color(128, 0, 128));

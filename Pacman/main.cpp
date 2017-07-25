@@ -132,10 +132,10 @@ int main()
 	 
 	Map loadedMap(map1, mapHeight, mapWidth);
 
-	Bot bot1(1, 6, 6, 0, 1, 3, 0, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
-	Bot bot2(19, 5, 6, 0, 1, 3, 0, &loadedMap, 1);
-	Bot bot3(3, 6, 7, 0, 1, 3, 0, &loadedMap, 1);
-	Bot bot4(4, 6, 5, 0, 1, 3, 0, &loadedMap, 1);
+	Bot bot1(1, 6, 6, 0, 1, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
+	Bot bot2(19, 5, 6, 0, 1, 3, &loadedMap, 1);
+	Bot bot3(3, 6, 7, 0, 1, 3, &loadedMap, 1);
+	Bot bot4(4, 6, 5, 0, 1, 3, &loadedMap, 1);
 	Player player(2, 3, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
@@ -189,7 +189,7 @@ int main()
 	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan);
 	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red);
 	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap, sf::Color::Blue);
-	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color::Magenta);
+	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255));
 	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::Green);
 
 	guiBot1.setShapePositionByOffset(offsetX, offsetY);
@@ -203,8 +203,8 @@ int main()
 
 	while (window.isOpen())
 	{
-		if ((clock.getElapsedTime()).asMilliseconds() < 90) continue;
-		clock.restart();
+		//if ((clock.getElapsedTime()).asMilliseconds() < 90) continue;
+		//clock.restart();
 
 		while (window.pollEvent(evnt))
 		{

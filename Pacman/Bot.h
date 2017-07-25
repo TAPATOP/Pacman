@@ -10,7 +10,7 @@ class Bot :
 {
 public:
 	Bot();
-	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, unsigned int attackRange, Map* map, char displayChar);
+	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
 	
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
@@ -21,6 +21,7 @@ public:
 	bool getIsGhost();
 	int getID();
 	bool getCheckMe();
+	int getVulnerabilityTimer();
 
 	ItskoVector2i move();
 	void die();
@@ -37,9 +38,10 @@ public: void findRouteToDestination(int destinationY, int destinationX);
 private:
 	bool isVulnerable;
 	bool isGhost;
-	unsigned int attackRange;
 
 	bool checkMe = 0;
+
+	int vulnerabilityTimer = 0;
 
 	int botID; // I want it manually set for now
 
