@@ -276,11 +276,22 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		return;
 	}
 	mapNode* source = &nodes[sourceY][sourceX];
+	// mapNode* destination = current;
+	// 
+	// int stackSize = 0;
+	// while (current->parent != source)
+	// {
+	// 	stackSize++;
+	// 	current = current->parent;
+	// }
+	// 
+	// current = destination;
+
 	if (destinationStack != nullptr) delete destinationStack;
 
-	destinationStack = new BotStack(50);
+	destinationStack = new BotStack( (current->Gcost) / 10);
 	destinationStack->push(current->y, current->x);
-
+	
 	while (current->parent != source)
 	{
 		destinationStack->push(current->parent->y, current->parent->x);

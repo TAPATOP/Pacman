@@ -269,12 +269,16 @@ ItskoVector2i Player::executeMoving()
 		setMovementProgress(0);
 		return ItskoVector2i(0, 0);
 	}
-	if (getMovementProgress() >= getMovementSpeed())
+	// doesnt move if DX and DY are 0
+	//
+
+	if (getMovementProgress() >= getMovementSpeed()) // initiate actual movement
 	{
-		map->setWalkable(getY(), getX(), '.');
+		map->setWalkable(getY(), getX(), '.'); // write current tile as walkable
+
 		setX(getX() + getDX());
-		setY(getY() + getDY());
-		
+		setY(getY() + getDY()); // move according to dx and dy
+
 		int code = checkCollision2();
 		if (code == gv::playerDied)
 		{
@@ -288,6 +292,17 @@ ItskoVector2i Player::executeMoving()
 
 		if (nodeVal != gv::defaultValue)
 		{
+			if (nodeVal == gv::bigBallValue)
+			{
+				for (int i = 0; i < allActorsCount; i++)
+				{
+					Bot* bot = dynamic_cast<Bot*> (allActors[i]);
+					if (bot != nullptr && bot->getIsGhost() != 1)
+					{
+						bot->setIsVulnerable(1);
+					}
+				}
+			}
 			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
 		}
 		increaseScore(nodeVal);
