@@ -44,6 +44,11 @@ void GUI_Map::setRectangleRepresentation(int y, int x, sf::Color color)
 	guiMap[y][x]->setFillColor(color);
 }
 
+int GUI_Map::getValuableNodesCount()
+{
+	return map->getValuableNodesCount();
+}
+
 void GUI_Map::draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < height; i++)

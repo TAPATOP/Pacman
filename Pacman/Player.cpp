@@ -172,8 +172,8 @@ void Player::die()
 			bot->setIsGhost(0);
 			bot->deleteStack();
 		}
-		lives--;
 	}
+	lives--;
 }
 
 bool Player::isValidControl(char command)
@@ -305,7 +305,11 @@ ItskoVector2i Player::executeMoving()
 			}
 			map->setValuableNodesCount(map->getValuableNodesCount() - 1);
 		}
-		increaseScore(nodeVal);
+		if (nodeVal != 0)
+		{
+			increaseScore(nodeVal);
+		}
+
 		map->setValue(getY(), getX(), gv::defaultValue);
 		// calculates the score
 		// this is the way it is because this way you can make default nodes have

@@ -65,37 +65,55 @@ int GUI_Actor::move()
 
 	Bot* bot = dynamic_cast<Bot*> (actor);
 	
-	if (bot != nullptr && bot->getCheckMe())
+	if (bot != nullptr)
 	{
-		if (bot->getIsGhost())
+		if (bot->getCheckMe())
 		{
-			shape->setFillColor(sf::Color(128, 128, 128));
+			if (bot->getIsGhost())
+			{
+				shape->setFillColor(sf::Color(128, 128, 128));
+			}
+			else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
+			{
+				shape->setFillColor(sf::Color(128, 64, 0));
+			}
+			else if (bot->getIsVulnerable())
+			{
+				shape->setFillColor(sf::Color(128, 0, 128));
+			}
+			else
+			{
+				shape->setFillColor(defaultColor);
+			}
+			bot->setCheckMe(0);
 		}
-		else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
-		{
-			shape->setFillColor(sf::Color(128, 64, 0));
-		}
-		else if (bot->getIsVulnerable())
-		{
-			shape->setFillColor(sf::Color(128, 0, 128));
-		}
-		else
-		{
-			shape->setFillColor(defaultColor);
-		}
-		bot->setCheckMe(0);
 	}
-
-	if (dynamic_cast<Player*> (actor) != nullptr)
+	else
 	{
-		guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
+		Player* player = dynamic_cast<Player*>(actor);
+
+		if (player != nullptr)
+		{
+			guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
+		}
+		
+		if (guiMap->getValuableNodesCount() <= 0)
+		{
+			return 1;
+		}
+		else if (player->getLives() <= 0)
+		{
+			return -1;
+		}
+		// the structure of this if is: if the actor is a bot, check some stuff, else the actor is a player, so check some stuff
+
 	}
 	// changes the given tile value to "collected"
 	//
 
 	if (movement.getStateCode() == gv::playerDied)
 	{
-		std::cout << "Player is kill" << std::endl;
+		std::cout << "Player is kill. Lives left: " << dynamic_cast<Player*>(actor)->getLives() << std::endl;
 		for (int i = 0; i < allGUIActorsCount; i++)
 		{
 			allGUIActors[i]->resetPosition();

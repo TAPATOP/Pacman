@@ -12,6 +12,8 @@ public:
 
 	void setRectangleRepresentation(int y, int x, sf::Color color);
 
+	int getValuableNodesCount();
+
 	void draw(sf::RenderWindow&);
 
 	~GUI_Map();

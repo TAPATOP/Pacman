@@ -201,10 +201,12 @@ int main()
 
 	sf::Clock clock;
 
+	int gameStatus;
+
 	while (window.isOpen())
 	{
-		//if ((clock.getElapsedTime()).asMilliseconds() < 90) continue;
-		//clock.restart();
+		if ((clock.getElapsedTime()).asMilliseconds() < 90) continue;
+		clock.restart();
 
 		while (window.pollEvent(evnt))
 		{
@@ -223,7 +225,7 @@ int main()
 		guiBot2.move();
 		guiBot3.move();
 		guiBot4.move();
-		guiPlayer.move();
+		gameStatus = guiPlayer.move();
 
 		guiMap.draw(window);
 
@@ -235,6 +237,17 @@ int main()
 		guiPlayer.draw(window);
 
 		window.display();
+
+		if (gameStatus == 1)
+		{
+			std::cout << "YOU WIN" << std::endl;
+			break;
+		}
+		else if (gameStatus == -1)
+		{
+			std::cout << "YOU LOSE" << std::endl;
+			break;
+		}
 		// std:: cout << player.getScore() << std::endl;
 		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
 		// std::this_thread::sleep_for(std::chrono::milliseconds(10));
