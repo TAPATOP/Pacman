@@ -184,7 +184,7 @@ int main()
 	{
 		squareDisplaySize /= mapHeight;
 	}
-
+	squareDisplaySize = 30;
 	// std::cout << squareDisplaySize << std::endl;
 	// 
 	// std::cout << squareDisplaySize * mapWidth << std::endl;
@@ -193,7 +193,10 @@ int main()
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
-	GUI_Map guiMap(loadedMap, squareSize);
+	int offsetX = squareDisplaySize;
+	int offsetY = squareDisplaySize;
+
+	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX);
 
 	sf::RectangleShape rect1(squareSize);
 	sf::RectangleShape rect2(squareSize);
@@ -201,8 +204,6 @@ int main()
 	sf::RectangleShape rect4(squareSize);
 	sf::RectangleShape playerRect(squareSize);
 	
-	int offsetX = squareDisplaySize;
-	int offsetY = 0;
 
 	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan);
 	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red);
@@ -218,6 +219,24 @@ int main()
 	guiPlayer.setShapePositionByOffset(offsetX, offsetY);
 
 	sf::Clock clock;
+	//
+	//
+
+	sf::Font font;
+
+	if (!font.loadFromFile("sansation.ttf"))
+	{
+		std::cout << "Font error" << std::endl;
+		return 1;
+	}
+
+	sf::Text score;
+	score.setFont(font);
+	score.setCharacterSize(squareDisplaySize);
+
+	std::string scoreString("0");
+	// Text initialization above
+	//
 
 	int gameStatus = 0;
 	bool messagePrinted = 0;
@@ -248,6 +267,8 @@ int main()
 
 		if(gameStatus == 0)
 		{
+			window.clear();
+
 			guiBot1.move();
 			guiBot2.move();
 			guiBot3.move();
@@ -262,6 +283,11 @@ int main()
 			guiBot4.draw(window);
 
 			guiPlayer.draw(window);
+
+
+			scoreString = std::to_string(player.getScore());
+			score.setString("SCORE: " + scoreString);
+			window.draw(score);
 
 			window.display();
 		}
@@ -279,10 +305,6 @@ int main()
 		// twice before moving the figures, and on top of that 0
 		// will be the most common value of gameStatus
 		//
-
-		// std:: cout << player.getScore() << std::endl;
-		// std::cout << loadedMap.getValuableNodesCount() << std::endl;
-		// std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 	return 0;
 }
