@@ -120,6 +120,11 @@ ItskoVector2i Player::move()
 	// firstly checks if there is a bot/collision on the current location
 	//
 
+	if (getMovementProgress() == 0)
+	{
+		collectValue();
+	}
+
 	if (
 		nextCommand != controls.neutral &&
 		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks?
@@ -148,7 +153,6 @@ ItskoVector2i Player::move()
 		}
 		else
 		{
-			collectValue();
 			return ItskoVector2i(0, 0);
 		}
 	}
@@ -219,6 +223,7 @@ void Player::executeCurrentCommand()
 	{
 		setDY(0);
 		setDX(0);
+		setMovementProgress(0);
 	}
 }
 // Changes dx and dy to match the command's effect
@@ -289,12 +294,6 @@ ItskoVector2i Player::executeMoving()
 		map->setWalkable(getY(), getX(), getDisplayChar());
 		setMovementProgress(0);
 
-		collectValue();
-		// calculates the score
-		// this is the way it is because this way you can make default nodes have
-		// a negative value
-		//
-
 		return ItskoVector2i(getDY(), getDX());
 	}
 	setMovementProgress(getMovementProgress() + 1);
@@ -360,6 +359,9 @@ int Player::checkCollision2()
 	}
 	return 0;
 }
+// returns what type of collision there is- either botDied or playerDied
+//
+
 void Player::increaseScore(int increase)
 {
 	score += increase;
@@ -391,7 +393,10 @@ void Player::collectValue()
 
 	map->setValue(getY(), getX(), gv::defaultValue);
 }
-// returns what type of collision there is- either botDied or playerDied
+// calculates the score
+// this is the way it is because this way you can make default nodes have
+// a negative value
 //
+
 
 /// TO DO: Think of better names for checkCollision() and checkCollision2()

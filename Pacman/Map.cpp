@@ -72,6 +72,7 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 				continue;
 			}
 
+			nodes[i][j].value = gv::defaultValue;
 			nodes[i][j].walkable = origMap[i][j];
 		}
 	}

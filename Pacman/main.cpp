@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <chrono>
-#include <thread>
+#include <string>
 
 #include "Actor.h"
 #include "Bot.h"
