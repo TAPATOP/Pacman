@@ -194,7 +194,7 @@ int main()
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
 	int offsetX = squareDisplaySize;
-	int offsetY = squareDisplaySize + 15;
+	int offsetY = squareDisplaySize;
 
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX);
 
@@ -211,10 +211,10 @@ int main()
 	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255));
 	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::Green);
 
-	guiBot1.setShapePositionByOffset(offsetX, offsetY);
-	guiBot2.setShapePositionByOffset(offsetX, offsetY);
-	guiBot3.setShapePositionByOffset(offsetX, offsetY);
-	guiBot4.setShapePositionByOffset(offsetX, offsetY);
+	//guiBot1.setShapePositionByOffset(offsetX, offsetY);
+	//guiBot2.setShapePositionByOffset(offsetX, offsetY);
+	//guiBot3.setShapePositionByOffset(offsetX, offsetY);
+	//guiBot4.setShapePositionByOffset(offsetX, offsetY);
 	
 	guiPlayer.setShapePositionByOffset(offsetX, offsetY);
 

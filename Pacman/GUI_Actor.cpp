@@ -17,6 +17,7 @@ GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GU
 	this->shape->setFillColor(defaultColor);
 	this->defaultColor = defaultColor;
 
+	setShapePositionByOffset(map->getYOffset(), map->getXOffset());
 }
 // CONSTRUCTORS above
 //

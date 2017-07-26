@@ -14,6 +14,8 @@ public:
 	void setOffset(int yOffset, int xOffset);
 
 	int getValuableNodesCount();
+	int getYOffset();
+	int getXOffset();
 
 	void draw(sf::RenderWindow&);
 

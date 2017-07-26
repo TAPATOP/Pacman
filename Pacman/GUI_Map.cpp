@@ -58,6 +58,16 @@ int GUI_Map::getValuableNodesCount()
 	return map->getValuableNodesCount();
 }
 
+int GUI_Map::getYOffset()
+{
+	return yOffset;
+}
+
+int GUI_Map::getXOffset()
+{
+	return xOffset;
+}
+
 void GUI_Map::draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < height; i++)
