@@ -133,7 +133,7 @@ int main()
 		"#1##1##1###1###1##1#",
 		"#1##1#..........##1#",
 		"#1##111##.##1##1##1#",
-		"#1111#1#.G.#1##1111#",
+		"#1111#1#.H.#1##1111#",
 		"#1##111##.##1111##1#",
 		"#1##1####.#####1##1#",
 		"#11111........11111#",
@@ -177,14 +177,8 @@ int main()
 	}
 	else
 	{
-		squareDisplaySize /= mapHeight;
+		squareDisplaySize /= (mapHeight + 1);
 	}
-	squareDisplaySize = 30;
-	// std::cout << squareDisplaySize << std::endl;
-	// 
-	// std::cout << squareDisplaySize * mapWidth << std::endl;
-	// 
-	// std::cout << squareDisplaySize * mapHeight << std::endl;
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
@@ -192,9 +186,9 @@ int main()
 	int offsetY = squareDisplaySize;
 
 	sf::Texture mapTexture;
-	mapTexture.loadFromFile("MapTiles.bmp");
+	mapTexture.loadFromFile("Textures/MapTiles.bmp");
 
-	unsigned int mapTextureSizeX = mapTexture.getSize().x / 4;
+	unsigned int mapTextureSizeX = mapTexture.getSize().x / 4; // 4 is the number of tiles in the loaded image file
 	unsigned int mapTextureSizeY = mapTexture.getSize().y; 
 	
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX, &mapTexture);
@@ -212,16 +206,9 @@ int main()
 	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255));
 	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::Green);
 
-	//guiBot1.setShapePositionByOffset(offsetX, offsetY);
-	//guiBot2.setShapePositionByOffset(offsetX, offsetY);
-	//guiBot3.setShapePositionByOffset(offsetX, offsetY);
-	//guiBot4.setShapePositionByOffset(offsetX, offsetY);
-	
-	guiPlayer.setShapePositionByOffset(offsetX, offsetY);
-
 	sf::Clock clock;
-	//
-	//
+	// 
+	// Text initialization above
 
 	sf::Font font;
 
@@ -240,7 +227,7 @@ int main()
 	sf::Text remainingLives;
 	remainingLives.setFont(font);
 	remainingLives.setCharacterSize(squareDisplaySize);
-	remainingLives.setPosition(0, squareDisplaySize);
+	remainingLives.setPosition(0, (float)squareDisplaySize);
 
 	std::string livesString("LIVES: 69");
 	// Text initialization above

@@ -75,7 +75,7 @@ int GUI_Actor::move()
 
 	else
 	{
-		shape->move(movement.getX() * squareDisplaySize, movement.getY() * squareDisplaySize);
+		shape->move((float)movement.getX() * squareDisplaySize, (float)movement.getY() * squareDisplaySize);
 		//std::cout << actor->getMovementProgress() << " " << actor->getMovementSpeed() << " " << actor->getDX() << " " << squareDisplaySize << std::endl;
 		//std::cout << shape->getPosition().x << " " << (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * actor->getDX()) * squareDisplaySize << std::endl;
 		//if (actor->getMovementProgress() == 0)

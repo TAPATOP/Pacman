@@ -8,7 +8,7 @@ namespace gv
 
 	const char wallSquare = '#';
 	const char walkableSquare = '.';
-	const char ghostHouse = 'G';
+	const char ghostHouse = 'H';
 	const char defaultPlayerDisplay = 'p';
 
 	const char knotSquare = 'k';

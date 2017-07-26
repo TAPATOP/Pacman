@@ -20,9 +20,6 @@ GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& squareVector, int yOffset, int xOff
 	textureSizeX = allTextures->getSize().x / 4;
 	textureSizeY = allTextures->getSize().y;
 
-	std::cout << textureSizeX * 2 << std::endl;
-	std::cout << textureSizeY << std::endl;
-
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
@@ -32,22 +29,18 @@ GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& squareVector, int yOffset, int xOff
 			if (map->getValue(i, j) == gv::smallBallValue)
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY));
-				//guiMap[i][j]->setFillColor(sf::Color::Yellow);
 			}
 			else if (map->getValue(i, j) == gv::bigBallValue)
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY));
-				//guiMap[i][j]->setFillColor(sf::Color::Color(100, 150, 10, 255));
 			}
 			else if (map->getWalkable(i, j) == '.')
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY));
-				//guiMap[i][j]->setFillColor(sf::Color::White);
 			}
 			else if (map->getWalkable(i, j) == '#')
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(0, 0, textureSizeX, textureSizeY));
-				//guiMap[i][j]->setFillColor(sf::Color::Black);
 			}
 			else
 			{

@@ -247,7 +247,7 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 	}
 	if (
 		(x + newDirections.getX()) < 0 ||
-		(x + newDirections.getX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
+		(int)(x + newDirections.getX()) > (int)(map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
 		map->getWalkable(y, x + (int)newDirections.getX()) == gv::wallSquare
 		)
 	{
@@ -256,7 +256,7 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 
 	if (
 		(y + newDirections.getY()) < 0 ||
-		(y + newDirections.getY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
+		(int)(y + newDirections.getY()) > (int)(map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
 		map->getWalkable(y + (int)newDirections.getY(), x) == gv::wallSquare
 		)
 	{

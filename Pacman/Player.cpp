@@ -231,8 +231,8 @@ void Player::executeCurrentCommand()
 
 ItskoVector2i Player::interpretCommand(char command)
 {
-	float returnDY;
-	float returnDX;
+	int returnDY;
+	int returnDX;
 
 	if (command == controls.up)
 	{

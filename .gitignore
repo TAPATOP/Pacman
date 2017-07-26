@@ -80,3 +80,5 @@ Release/Pacman.exe
 Release/Pacman.ipdb
 *.exe
 Pacman/Textures/MapTiles.bmp
+*.bmp
+*.exe

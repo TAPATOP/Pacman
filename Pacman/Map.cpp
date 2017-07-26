@@ -195,7 +195,7 @@ void Map::printMap() const
 
 bool Map::isValidCoord(int y, int x)
 {
-	if (!(y >= 0 && y < mapHeight && x >= 0 && x < mapWidth))
+	if (!(y >= 0 && y < (int)mapHeight && x >= 0 && x < (int)mapWidth))
 	{
 		return false;
 	}
