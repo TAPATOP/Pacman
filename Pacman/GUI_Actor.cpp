@@ -7,7 +7,7 @@ GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::Shape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor)
+GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor)
 {
 	this->actor = actor;
 	this->shape = shape;
@@ -33,12 +33,7 @@ void GUI_Actor::setNextCommand(char command)
 
 void GUI_Actor::setShapeSize(sf::Vector2f& vector)
 {
-	sf::RectangleShape* temp = dynamic_cast<sf::RectangleShape*>(shape);
-
-	if (temp != nullptr)
-	{
-		temp->setSize(vector);
-	}
+	shape->setSize(vector);
 }
 
 void GUI_Actor::setFillColor(sf::Color color)
@@ -128,7 +123,7 @@ int GUI_Actor::move()
 
 		if (player != nullptr)
 		{
-			guiMap->setRectangleRepresentation(actor->getY(), actor->getX(), sf::Color::White);
+			guiMap->setRectangleToCollected(actor->getY(), actor->getX());
 		}
 		// changes the given tile value to "collected"
 

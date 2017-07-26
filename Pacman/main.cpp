@@ -147,7 +147,7 @@ int main()
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
-	 
+
 	Map loadedMap(map5, mapHeight, mapWidth);
 
 	Bot bot1(1, 9, 9, 0, 0, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
@@ -191,7 +191,13 @@ int main()
 	int offsetX = squareDisplaySize;
 	int offsetY = squareDisplaySize;
 
-	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX);
+	sf::Texture mapTexture;
+	mapTexture.loadFromFile("MapTiles.bmp");
+
+	unsigned int mapTextureSizeX = mapTexture.getSize().x / 4;
+	unsigned int mapTextureSizeY = mapTexture.getSize().y; 
+	
+	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX, &mapTexture);
 
 	sf::RectangleShape rect1(squareSize);
 	sf::RectangleShape rect2(squareSize);

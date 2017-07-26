@@ -8,9 +8,10 @@ class GUI_Map
 {
 public:
 	GUI_Map();
-	GUI_Map(Map&, sf::Vector2f&, int yOffset, int xOffset);
+	GUI_Map(Map&, sf::Vector2f&, int yOffset, int xOffset, sf::Texture* allTextures);
 
 	void setRectangleRepresentation(int y, int x, sf::Color color);
+	void setRectangleToCollected(int y, int x);
 	void setOffset(int yOffset, int xOffset);
 
 	int getValuableNodesCount();
@@ -29,5 +30,9 @@ private:
 
 	int yOffset = 0;
 	int xOffset = 0;
+
+	sf::Texture* allTextures;
+	int textureSizeX;
+	int textureSizeY;
 };
 
