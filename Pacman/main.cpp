@@ -263,8 +263,26 @@ int main()
 			case sf::Event::TextEntered:
 				if (evnt.text.unicode == 'p')
 				{
-					char c;
-					std::cin >> c;
+					/// pause implementation beginning here ///
+					bool gameIsPaused = 1;
+					while (gameIsPaused)
+					{
+						window.pollEvent(evnt);
+						switch (evnt.type)
+						{
+						case sf::Event::Closed:
+							window.close();
+							break;
+						case sf::Event::TextEntered:
+							if (evnt.text.unicode != 'p')
+							{
+								gameIsPaused = 0;
+							}
+							break;
+						}
+					}
+					/// pause implementation end here ///
+
 				}
 				guiPlayer.setNextCommand(evnt.text.unicode);
 				break;

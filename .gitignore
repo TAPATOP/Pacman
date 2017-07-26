@@ -72,3 +72,7 @@ SFML/lib/sfml-audio-d.pdb
 *.log
 *.tmp
 Debug/sansation.ttf
+Release/Pacman.exe
+Release/sansation.ttf
+Release/Pacman.ipdb
+Release/Pacman.exe
