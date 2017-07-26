@@ -162,7 +162,7 @@ int main()
 	Player player(14, 9, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
-	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Alpha!", sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Open Beta!", sf::Style::Close);
 	sf::Event evnt;
 
 	unsigned int squareDisplaySize;
@@ -194,7 +194,7 @@ int main()
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
 	int offsetX = squareDisplaySize;
-	int offsetY = squareDisplaySize;
+	int offsetY = squareDisplaySize + 15;
 
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX);
 
@@ -234,7 +234,14 @@ int main()
 	score.setFont(font);
 	score.setCharacterSize(squareDisplaySize);
 
-	std::string scoreString("0");
+	std::string scoreString("SCORE: 0");
+
+	sf::Text remainingLives;
+	remainingLives.setFont(font);
+	remainingLives.setCharacterSize(squareDisplaySize);
+	remainingLives.setPosition(0, squareDisplaySize);
+
+	std::string livesString("LIVES: 69");
 	// Text initialization above
 	//
 
@@ -284,10 +291,13 @@ int main()
 
 			guiPlayer.draw(window);
 
-
 			scoreString = std::to_string(player.getScore());
 			score.setString("SCORE: " + scoreString);
 			window.draw(score);
+
+			livesString = std::to_string(player.getLives());
+			remainingLives.setString("LIVES: " + livesString);
+			window.draw(remainingLives);
 
 			window.display();
 		}
