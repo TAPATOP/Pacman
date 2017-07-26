@@ -8,10 +8,11 @@ namespace gv
 
 	const char wallSquare = '#';
 	const char walkableSquare = '.';
-	const char ghostHouse = 'H';
 	const char defaultPlayerDisplay = 'p';
 
 	const char knotSquare = 'k';
+	const char ghostHouseCenter = 'H';
+	const char ghostHouse = 'h';
 
 	const char smallBall = '1';
 	const char bigBall = '2';

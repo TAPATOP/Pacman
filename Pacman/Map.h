@@ -44,6 +44,6 @@ private:
 	unsigned int mapHeight;
 	unsigned int mapWidth;
 
-	int ghostHouseX; // where the ghosts go after dying
-	int ghostHouseY;
+	int ghostHouseCenterX; // where the ghosts go after dying
+	int ghostHouseCenterY;
 };

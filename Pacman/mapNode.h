@@ -8,7 +8,7 @@ struct mapNode
 		return Gcost + Hcost; // calculate it each time instead of storing it in yet another variable
 	}
 	char walkable = '.'; // walkable, wall or gate
-	char knot = 0; // if it's a knot or not
+	char logical = 0; // if it's a knot/ gate/ house or not
 	int value = gv::defaultValue; // emtpy, small ball or big ball
 
 	int x;

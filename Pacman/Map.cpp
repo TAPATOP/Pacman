@@ -18,8 +18,8 @@ Map::Map()
 	this->mapWidth = 10;
 
 	valuableNodesCount = 0;
-	ghostHouseX = 0;
-	ghostHouseY = 0;
+	ghostHouseCenterX = 0;
+	ghostHouseCenterY = 0;
 
 	processLogicalMap();
 }
@@ -50,11 +50,18 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 		{
 			nodes[i][j].y = i;
 			nodes[i][j].x = j;
+			if (origMap[i][j] == gv::ghostHouseCenter)
+			{
+				nodes[i][j].walkable = gv::walkableSquare;
+				nodes[i][j].logical = gv::ghostHouseCenter;
+				ghostHouseCenterX = j;
+				ghostHouseCenterY = i;
+				continue;
+			}
 			if (origMap[i][j] == gv::ghostHouse)
 			{
 				nodes[i][j].walkable = gv::walkableSquare;
-				ghostHouseX = j;
-				ghostHouseY = i;
+				nodes[i][j].logical = gv::ghostHouse;
 				continue;
 			}
 			if (origMap[i][j] == gv::smallBall)
@@ -121,7 +128,7 @@ char Map::getWalkable(int y, int x) const
 
 char Map::getLogical(int y, int x) const
 {
-	return nodes[y][x].knot;
+	return nodes[y][x].logical;
 }
 int Map::getValue(int y, int x) const
 {
@@ -133,11 +140,11 @@ int Map::getValuableNodesCount() const
 }
 int Map::getGhostHouseX() const
 {
-	return ghostHouseX;
+	return ghostHouseCenterX;
 }
 int Map::getGhostHouseY() const
 {
-	return ghostHouseY;
+	return ghostHouseCenterY;
 }
 // GETTERS above
 //
@@ -171,26 +178,26 @@ unsigned int Map::countNearbyWalkableSquares(int i, int j) const
 
 void Map::printMap() const
 {
-	//for (unsigned int i = 0; i < mapHeight; i++)
-	//{
-	//	for (unsigned int j = 0; j < mapWidth; j++)
-	//	{
-	//		std::cout << (char)nodes[i][j].walkable;
-	//	}
-	//	std::cout << std::endl;
-	//}
-
-	std::cout << std::endl;
-
 	for (unsigned int i = 0; i < mapHeight; i++)
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
-			std::cout << i << " " << j << " : " << nodes[i][j].y << " " << nodes[i][j].x << std::endl;
+			std::cout << (char)nodes[i][j].logical;
 		}
 		std::cout << std::endl;
 	}
-	std::cout << std::endl;
+
+	//std::cout << std::endl;
+	//
+	//for (unsigned int i = 0; i < mapHeight; i++)
+	//{
+	//	for (unsigned int j = 0; j < mapWidth; j++)
+	//	{
+	//		std::cout << i << " " << j << " : " << nodes[i][j].y << " " << nodes[i][j].x << std::endl;
+	//	}
+	//	std::cout << std::endl;
+	//}
+	//std::cout << std::endl;
 }
 
 bool Map::isValidCoord(int y, int x)
@@ -315,13 +322,17 @@ void Map::processLogicalMap()
 	{
 		for (j = 0; j < mapWidth; j++)
 		{
+			if (nodes[i][j].logical == gv::ghostHouse || nodes[i][j].logical == gv::ghostHouseCenter)
+			{
+				continue;
+			}
 			if (countNearbyWalkableSquares(i, j) > 2)
 			{
-				nodes[i][j].knot = gv::knotSquare;
+				nodes[i][j].logical = gv::knotSquare;
 			}
 			else
 			{
-				nodes[i][j].knot = nodes[i][j].walkable;
+				nodes[i][j].logical = nodes[i][j].walkable;
 			}
 		}
 	}

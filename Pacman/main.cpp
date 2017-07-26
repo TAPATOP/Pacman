@@ -132,9 +132,9 @@ int main()
 		"#1111##1###11#11111#",
 		"#1##1##1###1###1##1#",
 		"#1##1#..........##1#",
-		"#1##111##.##1##1##1#",
-		"#1111#1#.H.#1##1111#",
-		"#1##111##.##1111##1#",
+		"#1##111##h##1##1##1#",
+		"#1111#1#hHh#1##1111#",
+		"#1##111##h##1111##1#",
 		"#1##1####.#####1##1#",
 		"#11111........11111#",
 		"#1##1##1#1#1#1##1#1#",
@@ -147,13 +147,17 @@ int main()
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
+	std::cout << "Hmm" << std::endl;
 
 	Map loadedMap(map5, mapHeight, mapWidth);
+
+	loadedMap.printMap();
 
 	Bot bot1(1, 9, 9, 0, 0, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
 	Bot bot2(19, 9, 8, 0, 0, 3, &loadedMap, 1);
 	Bot bot3(3, 9, 10, 0, 0, 3, &loadedMap, 1);
 	Bot bot4(4, 8, 9, 0, 0, 3, &loadedMap, 1);
+
 	Player player(14, 9, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
@@ -276,7 +280,6 @@ int main()
 				break;
 			}
 		}
-
 
 		if(gameStatus == 0)
 		{

@@ -99,6 +99,11 @@ ItskoVector2i Bot::move()
 		setDX(command.getX() - getX());
 		setDY(command.getY() - getY());
 
+		if (getY() == 7)
+		{
+			ItskoVector2i a;
+		}
+
 		if (getX() + getDX() == map->getGhostHouseX() && getY() + getDY() == map->getGhostHouseY())
 		{
 			setIsGhost(0);
@@ -107,8 +112,14 @@ ItskoVector2i Bot::move()
 	}
 	else
 	{
+		if (isGhost)
+		{
+			return executeMoving();
+		}
+
+		char currentTile = map->getLogical(getY(), getX());
 		if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
-			map->getLogical(getY(), getX()) == gv::knotSquare) // if the square the bot is on is a 'knot'
+			currentTile == gv::knotSquare || currentTile == gv::ghostHouse || currentTile == gv::ghostHouseCenter) // if the square the bot is on is a 'knot'
 		{
 			pickRandomDirection();
 		}
@@ -222,5 +233,4 @@ void Bot::findRouteToDestination(int destinationY, int destinationX)
 	if (getY() == destinationY && getX() == destinationX) return;
 
 	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, destinationStack);
-	// destinationStack = new BotStack(50000);
 }

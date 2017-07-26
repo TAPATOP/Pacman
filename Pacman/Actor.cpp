@@ -213,30 +213,7 @@ Actor::~Actor()
 
 bool Actor::canMove() const
 {
-	if (dx == 0 && dy == 0)
-	{
-		return 0; // prevents cycling in case of no commands
-	}
-
-	if (
-		(x + dx) < 0 ||
-		((unsigned)x + dx) > (map->getMapWidth()) - 1 || // x + dx can be equal to width - 1, if the expression is true then there is an error
-		map->getWalkable(y, x + dx) == gv::wallSquare
-	   )
-	{
-		return 0; // error, e.g. can't move
-	}
-
-	if (
-		(y + dy) < 0 ||
-		((unsigned)y + dy) > (map->getMapHeight()) - 1 || // y + dy can be equal to height - 1, if the expression is true then there is an error
-		map->getWalkable(y + dy, x) == gv::wallSquare
-		)
-	{
-		return 0; // error, e.g. can't move
-	}
-
-	return 1; // no errors, e.g. can move
+	return canMove(ItskoVector2i(dy, dx));
 }
 
 bool Actor::canMove(ItskoVector2i& newDirections) const
@@ -260,9 +237,19 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 	{
 		return 0; // error, e.g. can't move
 	}
-	if (map->getWalkable(y + (int)newDirections.getY(), x + (int)newDirections.getX()) == gv::wallSquare)
+	char futureTile = map->getLogical(y + (int)newDirections.getY(), x + (int)newDirections.getX());
+	char currentTile = map->getLogical(y, x);
+
+	if ( futureTile == gv::wallSquare)
 	{
 		return 0;
+	}
+	if ( 
+		(currentTile != gv::ghostHouse && currentTile != gv::ghostHouseCenter) && 
+		(futureTile == gv::ghostHouse || futureTile == gv::ghostHouseCenter)
+		)
+	{
+		return 0; // actors cannot move back into the house if they aren't already in it
 	}
 
 	return 1; // no errors, e.g. can move
