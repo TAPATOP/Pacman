@@ -35,6 +35,7 @@ void Bot::setIsVulnerable(bool isVulnerable)
 void Bot::setIsGhost(bool isGhost)
 {
 	this->isGhost = isGhost;
+	setIsVulnerable(0);
 	checkMe = 1;
 }
 void Bot::setID(int botID)
