@@ -76,3 +76,7 @@ Release/Pacman.exe
 Release/sansation.ttf
 Release/Pacman.ipdb
 Release/Pacman.exe
+*.zip
+Release/Pacman.ipdb
+*.exe
+Pacman/Textures/MapTiles.bmp

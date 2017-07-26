@@ -10,14 +10,9 @@
 #include "Map.h"
 #include "Player.h"
 
-#include"BotStack.h"
-#include"mapNode.h"
-#include"BotLinkedList.h"
 
 int main()
 {
-	char keepOn;
-
 	const unsigned int mapHeight = 20;
 	const unsigned int mapWidth = 20;
 
@@ -263,7 +258,7 @@ int main()
 			case sf::Event::TextEntered:
 				if (evnt.text.unicode == 'p')
 				{
-					/// pause implementation beginning here ///
+					/// pause implementation begins here ///
 					bool gameIsPaused = 1;
 					while (gameIsPaused)
 					{
@@ -281,7 +276,7 @@ int main()
 							break;
 						}
 					}
-					/// pause implementation end here ///
+					/// pause implementation ends here ///
 
 				}
 				guiPlayer.setNextCommand(evnt.text.unicode);
