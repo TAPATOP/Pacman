@@ -25,7 +25,14 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicate
 
 	findRouteToDedicatedPoint();
 
-	botBehaviour = &Bot::defaultBehaviour;
+	if (botID == 1)
+	{
+		botBehaviour = &Bot::seekingBehaviour;
+	}
+	else
+	{
+		botBehaviour = &Bot::defaultBehaviour;
+	}
 }
 // CONSTRUCTORS above
 //
@@ -137,8 +144,14 @@ ItskoVector2i Bot::move()
 		}
 		// if the bot is a ghost, it can just move
 		//
-
-		(this->*botBehaviour)();
+		if (!isVulnerable)
+		{
+			(this->*botBehaviour)();
+		}
+		else
+		{
+			defaultBehaviour();
+		}
 	}
 	return executeMoving();
 }
@@ -268,6 +281,24 @@ void Bot::defaultBehaviour()
 			//
 		}
 	}
+}
+
+void Bot::seekingBehaviour()
+{
+	int playerX;
+	int playerY;
+
+	for (int i = 0; i < allActorsCount; i++)
+	{
+		Bot* casted = dynamic_cast<Bot*> (allActors[i]);
+		if (casted == nullptr)
+		{
+			playerX = allActors[i]->getX();
+			playerY = allActors[i]->getY();
+			break;
+		}
+	}
+	findRouteToDestination(playerY, playerX);
 }
 
 void Bot::findRouteToDestination(int destinationY, int destinationX)

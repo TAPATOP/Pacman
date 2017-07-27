@@ -38,6 +38,7 @@ private:
 	void (Bot::*botBehaviour)();
 
 	void defaultBehaviour();
+	void seekingBehaviour();
 
 
 public: void findRouteToDestination(int destinationY, int destinationX);
