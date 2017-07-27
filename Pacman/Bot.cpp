@@ -25,14 +25,14 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicate
 
 	findRouteToDedicatedPoint();
 
-	if (botID == 1)
+	//if (botID == 1)
 	{
 		botBehaviour = &Bot::seekingBehaviour;
 	}
-	else
-	{
-		botBehaviour = &Bot::defaultBehaviour;
-	}
+	//else
+	//{
+	//	botBehaviour = &Bot::defaultBehaviour;
+	//}
 }
 // CONSTRUCTORS above
 //
@@ -144,6 +144,8 @@ ItskoVector2i Bot::move()
 				setDX(command.getX() - getX());
 				setDY(command.getY() - getY());
 				return executeMoving();
+				// pops stack and executes
+				//
 			}
 
 			if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
@@ -159,6 +161,17 @@ ItskoVector2i Bot::move()
 				deleteStack();
 				setDX(0);
 				setDY(0);
+				(this->*botBehaviour)();
+
+				if (destinationStack != nullptr && !destinationStack->isEmpty())
+				{
+					ItskoVector2i command = destinationStack->topNpop();
+					setDX(command.getX() - getX());
+					setDY(command.getY() - getY());
+					return executeMoving();
+				}
+				// pops stack and executes
+				//
 			}
 			// deletes the stack, the reason this isnt in the above 'if' is because if it was, 
 			// it would only work correctly for traversing after bot's death
@@ -167,6 +180,7 @@ ItskoVector2i Bot::move()
 		// this else is responsible for extracting the destinationStack
 		//
 	}
+
 	return executeMoving();
 }
 
@@ -174,7 +188,7 @@ void Bot::die()
 {
 	setIsVulnerable(0);
 	setIsGhost(1);
-
+	
 	ghostBehaviour();
 }
 
@@ -295,6 +309,8 @@ void Bot::defaultBehaviour()
 		}
 	}
 }
+// pretty much random movement
+//
 
 void Bot::seekingBehaviour()
 {

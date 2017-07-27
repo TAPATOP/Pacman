@@ -223,11 +223,24 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		return;
 	}
 
-	//f (sourceX == destinationX && sourceY == destinationY)
-	//
-	//	std::cout << "You're already at your destination" << std::endl;
-	//	return;
-	//
+	bool sourceIsHouse = 0;
+	bool destinationIsHouse = 0;
+	bool canCrossHouse = 0;
+
+	if (nodes[sourceY][sourceX].logical == gc::ghostHouseCenter ||
+		nodes[sourceY][sourceX].logical == gc::ghostHouse)
+	{
+		sourceIsHouse = 1;
+	}
+
+	if (nodes[destinationY][destinationX].logical == gc::ghostHouseCenter ||
+		nodes[destinationY][destinationX].logical == gc::ghostHouse)
+	{
+		destinationIsHouse = 1;
+	}
+
+	canCrossHouse = destinationIsHouse || sourceIsHouse;
+
 	calculateHCost(destinationY, destinationX);
 
 	BotLinkedList openList(&nodes[sourceY][sourceX]);
@@ -254,9 +267,17 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 				neighbour = &nodes[current->y + i][current->x + j];
 
 				if (
-					neighbour->walkable == gc::wallSquare || // if neighbour is not traversible
+					neighbour->walkable == gc::wallSquare ||  // if neighbour is not traversible
 					closedList.isNodeQueued(neighbour) == 1  // or neighbor is in closedList
-					) continue; // proceed to next node
+					) 
+					{
+						continue;
+					}// proceed to next node
+
+				if (canCrossHouse == 0 && (neighbour->logical == gc::ghostHouse || neighbour->logical == gc::ghostHouseCenter))
+				{
+					continue;
+				}
 
 				if (
 					(gc::standardMovementCost + current->Gcost ) < neighbour->Gcost || // if new path to neighbor is shorter

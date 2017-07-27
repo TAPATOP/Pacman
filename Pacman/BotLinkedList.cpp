@@ -160,7 +160,8 @@ bool BotLinkedList::isNodeQueued(mapNode * checkMe)
 BotLinkedList::~BotLinkedList()
 {
 	resetCurrent();
-	while (current->next != nullptr)
+	// TO DO: while (current!= nullptr && current->next != nullptr)
+	while (current!= nullptr && current->next != nullptr)
 	{
 		listNode* nextNode = current->next;
 		delete current;
