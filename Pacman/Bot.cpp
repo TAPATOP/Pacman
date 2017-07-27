@@ -93,20 +93,25 @@ ItskoVector2i Bot::move()
 		}
 	}
 
-	if (getMovementProgress() == 0 && destinationStack != nullptr && !(destinationStack->isEmpty()))
+	if (destinationStack != nullptr )
 	{
-		ItskoVector2i command = destinationStack->topNpop();
-		setDX(command.getX() - getX());
-		setDY(command.getY() - getY());
-
-		if (getY() == 7)
+		if (getMovementProgress() == 0 && !(destinationStack->isEmpty()))
 		{
-			ItskoVector2i a;
+			ItskoVector2i command = destinationStack->topNpop();
+			setDX(command.getX() - getX());
+			setDY(command.getY() - getY());
 		}
-
-		if (getX() + getDX() == map->getGhostHouseX() && getY() + getDY() == map->getGhostHouseY())
+		else //if(getMovementProgress() + 1 >= getMovementSpeed())
 		{
-			setIsGhost(0);
+			if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
+			{
+				if (isGhost)
+				{
+					setIsGhost(0);
+				}
+				delete destinationStack;
+				destinationStack = nullptr;
+			}
 		}
 		
 	}
@@ -173,6 +178,11 @@ Bot::~Bot()
 
 void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 {
+	if (map->getLogical(getY(), getX()) == gv::ghostHouse || map->getLogical(getY(), getX()) == gv::ghostHouseCenter)
+	{
+		mustBeOppositeToOldDXDY = 0;
+	}
+
 	unsigned int br = 0;
 	int origDX = -getDX() * mustBeOppositeToOldDXDY;	// these make sure the bots do not go back to their old
 	int origDY = -getDY() * mustBeOppositeToOldDXDY;	// position when coming across a knot

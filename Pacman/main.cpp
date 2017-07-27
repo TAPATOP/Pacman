@@ -147,14 +147,11 @@ int main()
 	};
 	// i'm just simulating a file, bro, ignore me
 	//
-	std::cout << "Hmm" << std::endl;
 
 	Map loadedMap(map5, mapHeight, mapWidth);
 
-	loadedMap.printMap();
-
 	Bot bot1(1, 9, 9, 0, 0, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
-	Bot bot2(19, 9, 8, 0, 0, 3, &loadedMap, 1);
+	Bot bot2(2, 9, 8, 0, 0, 3, &loadedMap, 1);
 	Bot bot3(3, 9, 10, 0, 0, 3, &loadedMap, 1);
 	Bot bot4(4, 8, 9, 0, 0, 3, &loadedMap, 1);
 
