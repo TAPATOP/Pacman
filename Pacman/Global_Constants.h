@@ -1,6 +1,6 @@
 #pragma once
 
-namespace gv
+namespace gc
 {
 	///////////////////////
 	/// MAP- RELATED below

@@ -55,7 +55,7 @@ bool BotStack::pop()
 
 ItskoVector2i BotStack::top()
 {
-	if (isEmpty()) return ItskoVector2i(0, 0, gv::emptyBotStack);
+	if (isEmpty()) return ItskoVector2i(0, 0, gc::emptyBotStack);
 
 	return ItskoVector2i(coordinates[stackSize - 1].y, coordinates[stackSize - 1].x);
 }

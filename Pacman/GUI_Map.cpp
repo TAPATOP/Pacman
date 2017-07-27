@@ -26,11 +26,11 @@ GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& squareVector, int yOffset, int xOff
 		{
 			guiMap[i][j] = new sf::RectangleShape(squareVector);
 			guiMap[i][j]->setTexture(allTextures);
-			if (map->getValue(i, j) == gv::smallBallValue)
+			if (map->getValue(i, j) == gc::smallBallValue)
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY));
 			}
-			else if (map->getValue(i, j) == gv::bigBallValue)
+			else if (map->getValue(i, j) == gc::bigBallValue)
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY));
 			}

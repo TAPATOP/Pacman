@@ -8,7 +8,7 @@ Map::Map()
 	{
 		for (unsigned int j = 0; j < 10; j++)
 		{
-			nodes[i][j].walkable = gv::walkableSquare;
+			nodes[i][j].walkable = gc::walkableSquare;
 			nodes[i][j].y = i;
 			nodes[i][j].x = j;
 		}
@@ -28,16 +28,16 @@ Map::Map()
 
 Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 {
-	if (mapHeight > gv::maxLoadedMapHeight)
+	if (mapHeight > gc::maxLoadedMapHeight)
 	{
 		std::cout << "Warning: Given map height higher than allowed! Automatic fix incoming..." << std::endl;
-		mapHeight = gv::maxLoadedMapHeight;
+		mapHeight = gc::maxLoadedMapHeight;
 	}
 	
-	if (mapWidth > gv::maxLoadedMapWidth)
+	if (mapWidth > gc::maxLoadedMapWidth)
 	{
 		std::cout << "Warning: Given map width higher than allowed! Automatic fix incoming..." << std::endl;
-		mapWidth = gv::maxLoadedMapWidth;
+		mapWidth = gc::maxLoadedMapWidth;
 	}
 	// Bounds checks
 	//
@@ -50,36 +50,36 @@ Map::Map(char** const origMap, unsigned int mapHeight, unsigned int mapWidth)
 		{
 			nodes[i][j].y = i;
 			nodes[i][j].x = j;
-			if (origMap[i][j] == gv::ghostHouseCenter)
+			if (origMap[i][j] == gc::ghostHouseCenter)
 			{
-				nodes[i][j].walkable = gv::walkableSquare;
-				nodes[i][j].logical = gv::ghostHouseCenter;
+				nodes[i][j].walkable = gc::walkableSquare;
+				nodes[i][j].logical = gc::ghostHouseCenter;
 				ghostHouseCenterX = j;
 				ghostHouseCenterY = i;
 				continue;
 			}
-			if (origMap[i][j] == gv::ghostHouse)
+			if (origMap[i][j] == gc::ghostHouse)
 			{
-				nodes[i][j].walkable = gv::walkableSquare;
-				nodes[i][j].logical = gv::ghostHouse;
+				nodes[i][j].walkable = gc::walkableSquare;
+				nodes[i][j].logical = gc::ghostHouse;
 				continue;
 			}
-			if (origMap[i][j] == gv::smallBall)
+			if (origMap[i][j] == gc::smallBall)
 			{
-				nodes[i][j].value = gv::smallBallValue;
-				nodes[i][j].walkable = gv::walkableSquare;
+				nodes[i][j].value = gc::smallBallValue;
+				nodes[i][j].walkable = gc::walkableSquare;
 				valuableNodesCount++;
 				continue;
 			}
-			if (origMap[i][j] == gv::bigBall)
+			if (origMap[i][j] == gc::bigBall)
 			{
-				nodes[i][j].value = gv::bigBallValue;
-				nodes[i][j].walkable = gv::walkableSquare;
+				nodes[i][j].value = gc::bigBallValue;
+				nodes[i][j].walkable = gc::walkableSquare;
 				valuableNodesCount++;
 				continue;
 			}
 
-			nodes[i][j].value = gv::defaultValue;
+			nodes[i][j].value = gc::defaultValue;
 			nodes[i][j].walkable = origMap[i][j];
 		}
 	}
@@ -166,12 +166,12 @@ unsigned int Map::countNearbyWalkableSquares(int i, int j) const
 
 	unsigned int br = 0;
 
-	if (nodes[i][j].walkable == gv::wallSquare) return 0;
+	if (nodes[i][j].walkable == gc::wallSquare) return 0;
 
-	if (i + 1 < (int)mapHeight && nodes[i + 1][j].walkable != gv::wallSquare) br++; // square downwards
-	if (i - 1 >= 0 && nodes[i - 1][j].walkable != gv::wallSquare) br++; // square upwards
-	if (j - 1 >= 0 && nodes[i][j - 1].walkable != gv::wallSquare) br++; // square to the left
-	if (j + 1 < (int)mapWidth && nodes[i][j + 1].walkable != gv::wallSquare) br++; // square to the right
+	if (i + 1 < (int)mapHeight && nodes[i + 1][j].walkable != gc::wallSquare) br++; // square downwards
+	if (i - 1 >= 0 && nodes[i - 1][j].walkable != gc::wallSquare) br++; // square upwards
+	if (j - 1 >= 0 && nodes[i][j - 1].walkable != gc::wallSquare) br++; // square to the left
+	if (j + 1 < (int)mapWidth && nodes[i][j + 1].walkable != gc::wallSquare) br++; // square to the right
 
 	return br;
 }
@@ -182,7 +182,7 @@ void Map::printMap() const
 	{
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
-			std::cout << (char)nodes[i][j].logical;
+			std::cout << (char)nodes[i][j].walkable;
 		}
 		std::cout << std::endl;
 	}
@@ -211,13 +211,13 @@ bool Map::isValidCoord(int y, int x)
 
 void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &destinationStack)
 {
-	if (nodes[sourceY][sourceX].walkable == gv::wallSquare)
+	if (nodes[sourceY][sourceX].walkable == gc::wallSquare)
 	{
 		std::cout << "The source tile is not walkable??" << std::endl;
 		return;
 	}
 
-	if (nodes[destinationY][destinationX].walkable == gv::wallSquare)
+	if (nodes[destinationY][destinationX].walkable == gc::wallSquare)
 	{
 		std::cout << "DESTINATION TILE NOT WALKABLE ???????????!" << std::endl;
 		return;
@@ -254,16 +254,16 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 				neighbour = &nodes[current->y + i][current->x + j];
 
 				if (
-					neighbour->walkable == gv::wallSquare || // if neighbour is not traversible
+					neighbour->walkable == gc::wallSquare || // if neighbour is not traversible
 					closedList.isNodeQueued(neighbour) == 1  // or neighbor is in closedList
 					) continue; // proceed to next node
 
 				if (
-					(gv::standardMovementCost + current->Gcost ) < neighbour->Gcost || // if new path to neighbor is shorter
+					(gc::standardMovementCost + current->Gcost ) < neighbour->Gcost || // if new path to neighbor is shorter
 					openList.isNodeQueued(neighbour) == 0 // or if neighbor is not in openList
 					)
 				{
-					neighbour->Gcost = current->Gcost + gv::standardMovementCost; // set Fcost
+					neighbour->Gcost = current->Gcost + gc::standardMovementCost; // set Fcost
 					neighbour->parent = current; // set parent of neighbor to current
 
 					if (openList.isNodeQueued(neighbour) == 0) // if neighbour is not in openList
@@ -284,16 +284,6 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 		return;
 	}
 	mapNode* source = &nodes[sourceY][sourceX];
-	// mapNode* destination = current;
-	// 
-	// int stackSize = 0;
-	// while (current->parent != source)
-	// {
-	// 	stackSize++;
-	// 	current = current->parent;
-	// }
-	// 
-	// current = destination;
 
 	if (destinationStack != nullptr) delete destinationStack;
 
@@ -322,13 +312,13 @@ void Map::processLogicalMap()
 	{
 		for (j = 0; j < mapWidth; j++)
 		{
-			if (nodes[i][j].logical == gv::ghostHouse || nodes[i][j].logical == gv::ghostHouseCenter)
+			if (nodes[i][j].logical == gc::ghostHouse || nodes[i][j].logical == gc::ghostHouseCenter)
 			{
 				continue;
 			}
 			if (countNearbyWalkableSquares(i, j) > 2)
 			{
-				nodes[i][j].logical = gv::knotSquare;
+				nodes[i][j].logical = gc::knotSquare;
 			}
 			else
 			{
@@ -345,7 +335,7 @@ void Map::calculateHCost(int destinationY, int destinationX)
 		for (unsigned int j = 0; j < mapWidth; j++)
 		{
 			nodes[i][j].Hcost = 
-				abs(destinationY - (int)i) * gv::standardMovementCost + abs(destinationX - (int)j) * gv::standardMovementCost;
+				abs(destinationY - (int)i) * gc::standardMovementCost + abs(destinationX - (int)j) * gc::standardMovementCost;
 		}
 	}
 }

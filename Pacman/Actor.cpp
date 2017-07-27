@@ -5,13 +5,13 @@ Actor* Actor::allActors[Actor::maxActors];
 
 Actor::Actor()
 {
-	x = gv::defaultX; 
-	y = gv::defaultY; 
+	x = gc::defaultX; 
+	y = gc::defaultY; 
 
 	dx = 0; 
 	dy = 0; 
 
-	movementSpeed = gv::defaultMovementSpeed;
+	movementSpeed = gc::defaultMovementSpeed;
 	map = nullptr;
 
 	displayChar = 1;
@@ -24,7 +24,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	if (x < 0 || x > map->getMapWidth() - 1)
 	{
 		std::cout << "Warning, given x for Actor isn't a legit one. Automatically fixing this..." << std::endl;
-		this->x = gv::defaultX;
+		this->x = gc::defaultX;
 	}
 	else
 	{
@@ -35,7 +35,7 @@ Actor::Actor(unsigned int y, unsigned int x, int dy, int dx, unsigned int moveme
 	if (y < 0 || y > map->getMapHeight() - 1)
 	{
 		std::cout << "Warning, given x for Actor isn't a legit one. Automatically fixing this..." << std::endl;
-		this->y = gv::defaultY;
+		this->y = gc::defaultY;
 	}
 	else
 	{
@@ -75,7 +75,7 @@ Actor::Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned in
 	if (startingX < 0 || startingX > map->getMapWidth() - 1)
 	{
 		std::cout << "Warning, given startingX for Actor isn't a legit one. Automatically fixing this..." << std::endl;
-		this->startingX = gv::defaultX;
+		this->startingX = gc::defaultX;
 	}
 	else
 	{
@@ -85,7 +85,7 @@ Actor::Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned in
 	if (startingY < 0 || startingY > map->getMapHeight() - 1)
 	{
 		std::cout << "Warning, given startingY for Actor isn't a legit one. Automatically fixing this..." << std::endl;
-		this->startingY = gv::defaultY;
+		this->startingY = gc::defaultY;
 	}
 	else
 	{
@@ -240,13 +240,13 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 	char futureTile = map->getLogical(y + (int)newDirections.getY(), x + (int)newDirections.getX());
 	char currentTile = map->getLogical(y, x);
 
-	if ( futureTile == gv::wallSquare)
+	if ( futureTile == gc::wallSquare)
 	{
 		return 0;
 	}
 	if ( 
-		(currentTile != gv::ghostHouse && currentTile != gv::ghostHouseCenter) && 
-		(futureTile == gv::ghostHouse || futureTile == gv::ghostHouseCenter)
+		(currentTile != gc::ghostHouse && currentTile != gc::ghostHouseCenter) && 
+		(futureTile == gc::ghostHouse || futureTile == gc::ghostHouseCenter)
 		)
 	{
 		return 0; // actors cannot move back into the house if they aren't already in it

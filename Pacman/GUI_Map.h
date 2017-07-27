@@ -23,7 +23,7 @@ public:
 	~GUI_Map();
 private:
 	Map* map;
-	sf::RectangleShape* guiMap[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+	sf::RectangleShape* guiMap[gc::maxLoadedMapHeight][gc::maxLoadedMapWidth];
 
 	int height;
 	int width;

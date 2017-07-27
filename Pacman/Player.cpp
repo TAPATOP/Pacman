@@ -15,11 +15,11 @@ Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int move
 {
 	this->lives = lives;
 	
-	controls.up = gv::up;
-	controls.down = gv::down;
-	controls.left = gv::left;
-	controls.right = gv::right;
-	controls.stop = gv::stop;
+	controls.up = gc::up;
+	controls.down = gc::down;
+	controls.left = gc::left;
+	controls.right = gc::right;
+	controls.stop = gc::stop;
 
 	score = 0;
 	currentCommand = controls.neutral;
@@ -28,10 +28,8 @@ Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int move
 
 Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, 
 	Map * map, char displayChar, int lives, char up, char down, char left, char right, char stop)
-	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
+	: Player(y, x, dy, dx, movementSpeed, map, displayChar, lives)
 {
-	this->lives = lives;
-
 	controls.up = up;
 	controls.down = down;
 	controls.left = left;
@@ -65,7 +63,7 @@ void Player::setNextCommand(char command)
 {
 	if (!isValidControl(command)) return; // checks if 'command' is one of the controls is in 'controls'
 
-	if (command == gv::stop)
+	if (command == gc::stop)
 	{
 		setCurrentCommand(command);
 	}
@@ -113,7 +111,7 @@ int Player::getLives()
 ItskoVector2i Player::move()
 {
 	int code = checkCollision2();
-	if (code == gv::playerDied)
+	if (code == gc::playerDied)
 	{
 		return ItskoVector2i(0, 0, code); // the game stops when the player dies, so no need in continuing calculating stuff
 	}
@@ -127,7 +125,7 @@ ItskoVector2i Player::move()
 
 	if (
 		nextCommand != controls.neutral &&
-		map->getLogical(getY(), getX()) == gv::knotSquare && // might be abundant with following checks?
+		map->getLogical(getY(), getX()) == gc::knotSquare && // might be abundant with following checks?
 		getMovementProgress() == 0 && 
 		canMove(interpretCommand(nextCommand))
 		)
@@ -286,7 +284,7 @@ ItskoVector2i Player::executeMoving()
 		setY(getY() + getDY()); // move according to dx and dy
 
 		int code = checkCollision2();
-		if (code == gv::playerDied)
+		if (code == gc::playerDied)
 		{
 			return ItskoVector2i(0, 0, code);
 		}
@@ -312,12 +310,12 @@ int Player::checkCollision()
 				if (bot->getIsVulnerable() == 1) // if the bot is vulnerable => the bot dies
 				{
 					allActors[i]->die();
-					return gv::botDied;
+					return gc::botDied;
 				}
 				else // if the bot is not vulnerable => the player dies
 				{
 					bot->setIsGhost(1); // prevents cycling of the same bot killing the player infinitely, it will be reset later on
-					return gv::playerDied; // state code for player death; shouldnt be executed immediately
+					return gc::playerDied; // state code for player death; shouldnt be executed immediately
 				}
 			}
 		}
@@ -338,20 +336,20 @@ int Player::checkCollision2()
 		{
 			collisionCode = checkCollision();
 
-			if (collisionCode == gv::playerDied)
+			if (collisionCode == gc::playerDied)
 			{
 				playerHasDied = 1;
 			}
-			else if (collisionCode == gv::botDied)
+			else if (collisionCode == gc::botDied)
 			{
-				increaseScore(gv::botValue);
+				increaseScore(gc::botValue);
 			}
 		} while (collisionCode != 0); // this allows the player to eat all the bots on the current square
 
 		if (playerHasDied == 1)
 		{
 			die();
-			return gv::playerDied;
+			return gc::playerDied;
 		}
 		// 
 		/// TO DO: should be replaced with an iterator?
@@ -371,9 +369,9 @@ void Player::collectValue()
 {
 	int nodeVal = map->getValue(getY(), getX());
 
-	if (nodeVal != gv::defaultValue)
+	if (nodeVal != gc::defaultValue)
 	{
-		if (nodeVal == gv::bigBallValue)
+		if (nodeVal == gc::bigBallValue)
 		{
 			for (int i = 0; i < allActorsCount; i++)
 			{
@@ -391,7 +389,7 @@ void Player::collectValue()
 		increaseScore(nodeVal);
 	}
 
-	map->setValue(getY(), getX(), gv::defaultValue);
+	map->setValue(getY(), getX(), gc::defaultValue);
 }
 // calculates the score
 // this is the way it is because this way you can make default nodes have

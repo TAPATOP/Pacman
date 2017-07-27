@@ -4,11 +4,10 @@
 
 Bot::Bot()
 {
-	isVulnerable = 0;
-	isGhost = 0;
+	std::cout << "Bot default constructor called?" << std::endl;
 }
 
-Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed,
+Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicatedY, int dedicatedX, unsigned int movementSpeed,
 	Map* map, char displayChar) 
 	: Actor(y, x, dy, dx, movementSpeed, map, displayChar)
 {
@@ -20,6 +19,9 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int
 	}
 	isVulnerable = 0;
 	isGhost = 0;
+
+	this->dedicatedX = dedicatedX;
+	this->dedicatedY = dedicatedY;
 }
 // CONSTRUCTORS above
 //
@@ -79,16 +81,16 @@ ItskoVector2i Bot::move()
 {
 	if (isVulnerable)
 	{
-		if (vulnerabilityTimer >= gv::VTimer)
+		if (vulnerabilityTimer >= gc::VTimer)
 		{
 			setIsVulnerable(0); // the timer resets itself in that function
 		}
 		else
 		{
 			vulnerabilityTimer++;
-			if (vulnerabilityTimer >= (gv::VTimer / 10) * gv::blinkingTimer)
+			if (vulnerabilityTimer >= (gc::VTimer / 10) * gc::blinkingTimer)
 			{
-				checkMe = 1; // used for announcing the end of vulnerability
+				checkMe = 1; // used for announcing that the end of vulnerability is near, so the gui switches to "flashing" ghosts
 			}
 		}
 	}
@@ -101,17 +103,19 @@ ItskoVector2i Bot::move()
 			setDX(command.getX() - getX());
 			setDY(command.getY() - getY());
 		}
-		else //if(getMovementProgress() + 1 >= getMovementSpeed())
+
+		if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
 		{
-			if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
+			if (isGhost)
 			{
-				if (isGhost)
-				{
-					setIsGhost(0);
-				}
-				delete destinationStack;
-				destinationStack = nullptr;
+				setIsGhost(0);
 			}
+		}
+
+		if (destinationStack->isEmpty() && !isGhost)
+		{
+			delete destinationStack;
+			destinationStack = nullptr;
 		}
 		
 	}
@@ -124,7 +128,7 @@ ItskoVector2i Bot::move()
 
 		char currentTile = map->getLogical(getY(), getX());
 		if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
-			currentTile == gv::knotSquare || currentTile == gv::ghostHouse || currentTile == gv::ghostHouseCenter) // if the square the bot is on is a 'knot'
+			currentTile == gc::knotSquare || currentTile == gc::ghostHouse || currentTile == gc::ghostHouseCenter) // if the square the bot is on is a 'knot'
 		{
 			pickRandomDirection();
 		}
@@ -178,7 +182,7 @@ Bot::~Bot()
 
 void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 {
-	if (map->getLogical(getY(), getX()) == gv::ghostHouse || map->getLogical(getY(), getX()) == gv::ghostHouseCenter)
+	if (map->getLogical(getY(), getX()) == gc::ghostHouse || map->getLogical(getY(), getX()) == gc::ghostHouseCenter)
 	{
 		mustBeOppositeToOldDXDY = 0;
 	}
@@ -236,6 +240,20 @@ void Bot::reverseDirection()
 {
 	setDY(-getDY());
 	setDX(-getDX());
+}
+
+void Bot::resetPosition()
+{
+	Actor::resetPosition();
+}
+
+void Bot::findRouteToDedicatedPoint()
+{
+	if (destinationStack != nullptr)
+	{
+		delete destinationStack;
+	}
+	findRouteToDestination(dedicatedY, dedicatedX);
 }
 
 void Bot::findRouteToDestination(int destinationY, int destinationX)

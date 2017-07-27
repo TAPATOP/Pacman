@@ -62,7 +62,7 @@ int GUI_Actor::move()
 	Bot* bot = dynamic_cast<Bot*> (actor);
 	
 
-	if (movement.getStateCode() == gv::playerDied)
+	if (movement.getStateCode() == gc::playerDied)
 	{
 		std::cout << "Player is kill. Lives left: " << dynamic_cast<Player*>(actor)->getLives() << std::endl;
 		for (int i = 0; i < allGUIActorsCount; i++)
@@ -102,7 +102,7 @@ int GUI_Actor::move()
 			{
 				shape->setFillColor(sf::Color(128, 128, 128));
 			}
-			else if (bot->getVulnerabilityTimer() >= (gv::VTimer / 10) * gv::blinkingTimer)
+			else if (bot->getVulnerabilityTimer() >= (gc::VTimer / 10) * gc::blinkingTimer)
 			{
 				shape->setFillColor(sf::Color(128, 64, 0));
 			}

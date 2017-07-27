@@ -7,7 +7,7 @@
 #include<iostream>
 #include<SFML/Graphics/Vertex.hpp>
 
-#include"Global_Variables.h"
+#include"Global_Constants.h"
 #include"ItskoVector2i.h"
 #include"Map.h"
 
@@ -38,7 +38,7 @@ public:
 
 	virtual ItskoVector2i move() = 0;
 	virtual void die() = 0;
-	void resetPosition();
+	virtual void resetPosition();
 
 	virtual ~Actor(); 
 protected:

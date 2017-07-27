@@ -1,5 +1,5 @@
 #pragma once
-#include "Global_Variables.h"
+#include "Global_Constants.h"
 
 struct mapNode
 {
@@ -9,7 +9,7 @@ struct mapNode
 	}
 	char walkable = '.'; // walkable, wall or gate
 	char logical = 0; // if it's a knot/ gate/ house or not
-	int value = gv::defaultValue; // emtpy, small ball or big ball
+	int value = gc::defaultValue; // emtpy, small ball or big ball
 
 	int x;
 	int y;

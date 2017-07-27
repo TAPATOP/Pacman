@@ -10,7 +10,7 @@ class Bot :
 {
 public:
 	Bot();
-	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
+	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicatedY, int dedicatedX, unsigned int movementSpeed, Map* map, char displayChar);
 	
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
@@ -32,12 +32,15 @@ private:
 	void pickRandomDirection(bool mustBeOppositeToOldDXDY = 1);
 	void cornerSolver(); // adjusts DX and DY in such way so the bot will traverse it properly
 	void reverseDirection();
+	void resetPosition();
+
+public :void findRouteToDedicatedPoint();
 
 public: void findRouteToDestination(int destinationY, int destinationX);
 
 private:
-	bool isVulnerable;
-	bool isGhost;
+	bool isVulnerable = 0;
+	bool isGhost = 0;
 
 	bool checkMe = 0;
 
@@ -45,5 +48,7 @@ private:
 
 	int botID; // I want it manually set for now
 
-	BotStack* destinationStack;
+	BotStack* destinationStack = nullptr;
+	int dedicatedX = 0;
+	int dedicatedY = 0; // coordinates of the point bot goes to by default(similar to original Pacman's differing bot modes)
 };

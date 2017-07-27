@@ -4,7 +4,7 @@
 
 #include "Actor.h"
 #include "Bot.h"
-#include "Global_Variables.h"
+#include "Global_Constants.h"
 #include "GUI_Actor.h"
 #include "GUI_Map.h"
 #include "Map.h"
@@ -150,26 +150,28 @@ int main()
 
 	Map loadedMap(map5, mapHeight, mapWidth);
 
-	Bot bot1(1, 9, 9, 0, 0, 3, &loadedMap, 1); // id, y, x, dy, dx, speed, attack range, map, display symbol
-	Bot bot2(2, 9, 8, 0, 0, 3, &loadedMap, 1);
-	Bot bot3(3, 9, 10, 0, 0, 3, &loadedMap, 1);
-	Bot bot4(4, 8, 9, 0, 0, 3, &loadedMap, 1);
+	Bot bot1(1, 9, 9, 0, 0, 1, 1, 3, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
+	Bot bot2(2, 9, 8, 0, 0, 1, 18, 3, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 18, 1, 3, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 18, 18, 3, &loadedMap, 1);
 
-	Player player(14, 9, 0, 0, 1, &loadedMap, gv::defaultPlayerDisplay, 3); 
+	Player player(14, 9, 0, 0, 1, &loadedMap, gc::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
-	sf::RenderWindow window(sf::VideoMode(gv::windowWidth, gv::windowHeight), "Pacman Open Beta!", sf::Style::Close);
+	// bot4.findRouteToDedicatedPoint();
+
+	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
 	sf::Event evnt;
 
 	unsigned int squareDisplaySize;
 
-	if (gv::windowHeight > gv::windowWidth)
+	if (gc::windowHeight > gc::windowWidth)
 	{
-		squareDisplaySize = gv::windowWidth;
+		squareDisplaySize = gc::windowWidth;
 	}
 	else
 	{
-		squareDisplaySize = gv::windowHeight;
+		squareDisplaySize = gc::windowHeight;
 	}
 
 	if (mapWidth > mapHeight)
@@ -324,3 +326,7 @@ int main()
 	}
 	return 0;
 }
+
+// TO DO: global OffsetX/OffsetY
+// Flashing ghosts
+// harder bots

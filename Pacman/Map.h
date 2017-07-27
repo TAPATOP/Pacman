@@ -4,7 +4,7 @@
 
 #include"BotLinkedList.h"
 #include"BotStack.h"
-#include"Global_Variables.h"
+#include"Global_Constants.h"
 #include"mapNode.h"
 
 class Map
@@ -38,7 +38,7 @@ private:
 	void processLogicalMap();
 	void calculateHCost(int y, int x);
 private:
-	mapNode nodes[gv::maxLoadedMapHeight][gv::maxLoadedMapWidth];
+	mapNode nodes[gc::maxLoadedMapHeight][gc::maxLoadedMapWidth];
 	int valuableNodesCount;
 
 	unsigned int mapHeight;
