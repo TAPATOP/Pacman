@@ -328,3 +328,4 @@ int main()
 // TO DO: global OffsetX/OffsetY
 // Flashing ghosts
 // harder bots
+// smooth movement

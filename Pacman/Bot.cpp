@@ -104,53 +104,46 @@ ItskoVector2i Bot::move()
 				checkMe = 1; // used for announcing that the end of vulnerability is near, so the gui switches to "flashing" ghosts
 			}
 		}
-	}
-
-	if (destinationStack != nullptr )
-	{
-		if (getMovementProgress() == 0 && !(destinationStack->isEmpty()))
-		{
-			ItskoVector2i command = destinationStack->topNpop();
-			setDX(command.getX() - getX());
-			setDY(command.getY() - getY());
-		}
-
-		if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
-		{
-			if (isGhost)
-			{
-				setIsGhost(0);
-			}
-		}
-
-		if (destinationStack->isEmpty() && !isGhost)
-		{
-			delete destinationStack;
-			destinationStack = nullptr;
-		}
-		// deletes the stack, the reason this isnt in the above 'if' is because if it was, 
-		// it would only work correctly for traversing after bot's death
-		//
-		
+		deleteStack();
+		defaultBehaviour();
 	}
 	else
-	// this else is executed if the stack has been destroyed or hasn't been initialized yet
-	// e.g. default(comandless) bot behavior
-	//
 	{
-		if (isGhost)
-		{
-			return executeMoving();
-		}
-		// if the bot is a ghost, it can just move
-		//
-		if (!isVulnerable)
+		if (destinationStack == nullptr)
 		{
 			(this->*botBehaviour)();
 		}
+		// this if is executed if the stack has been destroyed or hasn't been initialized yet
+		// e.g. default(comandless) bot behavior, e.g. what the bot does after he's out of commands
+		//
+
 		else
 		{
-			defaultBehaviour();
+			if (getMovementProgress() == 0 && !(destinationStack->isEmpty()))
+			{
+				ItskoVector2i command = destinationStack->topNpop();
+				setDX(command.getX() - getX());
+				setDY(command.getY() - getY());
+				return executeMoving();
+			}
+
+			if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
+			{
+				if (isGhost)
+				{
+					setIsGhost(0);
+				}
+			}
+
+			if (getMovementProgress() == 0 && destinationStack->isEmpty())// && !isGhost)
+			{
+				deleteStack();
+				setDX(0);
+				setDY(0);
+			}
+			// deletes the stack, the reason this isnt in the above 'if' is because if it was, 
+			// it would only work correctly for traversing after bot's death
+			//
 		}
 	}
 	return executeMoving();
