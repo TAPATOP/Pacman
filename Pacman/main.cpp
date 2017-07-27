@@ -329,3 +329,4 @@ int main()
 // Flashing ghosts
 // harder bots
 // smooth movement
+// rename Bot::destinationStack to commandStack

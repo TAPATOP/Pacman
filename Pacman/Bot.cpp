@@ -43,6 +43,10 @@ void Bot::setIsVulnerable(bool isVulnerable)
 	this->isVulnerable = isVulnerable;
 	checkMe = 1;
 	vulnerabilityTimer = 0;
+	if (isVulnerable)
+	{
+		deleteStack();
+	}
 }
 
 void Bot::setIsGhost(bool isGhost)
@@ -50,7 +54,15 @@ void Bot::setIsGhost(bool isGhost)
 	this->isGhost = isGhost;
 	setIsVulnerable(0);
 	checkMe = 1;
+	
+	if (isGhost)
+	{
+		deleteStack();
+	}
 }
+// sets isGhost, sets isVulnerable to 0, raises the checkMe flag and deletes the destinationStack
+//
+
 void Bot::setID(int botID)
 {
 	this->botID = botID;
@@ -104,17 +116,24 @@ ItskoVector2i Bot::move()
 				checkMe = 1; // used for announcing that the end of vulnerability is near, so the gui switches to "flashing" ghosts
 			}
 		}
-		deleteStack();
-		defaultBehaviour();
+		vulnerableBehaviour();
 	}
 	else
 	{
 		if (destinationStack == nullptr)
 		{
-			(this->*botBehaviour)();
+			if (isGhost)
+			{
+				ghostBehaviour();
+			}
+			else
+			{
+				(this->*botBehaviour)();
+			}
 		}
 		// this if is executed if the stack has been destroyed or hasn't been initialized yet
 		// e.g. default(comandless) bot behavior, e.g. what the bot does after he's out of commands
+		// E.G. THIS FILLS UP THE STACK WITH COMMANDS
 		//
 
 		else
@@ -145,6 +164,8 @@ ItskoVector2i Bot::move()
 			// it would only work correctly for traversing after bot's death
 			//
 		}
+		// this else is responsible for extracting the destinationStack
+		//
 	}
 	return executeMoving();
 }
@@ -154,8 +175,7 @@ void Bot::die()
 	setIsVulnerable(0);
 	setIsGhost(1);
 
-	findRouteToDestination(map->getGhostHouseY(), map->getGhostHouseX());
-	setMovementProgress(0);
+	ghostBehaviour();
 }
 
 void Bot::deleteStack()
@@ -292,6 +312,17 @@ void Bot::seekingBehaviour()
 		}
 	}
 	findRouteToDestination(playerY, playerX);
+}
+
+void Bot::ghostBehaviour()
+{
+	findRouteToDestination(map->getGhostHouseY(), map->getGhostHouseX());
+	setMovementProgress(0);
+}
+
+void Bot::vulnerableBehaviour()
+{
+	defaultBehaviour();
 }
 
 void Bot::findRouteToDestination(int destinationY, int destinationX)

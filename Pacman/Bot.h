@@ -40,6 +40,8 @@ private:
 
 	void defaultBehaviour();
 	void seekingBehaviour();
+	void ghostBehaviour();
+	void vulnerableBehaviour();
 
 public: void findRouteToDestination(int destinationY, int destinationX);
 
