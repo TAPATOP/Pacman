@@ -59,6 +59,12 @@ void Bot::setIsGhost(bool isGhost)
 	{
 		deleteStack();
 	}
+	else
+	{
+		setDX(0);
+		setDY(0);
+		findRouteToDedicatedPoint();
+	}
 }
 // sets isGhost, sets isVulnerable to 0, raises the checkMe flag and deletes the destinationStack
 //
