@@ -121,6 +121,8 @@ ItskoVector2i Bot::move()
 	}
 	else
 	{
+		// this else is executed if the stack has been destroyed or hasn't been initialized yet
+		// e.g. default(comandless) bot behavior
 		if (isGhost)
 		{
 			return executeMoving();
@@ -245,6 +247,7 @@ void Bot::reverseDirection()
 void Bot::resetPosition()
 {
 	Actor::resetPosition();
+	findRouteToDedicatedPoint();
 }
 
 void Bot::findRouteToDedicatedPoint()

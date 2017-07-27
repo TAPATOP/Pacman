@@ -158,8 +158,6 @@ int main()
 	Player player(14, 9, 0, 0, 1, &loadedMap, gc::defaultPlayerDisplay, 3); 
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
-	// bot4.findRouteToDedicatedPoint();
-
 	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
 	sf::Event evnt;
 
