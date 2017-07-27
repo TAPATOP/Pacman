@@ -33,8 +33,12 @@ private:
 	void cornerSolver(); // adjusts DX and DY in such way so the bot will traverse it properly
 	void reverseDirection();
 	void resetPosition();
+	void findRouteToDedicatedPoint();
 
-public :void findRouteToDedicatedPoint();
+	void (Bot::*botBehaviour)();
+
+	void defaultBehaviour();
+
 
 public: void findRouteToDestination(int destinationY, int destinationX);
 

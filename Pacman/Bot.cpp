@@ -22,6 +22,10 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicate
 
 	this->dedicatedX = dedicatedX;
 	this->dedicatedY = dedicatedY;
+
+	findRouteToDedicatedPoint();
+
+	botBehaviour = &Bot::defaultBehaviour;
 }
 // CONSTRUCTORS above
 //
@@ -117,45 +121,24 @@ ItskoVector2i Bot::move()
 			delete destinationStack;
 			destinationStack = nullptr;
 		}
+		// deletes the stack, the reason this isnt in the above 'if' is because if it was, 
+		// it would only work correctly for traversing after bot's death
+		//
 		
 	}
 	else
+	// this else is executed if the stack has been destroyed or hasn't been initialized yet
+	// e.g. default(comandless) bot behavior
+	//
 	{
-		// this else is executed if the stack has been destroyed or hasn't been initialized yet
-		// e.g. default(comandless) bot behavior
 		if (isGhost)
 		{
 			return executeMoving();
 		}
+		// if the bot is a ghost, it can just move
+		//
 
-		char currentTile = map->getLogical(getY(), getX());
-		if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
-			currentTile == gc::knotSquare || currentTile == gc::ghostHouse || currentTile == gc::ghostHouseCenter) // if the square the bot is on is a 'knot'
-		{
-			pickRandomDirection();
-		}
-		else
-		{
-			if (!canMove())
-			{
-				if (getDX() == 0 && getDY() == 0)
-				{
-					pickRandomDirection();
-				}
-				else if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
-				{
-					cornerSolver();
-				}
-				else
-				{
-					reverseDirection();
-				}
-				// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
-				//
-			}
-			// this if is AI logic- related
-			//
-		}
+		(this->*botBehaviour)();
 	}
 	return executeMoving();
 }
@@ -243,6 +226,8 @@ void Bot::reverseDirection()
 	setDY(-getDY());
 	setDX(-getDX());
 }
+// reverses DX and DY, so the bot moves backwards
+//
 
 void Bot::resetPosition()
 {
@@ -252,11 +237,37 @@ void Bot::resetPosition()
 
 void Bot::findRouteToDedicatedPoint()
 {
-	if (destinationStack != nullptr)
-	{
-		delete destinationStack;
-	}
 	findRouteToDestination(dedicatedY, dedicatedX);
+}
+
+void Bot::defaultBehaviour()
+{
+	char currentTile = map->getLogical(getY(), getX());
+	if (getMovementProgress() == 0 && // if the bot hasn't started moving yet( prevents cycling the same knot)
+		currentTile == gc::knotSquare || currentTile == gc::ghostHouse || currentTile == gc::ghostHouseCenter) // if the square the bot is on is a 'knot'
+	{
+		pickRandomDirection();
+	}
+	else
+	{
+		if (!canMove())
+		{
+			if (getDX() == 0 && getDY() == 0)
+			{
+				pickRandomDirection();
+			}
+			else if (map->countNearbyWalkableSquares(getY(), getX()) == 2)
+			{
+				cornerSolver();
+			}
+			else
+			{
+				reverseDirection();
+			}
+			// nearby walkable squares will be either 1 or 2, cause 'knot' case works with 3 or 4, and 0 is not an option
+			//
+		}
+	}
 }
 
 void Bot::findRouteToDestination(int destinationY, int destinationX)

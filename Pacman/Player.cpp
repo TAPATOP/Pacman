@@ -331,7 +331,7 @@ int Player::checkCollision2()
 	if (map->getWalkable(getY(), getX()) != getDisplayChar()) // there is someone else on the current tile
 	{
 		bool playerHasDied = 0;
-
+		collectValue();
 		do
 		{
 			collisionCode = checkCollision();
@@ -395,6 +395,5 @@ void Player::collectValue()
 // this is the way it is because this way you can make default nodes have
 // a negative value
 //
-
 
 /// TO DO: Think of better names for checkCollision() and checkCollision2()
