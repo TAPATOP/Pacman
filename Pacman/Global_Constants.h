@@ -36,7 +36,7 @@ namespace gc
 	////////////////////
 
 	const unsigned int windowWidth = 800;
-	const unsigned int windowHeight = 600;
+	const unsigned int windowHeight = 200;
 
 	//////////////////
 	/// Controls Below

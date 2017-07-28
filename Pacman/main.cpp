@@ -155,7 +155,7 @@ int main()
 	Bot bot3(3, 9, 10, 0, 0, 18, 1, 9, &loadedMap, 1);
 	Bot bot4(4, 8, 9, 0, 0, 18, 18, 9, &loadedMap, 1);
 
-	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
+	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 1);
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
 	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
@@ -231,6 +231,13 @@ int main()
 	remainingLives.setPosition(0, (float)squareDisplaySize);
 
 	std::string livesString("LIVES: 69");
+
+
+	sf::Text endingMessage;
+	endingMessage.setFont(font);
+	endingMessage.setCharacterSize(mapWidth * squareDisplaySize / 8);
+	endingMessage.setPosition(offsetX + mapWidth * squareDisplaySize / 8, gc::windowHeight / 2);
+	endingMessage.setFillColor(sf::Color(255, 153, 0));
 	// Text initialization above
 	//
 
@@ -311,13 +318,21 @@ int main()
 		{
 			std::cout << "YOU LOSE" << std::endl;
 			messagePrinted = 1;
+			endingMessage.setString("YOU LOSE");
+
+			window.draw(endingMessage);
+			window.display();
 		}
 		else if (gameStatus == 1 && !messagePrinted)
 		{
 			std::cout << "YOU WIN" << std::endl;
 			messagePrinted = 1;
+			endingMessage.setString("YOU WIN");
+
+			window.draw(endingMessage);
+			window.display();
 		}
-		// by checking for status == 0 first we avoid checking status
+		// by checking for status == 0 first we avoid checking gameStatus
 		// twice before moving the figures, and on top of that 0
 		// will be the most common value of gameStatus
 		//
@@ -325,6 +340,4 @@ int main()
 	return 0;
 }
 
-// TO DO: global OffsetX/OffsetY
-// Flashing ghosts
-// smooth movement
+// TO DO: Flashing ghosts
