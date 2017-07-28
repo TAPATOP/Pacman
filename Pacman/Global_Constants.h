@@ -61,7 +61,8 @@ namespace gc
 	/// MISC Below
 	/////////////////
 
-	const int VTimer = 90;
+	const int gameSpeed = 60;
+	const int VTimer = 90 * gameSpeed;
 	const int blinkingTimer = 7;
 }
 

@@ -150,12 +150,12 @@ int main()
 
 	Map loadedMap(map5, mapHeight, mapWidth);
 
-	Bot bot1(1, 9, 9, 0, 0, 1, 1, 3, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
-	Bot bot2(2, 9, 8, 0, 0, 1, 18, 3, &loadedMap, 1);
-	Bot bot3(3, 9, 10, 0, 0, 18, 1, 3, &loadedMap, 1);
-	Bot bot4(4, 8, 9, 0, 0, 18, 18, 3, &loadedMap, 1);
+	Bot bot1(1, 9, 9, 0, 0, 1, 1, 9, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
+	Bot bot2(2, 9, 8, 0, 0, 1, 18, 9, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 18, 1, 9, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 18, 18, 9, &loadedMap, 1);
 
-	Player player(14, 9, 0, 0, 1, &loadedMap, gc::defaultPlayerDisplay, 3); 
+	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
 	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
@@ -183,8 +183,8 @@ int main()
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
-	int offsetX = squareDisplaySize * 2;
-	int offsetY = squareDisplaySize;
+	int offsetX = squareDisplaySize;
+	int offsetY = squareDisplaySize * 2;
 
 	sf::Texture mapTexture;
 	mapTexture.loadFromFile("Textures/MapTiles.bmp");
@@ -239,7 +239,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		if ((clock.getElapsedTime()).asMilliseconds() < 90) continue;
+		if ((clock.getElapsedTime()).asMilliseconds() < gc::gameSpeed) continue;
 		clock.restart();
 
 		while (window.pollEvent(evnt))

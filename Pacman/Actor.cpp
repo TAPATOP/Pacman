@@ -99,15 +99,15 @@ Actor::Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned in
 
 void Actor::setMovementSpeed(unsigned int movementSpeed)
 {
-	if (movementSpeed < 0)
-	{
-		std::cout << "Warning: invalid(negative) movementSpeed..." << std::endl;
-	}
+	//if (movementSpeed < 0)
+	//{
+	//	std::cout << "Warning: invalid(negative) movementSpeed..." << std::endl;
+	//}
 
 	this->movementSpeed = movementSpeed;
 }
 
-void Actor::setMovementProgress(unsigned int movementProgress)
+void Actor::setMovementProgress(int movementProgress)
 {
 	this->movementProgress = movementProgress;
 }
@@ -154,12 +154,12 @@ void Actor::setDisplayChar(char c)
 //
 //
 
-unsigned int Actor::getMovementSpeed() const
+int Actor::getMovementSpeed() const
 {
 	return movementSpeed;
 }
 
-unsigned int Actor::getMovementProgress() const
+int Actor::getMovementProgress() const
 {
 	return movementProgress;
 }
@@ -257,6 +257,7 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 
 ItskoVector2i Actor::executeMoving()
 {
+	movementProgress++;
 	if (movementProgress >= movementSpeed)
 	{
 		map->setWalkable(y, x, '.');
@@ -267,6 +268,5 @@ ItskoVector2i Actor::executeMoving()
 
 		return ItskoVector2i(dy, dx);
 	}
-	movementProgress++;
 	return ItskoVector2i(0,0);
 }

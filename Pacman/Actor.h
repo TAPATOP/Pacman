@@ -20,7 +20,7 @@ public:
 	Actor(unsigned int y, unsigned int x, unsigned int startingY, unsigned int startingX, int dy, int dx, unsigned int movementSpeed, Map* map, char displayChar);
 
 	void setMovementSpeed(unsigned int movementSpeed);
-	void setMovementProgress(unsigned int movementProgress);
+	void setMovementProgress(int movementProgress);
 	void setX(unsigned int x, std::ostream& out = std::cout);
 	void setY(unsigned int y);
 	void setDX(int dx);
@@ -28,8 +28,8 @@ public:
 	void setMap(Map*);
 	void setDisplayChar(char c);
 
-	unsigned int getMovementSpeed() const;
-	unsigned int getMovementProgress() const;
+	int getMovementSpeed() const;
+	int getMovementProgress() const;
 	int getX() const;
 	int getY() const;
 	int getDX() const;
@@ -57,8 +57,8 @@ private:
 	int dx; // horizontal movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 	int dy; // vertical movement direction, supposed to be either -1, 0 or 1, not decided on it yet tho
 
-	unsigned int movementSpeed; // lower is faster
-	unsigned int movementProgress = 0; // should always be lower than movementSpeed
+	int movementSpeed; // lower is faster
+	int movementProgress = 0; // should always be lower than movementSpeed
 
 	char displayChar;
 	//Node* lastVisitedNode; // future implementation

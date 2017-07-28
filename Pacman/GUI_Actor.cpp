@@ -75,23 +75,19 @@ int GUI_Actor::move()
 
 	else
 	{
-		shape->move((float)movement.getX() * squareDisplaySize, (float)movement.getY() * squareDisplaySize);
-		//std::cout << actor->getMovementProgress() << " " << actor->getMovementSpeed() << " " << actor->getDX() << " " << squareDisplaySize << std::endl;
-		//std::cout << shape->getPosition().x << " " << (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * actor->getDX()) * squareDisplaySize << std::endl;
-		//if (actor->getMovementProgress() == 0)
+		//shape->move((float)movement.getX() * squareDisplaySize, (float)movement.getY() * squareDisplaySize);
+		//if (actor->getMovementProgress() == actor->getMovementSpeed())
 		//{
-		// shape->setPosition(shape->getPosition().x + movement.getX() * squareDisplaySize, shape->getPosition().y + movement.getY() * squareDisplaySize);
-		//
+		//	shape->setPosition((float)(actor->getX() * squareDisplaySize + xOffset),
+		//		(float)(actor->getY() * squareDisplaySize + yOffset));
 		//}
 		//else
-		//{
-		//	shape->setPosition(
-		//		shape->getPosition().x + (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * (float)actor->getDX()) * (float)squareDisplaySize,
-		//		shape->getPosition().y + (float)((float)actor->getMovementProgress() / (float)actor->getMovementSpeed() * (float)actor->getDY()) * (float)squareDisplaySize
-		//	);
-		//}
-		//char a;
-		//std::cin >> a;
+		{
+			shape->setPosition(
+				(float)(actor->getX() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDX() + xOffset),
+				(float)(actor->getY() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDY() + yOffset)
+			);
+		}
 	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 	if (bot != nullptr)

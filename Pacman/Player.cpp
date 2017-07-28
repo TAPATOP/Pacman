@@ -78,11 +78,13 @@ void Player::setNextCommand(char command)
 		currentCommand = nextCommand;
 		nextCommand = controls.neutral;
 		executeCurrentCommand();
+		setMovementProgress(-getMovementProgress());
 		return;
 	// replaces currentCommand with nextCommand if nextCommand is a reversal of currentCommand
 	//
 	}
-	if (canMove(nextCommandInterpreter))
+	
+	if (canMove(nextCommandInterpreter) && getMovementProgress() == 0)
 	{
 		currentCommand = nextCommand;
 		nextCommand = controls.neutral;
@@ -270,12 +272,13 @@ ItskoVector2i Player::executeMoving()
 {
 	if (getDX() == 0 && getDY() == 0)
 	{
-		setMovementProgress(0);
+		setMovementProgress(-getMovementProgress());
 		return ItskoVector2i(0, 0);
 	}
 	// doesnt move if DX and DY are 0
 	//
 
+	setMovementProgress(getMovementProgress() + 1);
 	if (getMovementProgress() >= getMovementSpeed()) // initiate actual movement
 	{
 		map->setWalkable(getY(), getX(), '.'); // write current tile as walkable
@@ -294,7 +297,6 @@ ItskoVector2i Player::executeMoving()
 
 		return ItskoVector2i(getDY(), getDX());
 	}
-	setMovementProgress(getMovementProgress() + 1);
 	return ItskoVector2i(0, 0);
 }
 
