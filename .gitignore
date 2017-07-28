@@ -82,3 +82,6 @@ Release/Pacman.ipdb
 Pacman/Textures/MapTiles.bmp
 *.bmp
 *.exe
+*.png
+Release/Pacman.ipdb
+*.iobj

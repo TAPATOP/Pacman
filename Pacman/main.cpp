@@ -13,6 +13,8 @@
 
 int main()
 {
+	std::cout << (char)('A' + 32) << std::endl;
+
 	const unsigned int mapHeight = 20;
 	const unsigned int mapWidth = 20;
 
@@ -242,6 +244,7 @@ int main()
 
 	int gameStatus = 0;
 	bool messagePrinted = 0;
+	char lastButton = '0';
 
 	while (window.isOpen())
 	{
@@ -256,9 +259,20 @@ int main()
 				window.close();
 				break;
 			case sf::Event::TextEntered:
-				if (evnt.text.unicode == gc::pause)
+				std::cout << (char)evnt.text.unicode << " " << (char)((char)evnt.text.unicode + 32) << std::endl;
+				if (evnt.text.unicode >= 'A' && evnt.text.unicode <= 'Z')
 				{
-					/// pause implementation begins here ///
+					lastButton = (char)(evnt.text.unicode + 32);
+				}
+				else
+				{
+					lastButton = evnt.text.unicode;
+				}
+
+				if (lastButton == gc::pause)
+				{
+					// pause implementation begins here //
+
 					bool gameIsPaused = 1;
 					while (gameIsPaused)
 					{
@@ -269,17 +283,17 @@ int main()
 							window.close();
 							break;
 						case sf::Event::TextEntered:
-							if (evnt.text.unicode != gc::pause)
+							if (!(evnt.text.unicode == gc::pause || evnt.text.unicode == gc::pause - 32))
 							{
 								gameIsPaused = 0;
 							}
 							break;
 						}
 					}
-					/// pause implementation ends here ///
+					// pause implementation ends here ///
 
 				}
-				guiPlayer.setNextCommand(evnt.text.unicode);
+				guiPlayer.setNextCommand(lastButton);
 				break;
 			}
 		}
@@ -360,3 +374,4 @@ int main()
 }
 
 // TO DO: Flashing ghosts
+// maps to file
