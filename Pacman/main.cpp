@@ -150,12 +150,12 @@ int main()
 
 	Map loadedMap(map5, mapHeight, mapWidth);
 
-	Bot bot1(1, 9, 9, 0, 0, 1, 1, 9, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
-	Bot bot2(2, 9, 8, 0, 0, 1, 18, 9, &loadedMap, 1);
-	Bot bot3(3, 9, 10, 0, 0, 18, 1, 9, &loadedMap, 1);
-	Bot bot4(4, 8, 9, 0, 0, 18, 18, 9, &loadedMap, 1);
+	Bot bot1(1, 9, 9, 0, 0, 1, 1, 6, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
+	Bot bot2(2, 9, 8, 0, 0, 1, 18, 6, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 18, 1, 6, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 18, 18, 6, &loadedMap, 1);
 
-	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 1);
+	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
 	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
@@ -188,9 +188,6 @@ int main()
 
 	sf::Texture mapTexture;
 	mapTexture.loadFromFile("Textures/MapTiles.bmp");
-
-	unsigned int mapTextureSizeX = mapTexture.getSize().x / 4; // 4 is the number of tiles in the loaded image file
-	unsigned int mapTextureSizeY = mapTexture.getSize().y; 
 	
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX, &mapTexture);
 
@@ -200,16 +197,19 @@ int main()
 	sf::RectangleShape rect4(squareSize);
 	sf::RectangleShape playerRect(squareSize);
 	
+	sf::Texture bot1Texture, texture;
+	bot1Texture.loadFromFile("Textures/SpurdoDefault.png");
 
-	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan);
-	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red);
-	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap, sf::Color::Blue);
-	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255));
-	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::Green);
+	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan, &bot1Texture);
+	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red, &bot1Texture);
+	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap, sf::Color::Blue, &bot1Texture);
+	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &bot1Texture);
+
+	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::White, &bot1Texture);
 
 	sf::Clock clock;
 	// 
-	// Text initialization above
+	// Text initialization below
 
 	sf::Font font;
 
@@ -232,11 +232,10 @@ int main()
 
 	std::string livesString("LIVES: 69");
 
-
 	sf::Text endingMessage;
 	endingMessage.setFont(font);
 	endingMessage.setCharacterSize(mapWidth * squareDisplaySize / 8);
-	endingMessage.setPosition(offsetX + mapWidth * squareDisplaySize / 8, gc::windowHeight / 2);
+	endingMessage.setPosition(offsetX + mapWidth * (float)squareDisplaySize / 8, gc::windowHeight / 2);
 	endingMessage.setFillColor(sf::Color(255, 153, 0));
 	// Text initialization above
 	//
@@ -320,7 +319,17 @@ int main()
 			messagePrinted = 1;
 			endingMessage.setString("YOU LOSE");
 
+			guiMap.draw(window);
+
+			guiBot1.draw(window);
+			guiBot2.draw(window);
+			guiBot3.draw(window);
+			guiBot4.draw(window);
+
+			guiPlayer.draw(window);
+
 			window.draw(endingMessage);
+
 			window.display();
 		}
 		else if (gameStatus == 1 && !messagePrinted)
@@ -329,7 +338,17 @@ int main()
 			messagePrinted = 1;
 			endingMessage.setString("YOU WIN");
 
+			guiMap.draw(window);
+
+			guiBot1.draw(window);
+			guiBot2.draw(window);
+			guiBot3.draw(window);
+			guiBot4.draw(window);
+
+			guiPlayer.draw(window);
+
 			window.draw(endingMessage);
+
 			window.display();
 		}
 		// by checking for status == 0 first we avoid checking gameStatus

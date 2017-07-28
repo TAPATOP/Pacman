@@ -35,4 +35,4 @@ private:
 	int textureSizeX;
 	int textureSizeY;
 };
-
+// TO DO: remove textureSizeX/Y

@@ -7,7 +7,7 @@ GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor)
+GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor, sf::Texture* texture)
 {
 	this->actor = actor;
 	this->shape = shape;
@@ -17,7 +17,19 @@ GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDispla
 	this->shape->setFillColor(defaultColor);
 	this->defaultColor = defaultColor;
 
-	setShapePositionByOffset(map->getXOffset(), map->getYOffset());
+	actorTexture = texture;
+	shape->setTexture(actorTexture);
+
+	unsigned int textureSizeX = texture->getSize().x / 4;
+	unsigned int textureSizeY = texture->getSize().y;
+
+	movingRight = new sf::IntRect(0, 0, textureSizeX, textureSizeY);
+	movingLeft = new sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY);
+	movingUp = new sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY);
+	movingDown = new sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY);
+
+	setShapePositionByOffset(map->getXOffset(), map->getYOffset());	
+
 }
 // CONSTRUCTORS above
 //
@@ -61,6 +73,14 @@ int GUI_Actor::move()
 
 	Bot* bot = dynamic_cast<Bot*> (actor);
 	
+	if (actor->getDX() != 0 || actor->getDY() != 0)
+	{
+		setTextureByDirection(movement);
+	}
+	else
+	{
+		shape->setTextureRect(*movingRight);
+	}
 
 	if (movement.getStateCode() == gc::playerDied)
 	{
@@ -75,19 +95,10 @@ int GUI_Actor::move()
 
 	else
 	{
-		//shape->move((float)movement.getX() * squareDisplaySize, (float)movement.getY() * squareDisplaySize);
-		//if (actor->getMovementProgress() == actor->getMovementSpeed())
-		//{
-		//	shape->setPosition((float)(actor->getX() * squareDisplaySize + xOffset),
-		//		(float)(actor->getY() * squareDisplaySize + yOffset));
-		//}
-		//else
-		{
-			shape->setPosition(
-				(float)(actor->getX() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDX() + xOffset),
-				(float)(actor->getY() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDY() + yOffset)
-			);
-		}
+		shape->setPosition(
+			(float)(actor->getX() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDX() + xOffset),
+			(float)(actor->getY() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDY() + yOffset)
+		);
 	}
 	//if(actor->getMovementProgress() == 0 && actor) // smooth animation
 	if (bot != nullptr)
@@ -111,6 +122,8 @@ int GUI_Actor::move()
 				shape->setFillColor(defaultColor);
 			}
 			bot->setCheckMe(0);
+			// changes the bot's appearance according to his status
+			//
 		}
 	}
 	else
@@ -131,6 +144,8 @@ int GUI_Actor::move()
 		{
 			return -1;
 		}
+		// player map- collecting related
+		//
 	}
 	// the structure of this if is: if the actor is a bot, check some stuff, else the actor is a player, so check some stuff
 	//
@@ -149,6 +164,31 @@ void GUI_Actor::resetPosition()
 	setShapePositionByOffset(xOffset, yOffset);
 }
 
+void GUI_Actor::setTextureByDirection(ItskoVector2i& movementVector)
+{
+
+	if (actor->getDX() > 0 && actor->getDY() == 0)
+	{
+		shape->setTextureRect(*movingRight);
+	}
+	else if (actor->getDX() < 0 && actor->getDY() == 0)
+	{
+		shape->setTextureRect(*movingLeft);
+	}
+	else if (actor->getDX() == 0 && actor->getDY() > 0)
+	{
+		shape->setTextureRect(*movingDown);
+	}
+	else if (actor->getDX() == 0 && actor->getDY() < 0)
+	{
+		shape->setTextureRect(*movingUp);
+	}
+}
+
 GUI_Actor::~GUI_Actor()
 {
+	delete movingLeft;
+	delete movingDown;
+	delete movingRight;
+	delete movingUp;
 }

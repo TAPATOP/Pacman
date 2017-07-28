@@ -36,7 +36,7 @@ namespace gc
 	////////////////////
 
 	const unsigned int windowWidth = 800;
-	const unsigned int windowHeight = 200;
+	const unsigned int windowHeight = 600;
 
 	//////////////////
 	/// Controls Below
@@ -62,7 +62,7 @@ namespace gc
 	/////////////////
 
 	const int gameSpeed = 60;
-	const int VTimer = 90 * gameSpeed;
+	const int VTimer = 90;
 	const int blinkingTimer = 7;
 }
 

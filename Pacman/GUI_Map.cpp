@@ -48,6 +48,8 @@ GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& squareVector, int yOffset, int xOff
 			}
 			guiMap[i][j]->setPosition((float)(xOffset + j * squareVector.x), (float)(yOffset + i * squareVector.y));
 		}
+		// TO DO: this begs for a switch- case
+		//
 	}
 }
 
@@ -96,4 +98,11 @@ void GUI_Map::draw(sf::RenderWindow& window)
 
 GUI_Map::~GUI_Map()
 {
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			delete guiMap[i][j];
+		}
+	}
 }
