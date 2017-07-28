@@ -10,11 +10,10 @@
 #include "Map.h"
 #include "Player.h"
 
+#include"BotLinkedList.h"
 
 int main()
 {
-	std::cout << (char)('A' + 32) << std::endl;
-
 	const unsigned int mapHeight = 20;
 	const unsigned int mapWidth = 20;
 

@@ -5,7 +5,18 @@
 BotLinkedList::BotLinkedList()
 {
 	first = nullptr;
-	//last = nullptr;
+	current = first;
+}
+
+BotLinkedList::BotLinkedList(BotLinkedList & oldList)
+{
+	deleteEverything();
+
+	BotLinkedList* newOne = new BotLinkedList();
+	newOne = &oldList;
+
+	this->current = newOne->current;
+	this->first = newOne->first;
 }
 
 
@@ -17,6 +28,32 @@ BotLinkedList::BotLinkedList(mapNode* mnode)
 	//last = current;
 }
 
+BotLinkedList & BotLinkedList::operator=(BotLinkedList & oldList)
+{
+	if (oldList.current == nullptr) return *(new BotLinkedList());
+
+	deleteEverything();
+
+	this->first = oldList.first;
+	this->current = oldList.current;
+
+	while (oldList.current->next != nullptr)
+	{
+		current->next = new listNode();
+		current->next = oldList.current->next;
+		current->mapnode = oldList.current->mapnode;
+
+		current = current->next;
+		oldList.current = oldList.current->next;
+	}
+	current->next = nullptr;
+
+	oldList.resetCurrent();
+	resetCurrent();
+	return *this;
+}
+// WARNING: Untested
+//
 
 void BotLinkedList::enqueue(mapNode* addMe)
 {
@@ -136,17 +173,23 @@ bool BotLinkedList::isNodeQueued(mapNode * checkMe)
 	return 0;
 }
 
-BotLinkedList::~BotLinkedList()
+void BotLinkedList::deleteEverything()
 {
 	resetCurrent();
 
-	while (current!= nullptr && current->next != nullptr)
+	while (current != nullptr && current->next != nullptr)
 	{
 		listNode* nextNode = current->next;
+		delete current->mapnode;
 		delete current;
 		current = nextNode;
 	}
 	resetCurrent(); // double reset, just in case
+}
+
+BotLinkedList::~BotLinkedList()
+{
+	deleteEverything();
 }
 
 bool BotLinkedList::moveCurrent()

@@ -8,7 +8,10 @@ class BotLinkedList
 {
 public:
 	BotLinkedList();
+	BotLinkedList(BotLinkedList&);
 	BotLinkedList(mapNode*);
+
+	BotLinkedList& operator=(BotLinkedList&);
 
 	void enqueue(mapNode*);
 	void dequeue(mapNode*);
@@ -18,6 +21,7 @@ public:
 	bool isEmpty();
 	bool isNodeQueued(mapNode*);
 
+	void deleteEverything();
 	~BotLinkedList();
 private:
 	bool moveCurrent();
@@ -36,6 +40,5 @@ private:
 private:
 	listNode* first;
 	listNode* current;
-	//listNode* last;
 };
 
