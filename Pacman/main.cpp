@@ -183,7 +183,7 @@ int main()
 
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
-	int offsetX = squareDisplaySize;
+	int offsetX = squareDisplaySize * 2;
 	int offsetY = squareDisplaySize;
 
 	sf::Texture mapTexture;
@@ -250,7 +250,7 @@ int main()
 				window.close();
 				break;
 			case sf::Event::TextEntered:
-				if (evnt.text.unicode == 'p')
+				if (evnt.text.unicode == gc::pause)
 				{
 					/// pause implementation begins here ///
 					bool gameIsPaused = 1;
@@ -263,7 +263,7 @@ int main()
 							window.close();
 							break;
 						case sf::Event::TextEntered:
-							if (evnt.text.unicode != 'p')
+							if (evnt.text.unicode != gc::pause)
 							{
 								gameIsPaused = 0;
 							}
@@ -327,6 +327,4 @@ int main()
 
 // TO DO: global OffsetX/OffsetY
 // Flashing ghosts
-// harder bots
 // smooth movement
-// rename Bot::destinationStack to commandStack

@@ -66,7 +66,7 @@ void Bot::setIsGhost(bool isGhost)
 		findRouteToDedicatedPoint();
 	}
 }
-// sets isGhost, sets isVulnerable to 0, raises the checkMe flag and deletes the destinationStack
+// sets isGhost, sets isVulnerable to 0, raises the checkMe flag and deletes the commandStack
 //
 
 void Bot::setID(int botID)
@@ -126,7 +126,7 @@ ItskoVector2i Bot::move()
 	}
 	else
 	{
-		if (destinationStack == nullptr)
+		if (commandStack == nullptr)
 		{
 			if (isGhost)
 			{
@@ -144,9 +144,9 @@ ItskoVector2i Bot::move()
 
 		else
 		{
-			if (getMovementProgress() == 0 && !(destinationStack->isEmpty()))
+			if (getMovementProgress() == 0 && !(commandStack->isEmpty()))
 			{
-				ItskoVector2i command = destinationStack->topNpop();
+				ItskoVector2i command = commandStack->topNpop();
 				setDX(command.getX() - getX());
 				setDY(command.getY() - getY());
 				return executeMoving();
@@ -162,16 +162,16 @@ ItskoVector2i Bot::move()
 				}
 			}
 
-			if (getMovementProgress() == 0 && destinationStack->isEmpty())// && !isGhost)
+			if (getMovementProgress() == 0 && commandStack->isEmpty())// && !isGhost)
 			{
 				deleteStack();
 				setDX(0);
 				setDY(0);
 				(this->*botBehaviour)();
 
-				if (destinationStack != nullptr && !destinationStack->isEmpty())
+				if (commandStack != nullptr && !commandStack->isEmpty())
 				{
-					ItskoVector2i command = destinationStack->topNpop();
+					ItskoVector2i command = commandStack->topNpop();
 					setDX(command.getX() - getX());
 					setDY(command.getY() - getY());
 					return executeMoving();
@@ -183,7 +183,7 @@ ItskoVector2i Bot::move()
 			// it would only work correctly for traversing after bot's death
 			//
 		}
-		// this else is responsible for extracting the destinationStack
+		// this else is responsible for extracting the commandStack
 		//
 	}
 
@@ -200,10 +200,10 @@ void Bot::die()
 
 void Bot::deleteStack()
 {
-	if (destinationStack != nullptr)
+	if (commandStack != nullptr)
 	{
-		delete destinationStack;
-		destinationStack = nullptr;
+		delete commandStack;
+		commandStack = nullptr;
 	}
 }
 
@@ -351,5 +351,5 @@ void Bot::findRouteToDestination(int destinationY, int destinationX)
 {
 	if (getY() == destinationY && getX() == destinationX) return;
 
-	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, destinationStack);
+	map->buildRouteAstar(getY(), getX(), destinationY, destinationX, commandStack);
 }

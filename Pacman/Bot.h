@@ -55,7 +55,7 @@ private:
 
 	int botID; // I want it manually set for now
 
-	BotStack* destinationStack = nullptr;
+	BotStack* commandStack = nullptr;
 	int dedicatedX = 0;
 	int dedicatedY = 0; // coordinates of the point bot goes to by default(similar to original Pacman's differing bot modes)
 };

@@ -47,6 +47,7 @@ namespace gc
 	const char left = 'a';
 	const char right = 'd';
 	const char stop = ' ';
+	const char pause = 'p';
 
 	///////////////////////
 	/// Return Codes Below

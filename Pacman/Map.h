@@ -31,7 +31,7 @@ public:
 	void printMap() const;
 	bool isValidCoord(int y, int x);
 
-	void buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &destinationStack);
+	void buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &commandStack);
 
 	~Map();
 private:

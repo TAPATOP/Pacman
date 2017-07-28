@@ -46,7 +46,7 @@ GUI_Map::GUI_Map(Map& origMap, sf::Vector2f& squareVector, int yOffset, int xOff
 			{
 				guiMap[i][j]->setTextureRect(sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY));
 			}
-			guiMap[i][j]->setPosition((float)(yOffset + j * squareVector.x), (float)(xOffset + i * squareVector.y));
+			guiMap[i][j]->setPosition((float)(xOffset + j * squareVector.x), (float)(yOffset + i * squareVector.y));
 		}
 	}
 }

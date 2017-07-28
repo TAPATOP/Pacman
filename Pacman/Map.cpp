@@ -209,7 +209,7 @@ bool Map::isValidCoord(int y, int x)
 	return true;
 }
 
-void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &destinationStack)
+void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destinationX, BotStack* &commandStack)
 {
 	if (nodes[sourceY][sourceX].walkable == gc::wallSquare)
 	{
@@ -306,14 +306,14 @@ void Map::buildRouteAstar(int sourceY, int sourceX, int destinationY, int destin
 	}
 	mapNode* source = &nodes[sourceY][sourceX];
 
-	if (destinationStack != nullptr) delete destinationStack;
+	if (commandStack != nullptr) delete commandStack;
 
-	destinationStack = new BotStack( (current->Gcost) / 10);
-	destinationStack->push(current->y, current->x);
+	commandStack = new BotStack( (current->Gcost) / 10);
+	commandStack->push(current->y, current->x);
 	
 	while (current->parent != source)
 	{
-		destinationStack->push(current->parent->y, current->parent->x);
+		commandStack->push(current->parent->y, current->parent->x);
 		current = current->parent;
 	}
 }
