@@ -207,9 +207,7 @@ Actor::~Actor()
 {
 	allActorsCount--; // im not really sure whether deletion will ever occur during runtime
 }
-////////
-/// TO DO: implement proper logging of objects into the object array
-///////
+
 
 bool Actor::canMove() const
 {

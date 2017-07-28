@@ -259,7 +259,7 @@ int main()
 				window.close();
 				break;
 			case sf::Event::TextEntered:
-				std::cout << (char)evnt.text.unicode << " " << (char)((char)evnt.text.unicode + 32) << std::endl;
+
 				if (evnt.text.unicode >= 'A' && evnt.text.unicode <= 'Z')
 				{
 					lastButton = (char)(evnt.text.unicode + 32);

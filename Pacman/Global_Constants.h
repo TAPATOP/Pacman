@@ -65,5 +65,3 @@ namespace gc
 	const int VTimer = 90;
 	const int blinkingTimer = 7;
 }
-
-/// TO DO: Make controls work with capitalized letters

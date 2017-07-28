@@ -20,45 +20,25 @@ BotLinkedList::BotLinkedList(mapNode* mnode)
 
 void BotLinkedList::enqueue(mapNode* addMe)
 {
-	//last->mapnode = addMe;
-	//last->next = new listNode();
-	//last = last->next;
 	listNode* parent = nullptr;
 	
 	listNode* newNode = new listNode();
 	newNode->mapnode = addMe;
-	
-	//do
-	//{
-	//	if (addMe->Fvalue() <= current->mapnode->Fvalue() || newNodeWillBeLast == 1)
-	//	{
-	//		if (parent != nullptr)
-	//		{
-	//			parent->next = newNode;
-	//			newNode->next = current;
-	//		}
-	//		else
-	//		{
-	//			first = newNode;
-	//			newNode->next = current;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		newNodeWillBeLast = !moveCurrent();
-	//	}
-	//} while (true);
+
 	if (first == nullptr)
 	{
 		first = newNode;
-	//	last = newNode;
+
 		resetCurrent();
 		return;
 	}
 
 	do
 	{
-		if (addMe->Fvalue() <= current->mapnode->Fvalue()) // TO DO: in case of =, sort by H- value
+		if (
+			addMe->Fvalue() < current->mapnode->Fvalue() ||
+			(addMe->Fvalue() == current->mapnode->Fvalue() && addMe->Hcost < current->mapnode->Hcost)
+			)
 		{
 			break;
 		}
@@ -68,7 +48,6 @@ void BotLinkedList::enqueue(mapNode* addMe)
 	if (parent == current) // if this is true, then newNode must be last
 	{
 		current->next = newNode;
-		//last = newNode;
 	}
 	else if (parent == nullptr) // if this is true, then newNode must be first
 		{
@@ -160,7 +139,7 @@ bool BotLinkedList::isNodeQueued(mapNode * checkMe)
 BotLinkedList::~BotLinkedList()
 {
 	resetCurrent();
-	// TO DO: while (current!= nullptr && current->next != nullptr)
+
 	while (current!= nullptr && current->next != nullptr)
 	{
 		listNode* nextNode = current->next;
@@ -169,7 +148,6 @@ BotLinkedList::~BotLinkedList()
 	}
 	resetCurrent(); // double reset, just in case
 }
-/// TO DO
 
 bool BotLinkedList::moveCurrent()
 {
