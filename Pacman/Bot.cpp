@@ -134,7 +134,7 @@ ItskoVector2i Bot::move()
 		{
 			if (isGhost)
 			{
-				ghostBehaviour(); // when a bot becomes a ghost, he dumps his own commandStack
+				ghostBehaviour(); // when a bot becomes a ghost, he dumps his own commandStack		}
 			}
 			else
 			{

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <chrono>
+#include <thread>
 
 #include "Actor.h"
 #include "Bot.h"
@@ -171,10 +173,10 @@ int main()
 
 	Map loadedMap(map5, mapHeight, mapWidth);
 
-	Bot bot1(1, 9, 9, 0, 0, 1, 1, 6, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
-	Bot bot2(2, 9, 8, 0, 0, 1, 18, 6, &loadedMap, 1);
-	Bot bot3(3, 9, 10, 0, 0, 18, 1, 6, &loadedMap, 1);
-	Bot bot4(4, 8, 9, 0, 0, 18, 18, 6, &loadedMap, 1);
+	Bot bot1(1, 9, 9, 0, 0, 1, 1, 4, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
+	Bot bot2(2, 9, 8, 0, 0, 1, 18, 4, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 18, 1, 4, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 18, 18, 4, &loadedMap, 1);
 	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
 	// y, x, dy, dx, speed, map, symbol, lives, keys
 
@@ -236,7 +238,8 @@ int main()
 
 	int gameStatus = 0;
 	bool messagePrinted = 0;
-	char lastButton = '0';
+	char lastButton = 'p';
+
 
 	while (window.isOpen())
 	{
@@ -260,103 +263,87 @@ int main()
 				{
 					lastButton = evnt.text.unicode;
 				}
-
-				if (lastButton == gc::pause)
-				{
-					// pause implementation begins here //
-
-					bool gameIsPaused = 1;
-					while (gameIsPaused)
-					{
-						window.pollEvent(evnt);
-						switch (evnt.type)
-						{
-						case sf::Event::Closed:
-							window.close();
-							break;
-						case sf::Event::TextEntered:
-							if (!(evnt.text.unicode == gc::pause || evnt.text.unicode == gc::pause - 32))
-							{
-								gameIsPaused = 0;
-							}
-							break;
-						}
-					}
-					// pause implementation ends here ///
-
-				}
 				guiPlayer.setNextCommand(lastButton);
 				break;
 			}
 		}
 
-		if(gameStatus == 0)
-		{
-			window.clear();
+			if (gameStatus == 0)
+			{
+				window.clear();
 
-			guiBot1.move();
-			guiBot2.move();
-			guiBot3.move();
-			guiBot4.move();
-			gameStatus = guiPlayer.move();
+				if (lastButton != gc::pause)
+				{
+					guiBot1.move();
+					guiBot2.move();
+					guiBot3.move();
+					guiBot4.move();
+					gameStatus = guiPlayer.move();
+				}
+				guiMap.draw(window);
 
-			guiMap.draw(window);
+				guiBot1.draw(window);
+				guiBot2.draw(window);
+				guiBot3.draw(window);
+				guiBot4.draw(window);
 
-			guiBot1.draw(window);
-			guiBot2.draw(window);
-			guiBot3.draw(window);
-			guiBot4.draw(window);
+				guiPlayer.draw(window);
 
-			guiPlayer.draw(window);
+				scoreString = std::to_string(player.getScore());
+				score.setString("SCORE: " + scoreString);
+				window.draw(score);
 
-			scoreString = std::to_string(player.getScore());
-			score.setString("SCORE: " + scoreString);
-			window.draw(score);
+				livesString = std::to_string(player.getLives());
+				remainingLives.setString("LIVES: " + livesString);
+				window.draw(remainingLives);
 
-			livesString = std::to_string(player.getLives());
-			remainingLives.setString("LIVES: " + livesString);
-			window.draw(remainingLives);
+				window.display();
+			}
+			else if (gameStatus == -1 && !messagePrinted)
+			{
+				std::cout << "YOU LOSE" << std::endl;
+				messagePrinted = 1;
+				endingMessage.setString("YOU LOSE");
 
-			window.display();
-		}
-		else if (gameStatus == -1 && !messagePrinted)
-		{
-			std::cout << "YOU LOSE" << std::endl;
-			messagePrinted = 1;
-			endingMessage.setString("YOU LOSE");
+				guiMap.draw(window);
 
-			guiMap.draw(window);
+				guiBot1.draw(window);
+				guiBot2.draw(window);
+				guiBot3.draw(window);
+				guiBot4.draw(window);
 
-			guiBot1.draw(window);
-			guiBot2.draw(window);
-			guiBot3.draw(window);
-			guiBot4.draw(window);
+				guiPlayer.draw(window);
 
-			guiPlayer.draw(window);
+				window.draw(endingMessage);
 
-			window.draw(endingMessage);
+				window.display();
+			}
+			else if (gameStatus == 1 && !messagePrinted)
+			{
+				std::cout << "YOU WIN" << std::endl;
+				messagePrinted = 1;
+				endingMessage.setString("YOU WIN");
 
-			window.display();
-		}
-		else if (gameStatus == 1 && !messagePrinted)
-		{
-			std::cout << "YOU WIN" << std::endl;
-			messagePrinted = 1;
-			endingMessage.setString("YOU WIN");
+				guiMap.draw(window);
 
-			guiMap.draw(window);
+				guiBot1.draw(window);
+				guiBot2.draw(window);
+				guiBot3.draw(window);
+				guiBot4.draw(window);
 
-			guiBot1.draw(window);
-			guiBot2.draw(window);
-			guiBot3.draw(window);
-			guiBot4.draw(window);
+				guiPlayer.draw(window);
 
-			guiPlayer.draw(window);
+				window.draw(endingMessage);
 
-			window.draw(endingMessage);
-
-			window.display();
-		}
+				window.display();
+			}
+			else if (gameStatus == gc::playerDied)
+			{
+				lastButton = gc::pause;
+				gameStatus = 0;
+				std::this_thread::sleep_for(std::chrono::milliseconds(500));
+				guiPlayer.resetActors();
+			}
 		// by checking for status == 0 first we avoid checking gameStatus
 		// twice before moving the figures, and on top of that 0
 		// will be the most common value of gameStatus

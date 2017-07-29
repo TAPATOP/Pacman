@@ -32,6 +32,7 @@ GUI_Actor::GUI_Actor(Actor * actor, int squareDisplaySize, GUI_Map* map, sf::Col
 	movingLeft = sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY);
 	movingUp = sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY);
 	movingDown = sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY);
+	shape.setTextureRect(movingRight);
 
 	setShapePositionByOffset(map->getXOffset(), map->getYOffset());	
 
@@ -74,6 +75,8 @@ void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 
 int GUI_Actor::move()
 {
+	int gameStatus = 0;
+
 	ItskoVector2i movement = actor->move();
 
 	Bot* bot = dynamic_cast<Bot*> (actor);
@@ -82,18 +85,10 @@ int GUI_Actor::move()
 	{
 		setTextureByDirection(movement);
 	}
-	else
-	{
-		shape.setTextureRect(movingRight);
-	}
 
 	if (movement.getStateCode() == gc::playerDied)
 	{
-		std::cout << "Player is kill. Lives left: " << dynamic_cast<Player*>(actor)->getLives() << std::endl;
-		for (int i = 0; i < allGUIActorsCount; i++)
-		{
-			allGUIActors[i]->resetPosition();
-		}
+		gameStatus = gc::playerDied;
 	}
 	// in case the player has died, we need to reset the board
 	//
@@ -155,7 +150,7 @@ int GUI_Actor::move()
 	// the structure of this if is: if the actor is a bot, check some stuff, else the actor is a player, so check some stuff
 	//
 
-	return 0;
+	return gameStatus;
 }
 
 void GUI_Actor::draw(sf::RenderWindow& window)
@@ -187,6 +182,15 @@ void GUI_Actor::setTextureByDirection(ItskoVector2i& movementVector)
 	else if (actor->getDX() == 0 && actor->getDY() < 0)
 	{
 		shape.setTextureRect(movingUp);
+	}
+}
+
+void GUI_Actor::resetActors()
+{
+	std::cout << "Player is kill. Lives left: " << dynamic_cast<Player*>(actor)->getLives() << std::endl;
+	for (int i = 0; i < allGUIActorsCount; i++)
+	{
+		allGUIActors[i]->resetPosition();
 	}
 }
 
