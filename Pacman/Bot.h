@@ -1,3 +1,7 @@
+/////////////////////
+/// Realises all of the AI and non- player controlled behaviours
+/////////////////////
+
 #pragma once
 #include <cstdlib>
 #include <ctime>
@@ -9,6 +13,7 @@ class Bot :
 	public Actor
 {
 public:
+	// should not be used
 	Bot();
 	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicatedY, int dedicatedX, unsigned int movementSpeed, Map* map, char displayChar);
 
@@ -23,11 +28,11 @@ public:
 	void setID(int);
 	void setCheckMe(bool);
 
-	bool getIsVulnerable();
-	bool getIsGhost();
-	int getID();
-	bool getCheckMe();
-	int getVulnerabilityTimer();
+	bool getIsVulnerable() const;
+	bool getIsGhost() const;
+	int getID() const;
+	bool getCheckMe() const;
+	int getVulnerabilityTimer() const;
 
 	// Does everything related to moving -> from ticking, to changing behaviour, to executing commandStack
 	// / vulnerabilityTimer

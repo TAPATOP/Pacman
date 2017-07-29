@@ -75,25 +75,25 @@ void Bot::setCheckMe(bool val)
 }
 // SETTTERS above
 //
-//
 
-bool Bot::getIsVulnerable()
+
+bool Bot::getIsVulnerable() const
 {
 	return isVulnerable;
 }
-bool Bot::getIsGhost()
+bool Bot::getIsGhost() const
 {
 	return isGhost;
 }
-int Bot::getID()
+int Bot::getID() const
 {
 	return botID;
 }
-bool Bot::getCheckMe()
+bool Bot::getCheckMe() const
 {
 	return checkMe;
 }
-int Bot::getVulnerabilityTimer()
+int Bot::getVulnerabilityTimer() const
 {
 	return vulnerabilityTimer;
 }

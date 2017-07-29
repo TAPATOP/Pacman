@@ -1,3 +1,7 @@
+///////////////////////
+/// This class is used to let the GUI interract with the logical Map
+///////////////////////
+
 #pragma once
 
 #include<SFML/Graphics.hpp>

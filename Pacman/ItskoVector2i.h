@@ -1,3 +1,8 @@
+//////////////////////
+/// Stores x and y (or dx and dy) and a stateCode, used to send messages from
+/// the logical to the GUI elements
+/////////////////////
+
 #pragma once
 class ItskoVector2i
 {
