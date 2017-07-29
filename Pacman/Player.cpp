@@ -43,12 +43,13 @@ Player::Player(unsigned int y, unsigned int x, int dy, int dx, unsigned int move
 // CONSTRUCTORS above
 //
 
-void Player::setControls(char up, char down, char left, char right)
+void Player::setControls(char up, char down, char left, char right, char stop)
 {
 	controls.up = up;
 	controls.down = down;
 	controls.left = left;
 	controls.right = right;
+	controls.stop = stop;
 }
 
 void Player::setCurrentCommand(char command)
@@ -61,7 +62,7 @@ void Player::setCurrentCommand(char command)
 
 void Player::setNextCommand(char command)
 {
-	if (!isValidControl(command)) return; // checks if 'command' is one of the controls is in 'controls'
+	if (!isValidControl(command)) return; // checks if 'command' is one of the controls in 'controls'
 
 	if (command == gc::stop)
 	{
@@ -98,12 +99,12 @@ void Player::setNextCommand(char command)
 // SETTERS above
 //
 
-int Player::getScore()
+int Player::getScore() const
 {
 	return score;
 }
 
-int Player::getLives()
+int Player::getLives() const
 {
 	return lives;
 }
@@ -112,7 +113,7 @@ int Player::getLives()
 
 ItskoVector2i Player::move()
 {
-	int code = checkCollision2();
+	int code = handleCollisions();
 	if (code == gc::playerDied)
 	{
 		return ItskoVector2i(0, 0, code); // the game stops when the player dies, so no need in continuing calculating stuff
@@ -226,8 +227,6 @@ void Player::executeCurrentCommand()
 		setMovementProgress(0);
 	}
 }
-// Changes dx and dy to match the command's effect
-//
 
 ItskoVector2i Player::interpretCommand(char command)
 {
@@ -276,6 +275,7 @@ ItskoVector2i Player::executeMoving()
 		return ItskoVector2i(0, 0);
 	}
 	// doesnt move if DX and DY are 0
+	// I have no idea what this does but I'll leave it just in case it breaks something
 	//
 
 	setMovementProgress(getMovementProgress() + 1);
@@ -286,7 +286,7 @@ ItskoVector2i Player::executeMoving()
 		setX(getX() + getDX());
 		setY(getY() + getDY()); // move according to dx and dy
 
-		int code = checkCollision2();
+		int code = handleCollisions();
 		if (code == gc::playerDied)
 		{
 			return ItskoVector2i(0, 0, code);
@@ -322,11 +322,10 @@ int Player::checkCollision()
 			}
 		}
 	}
-	/// TO DO: should be replaced with an iterator?
-	//
+
 	return 0;
 }
-int Player::checkCollision2()
+int Player::handleCollisions()
 {
 	int collisionCode = 0;
 
@@ -353,9 +352,6 @@ int Player::checkCollision2()
 			die();
 			return gc::playerDied;
 		}
-		// 
-		/// TO DO: should be replaced with an iterator?
-		//
 	}
 	return 0;
 }
@@ -397,5 +393,3 @@ void Player::collectValue()
 // this is the way it is because this way you can make default nodes have
 // a negative value
 //
-
-/// TO DO: Think of better names for checkCollision() and checkCollision2()
