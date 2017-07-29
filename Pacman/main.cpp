@@ -242,11 +242,15 @@ int main()
 	bool messagePrinted = 0;
 	char lastButton = gc::pause;
 
+	// GAME OBJECTS INITILIZATION ABOVE
 
+	// GAME WINDOW
 	while (window.isOpen())
 	{
+		// very primitive delta timing- kind- of- thing
 		if ((clock.getElapsedTime()).asMilliseconds() < gc::gameSpeed) continue;
 		clock.restart();
+		//
 
 		while (window.pollEvent(evnt))
 		{
@@ -257,6 +261,7 @@ int main()
 				break;
 			case sf::Event::TextEntered:
 
+				// decapitalizer of input
 				if (evnt.text.unicode >= 'A' && evnt.text.unicode <= 'Z')
 				{
 					lastButton = (char)(evnt.text.unicode + 32);
@@ -265,15 +270,19 @@ int main()
 				{
 					lastButton = evnt.text.unicode;
 				}
+				//
+
 				guiPlayer.setNextCommand(lastButton);
 				break;
 			}
 		}
 
+		// standard game flow below
 			if (gameStatus == 0)
 			{
 				window.clear();
 
+				// pause implementation
 				if (lastButton != gc::pause)
 				{
 					guiBot1.move();
@@ -282,6 +291,8 @@ int main()
 					guiBot4.move();
 					gameStatus = guiPlayer.move();
 				}
+				//
+
 				guiMap.draw(window);
 
 				guiBot1.draw(window);
@@ -301,6 +312,9 @@ int main()
 
 				window.display();
 			}
+			//
+
+			// LOSE CONDITION below
 			else if (gameStatus == -1 && !messagePrinted)
 			{
 				window.clear();
@@ -330,6 +344,9 @@ int main()
 
 				window.display();
 			}
+			//
+
+			// WIN CONDITION below
 			else if (gameStatus == 1 && !messagePrinted)
 			{
 				window.clear();
@@ -359,6 +376,9 @@ int main()
 
 				window.display();
 			}
+			//
+
+			//player has lost a life
 			else if (gameStatus == gc::playerDied)
 			{
 				lastButton = gc::pause;
@@ -366,13 +386,11 @@ int main()
 				std::this_thread::sleep_for(std::chrono::milliseconds(500));
 				guiPlayer.resetActors();
 			}
+			//
 		// by checking for status == 0 first we avoid checking gameStatus
-		// twice before moving the figures, and on top of that 0
+		// thrice before moving the figures, and on top of that 0
 		// will be the most common value of gameStatus
 		//
 	}
 	return 0;
 }
-
-// TO DO: Flashing ghosts
-// maps to file

@@ -112,11 +112,11 @@ void Actor::setMovementProgress(int movementProgress)
 	this->movementProgress = movementProgress;
 }
 
-void Actor::setX(unsigned int x, std::ostream& out)
+void Actor::setX(unsigned int x)
 {
 	if (x >= map->getMapWidth())
 	{
-		out << "Error assigning x value, it's " << x << " while mapWidth is " << map->getMapWidth()<< "\n";
+		std::cout << "Error assigning x value, it's " << x << " while mapWidth is " << map->getMapWidth()<< "\n";
 		return;
 	}
 	this->x = x;
@@ -191,11 +191,6 @@ char Actor::getDisplayChar() const
 //
 //
 
-ItskoVector2i Actor::move()
-{
-	return ItskoVector2i();
-}
-
 void Actor::resetPosition()
 {
 	x = startingX;
@@ -222,7 +217,7 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 	}
 	if (
 		(x + newDirections.getX()) < 0 ||
-		(int)(x + newDirections.getX()) > (int)(map->getMapWidth()) - 1 // x + dx can be equal to width - 1, if the expression is true then there is an error
+		(x + newDirections.getX()) > (int)(map->getMapWidth()) - 1 // x + dx can be equal to width - 1; if the expression is true then there is an error
 		)
 	{
 		return 0; // error, e.g. can't move
@@ -255,7 +250,7 @@ bool Actor::canMove(ItskoVector2i& newDirections) const
 
 ItskoVector2i Actor::executeMoving()
 {
-	movementProgress++;
+	movementProgress++; // it's important that this happens before the if, otherwise actors would stutter when moving
 	if (movementProgress >= movementSpeed)
 	{
 		map->setWalkable(y, x, '.');

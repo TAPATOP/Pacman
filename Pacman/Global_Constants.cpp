@@ -29,7 +29,7 @@ namespace gc
 
 	const unsigned int defaultX = 0;
 	const unsigned int defaultY = 0;
-	const unsigned int defaultMovementSpeed = 100;
+	const unsigned int defaultMovementSpeed = 30;
 
 	////////////////////
 	/// GUI Below
@@ -58,7 +58,7 @@ namespace gc
 	const int emptyBotStack = 80;
 
 	//////////////////
-	/// MISC Below
+	/// Timers Below
 	/////////////////
 
 	const int gameSpeed = 60;
