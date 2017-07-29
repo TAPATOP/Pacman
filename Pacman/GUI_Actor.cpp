@@ -7,18 +7,23 @@ GUI_Actor::GUI_Actor()
 {
 }
 
-GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor, sf::Texture* texture)
+GUI_Actor::GUI_Actor(Actor * actor, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor, sf::Texture* texture)
 {
 	this->actor = actor;
-	this->shape = shape;
+	this->shape = sf::RectangleShape(sf::Vector2f(squareDisplaySize, squareDisplaySize));
 	this->squareDisplaySize = squareDisplaySize;
 	guiMap = map;
 	allGUIActors[allGUIActorsCount++] = this;
-	this->shape->setFillColor(defaultColor);
+
+	if (defaultColor != sf::Color::White) 
+	{
+		this->shape.setFillColor(defaultColor);
+	}
+
 	this->defaultColor = defaultColor;
 
 	actorTexture = texture;
-	shape->setTexture(actorTexture);
+	shape.setTexture(actorTexture);
 
 	unsigned int textureSizeX = texture->getSize().x / 4;
 	unsigned int textureSizeY = texture->getSize().y;
@@ -45,22 +50,22 @@ void GUI_Actor::setNextCommand(char command)
 
 void GUI_Actor::setShapeSize(sf::Vector2f& vector)
 {
-	shape->setSize(vector);
+	shape.setSize(vector);
 }
 
 void GUI_Actor::setFillColor(sf::Color color)
 {
-	shape->setFillColor(color);
+	shape.setFillColor(color);
 }
 
 void GUI_Actor::setShapePosition(int x, int y)
 {
-	shape->setPosition((float)x, (float)y);
+	shape.setPosition((float)x, (float)y);
 }
 
 void GUI_Actor::setShapePositionByOffset(int xOffset, int yOffset)
 {
-	shape->setPosition((float)(xOffset + actor->getX() * squareDisplaySize), (float)(yOffset + actor->getY() * squareDisplaySize));
+	shape.setPosition((float)(xOffset + actor->getX() * squareDisplaySize), (float)(yOffset + actor->getY() * squareDisplaySize));
 	this->xOffset = xOffset;
 	this->yOffset = yOffset;
 }
@@ -79,7 +84,7 @@ int GUI_Actor::move()
 	}
 	else
 	{
-		shape->setTextureRect(movingRight);
+		shape.setTextureRect(movingRight);
 	}
 
 	if (movement.getStateCode() == gc::playerDied)
@@ -95,7 +100,7 @@ int GUI_Actor::move()
 
 	else
 	{
-		shape->setPosition(
+		shape.setPosition(
 			(float)(actor->getX() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDX() + xOffset),
 			(float)(actor->getY() * squareDisplaySize + ((float)actor->getMovementProgress() / actor->getMovementSpeed()) * squareDisplaySize * actor->getDY() + yOffset)
 		);
@@ -107,19 +112,19 @@ int GUI_Actor::move()
 		{
 			if (bot->getIsGhost())
 			{
-				shape->setFillColor(sf::Color(128, 128, 128));
+				shape.setFillColor(sf::Color(128, 128, 128));
 			}
 			else if (bot->getVulnerabilityTimer() >= (gc::VTimer / 10) * gc::blinkingTimer)
 			{
-				shape->setFillColor(sf::Color(128, 64, 0));
+				shape.setFillColor(sf::Color(128, 64, 0));
 			}
 			else if (bot->getIsVulnerable())
 			{
-				shape->setFillColor(sf::Color(128, 0, 128));
+				shape.setFillColor(sf::Color(128, 0, 128));
 			}
 			else
 			{
-				shape->setFillColor(defaultColor);
+				shape.setFillColor(defaultColor);
 			}
 			bot->setCheckMe(0);
 			// changes the bot's appearance according to his status
@@ -155,7 +160,7 @@ int GUI_Actor::move()
 
 void GUI_Actor::draw(sf::RenderWindow& window)
 {
-	window.draw(*shape);
+	window.draw(shape);
 }
 
 void GUI_Actor::resetPosition()
@@ -169,19 +174,19 @@ void GUI_Actor::setTextureByDirection(ItskoVector2i& movementVector)
 
 	if (actor->getDX() > 0 && actor->getDY() == 0)
 	{
-		shape->setTextureRect(movingRight);
+		shape.setTextureRect(movingRight);
 	}
 	else if (actor->getDX() < 0 && actor->getDY() == 0)
 	{
-		shape->setTextureRect(movingLeft);
+		shape.setTextureRect(movingLeft);
 	}
 	else if (actor->getDX() == 0 && actor->getDY() > 0)
 	{
-		shape->setTextureRect(movingDown);
+		shape.setTextureRect(movingDown);
 	}
 	else if (actor->getDX() == 0 && actor->getDY() < 0)
 	{
-		shape->setTextureRect(movingUp);
+		shape.setTextureRect(movingUp);
 	}
 }
 

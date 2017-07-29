@@ -22,6 +22,13 @@ public:
 
 	~GUI_Map();
 private:
+	GUI_Map(GUI_Map&);
+
+	GUI_Map& operator=(GUI_Map&);
+	
+	// Copying GUI_Map shouldn't be allowed
+
+private:
 	Map* map;
 	sf::RectangleShape* guiMap[gc::maxLoadedMapHeight][gc::maxLoadedMapWidth];
 

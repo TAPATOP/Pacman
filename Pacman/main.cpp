@@ -14,21 +14,8 @@
 
 int main()
 {
-	mapNode m;
-	m.x = 10;
-	while (true)
-	{
-		BotLinkedList a(&m);
-		BotLinkedList b(a);
-		BotLinkedList c(b);
-		BotLinkedList d(b);
-		BotLinkedList e(b);
-		BotLinkedList f(b);
-		BotLinkedList r;
-		r = f;
-	}
-	const unsigned int mapHeight = 20;
-	const unsigned int mapWidth = 20;
+	unsigned int mapHeight = 20;
+	unsigned int mapWidth = 20;
 
 	char* map1[] = {
 		"#...........##.#...#",
@@ -162,19 +149,6 @@ int main()
 	// i'm just simulating a file, bro, ignore me
 	//
 
-	Map loadedMap(map5, mapHeight, mapWidth);
-
-	Bot bot1(1, 9, 9, 0, 0, 1, 1, 6, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
-	Bot bot2(2, 9, 8, 0, 0, 1, 18, 6, &loadedMap, 1);
-	Bot bot3(3, 9, 10, 0, 0, 18, 1, 6, &loadedMap, 1);
-	Bot bot4(4, 8, 9, 0, 0, 18, 18, 6, &loadedMap, 1);
-
-	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
-	// y, x, dy, dx, speed, map, symbol, lives, keys
-
-	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
-	sf::Event evnt;
-
 	unsigned int squareDisplaySize;
 
 	if (gc::windowHeight > gc::windowWidth)
@@ -195,6 +169,18 @@ int main()
 		squareDisplaySize /= (mapHeight + 1);
 	}
 
+	Map loadedMap(map5, mapHeight, mapWidth);
+
+	Bot bot1(1, 9, 9, 0, 0, 1, 1, 6, &loadedMap, 1); // id, y, x, dy, dx, dedicatedY, dedicatedX speed, attack range, map, display symbol
+	Bot bot2(2, 9, 8, 0, 0, 1, 18, 6, &loadedMap, 1);
+	Bot bot3(3, 9, 10, 0, 0, 18, 1, 6, &loadedMap, 1);
+	Bot bot4(4, 8, 9, 0, 0, 18, 18, 6, &loadedMap, 1);
+	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
+	// y, x, dy, dx, speed, map, symbol, lives, keys
+
+	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
+	sf::Event evnt;
+
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
 	int offsetX = squareDisplaySize;
@@ -204,22 +190,16 @@ int main()
 	mapTexture.loadFromFile("Textures/MapTiles.bmp");
 	
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX, &mapTexture);
-
-	sf::RectangleShape rect1(squareSize);
-	sf::RectangleShape rect2(squareSize);
-	sf::RectangleShape rect3(squareSize);
-	sf::RectangleShape rect4(squareSize);
-	sf::RectangleShape playerRect(squareSize);
 	
 	sf::Texture bot1Texture, texture;
 	bot1Texture.loadFromFile("Textures/SpurdoDefault.png");
 
-	GUI_Actor guiBot1(&bot1, &rect1, squareDisplaySize, &guiMap, sf::Color::Cyan, &bot1Texture);
-	GUI_Actor guiBot2(&bot2, &rect2, squareDisplaySize, &guiMap, sf::Color::Red, &bot1Texture);
-	GUI_Actor guiBot3(&bot3, &rect3, squareDisplaySize, &guiMap, sf::Color::Blue, &bot1Texture);
-	GUI_Actor guiBot4(&bot4, &rect4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &bot1Texture);
+	GUI_Actor guiBot1(&bot1, squareDisplaySize, &guiMap, sf::Color::Cyan, &bot1Texture);
+	GUI_Actor guiBot2(&bot2, squareDisplaySize, &guiMap, sf::Color::Red, &bot1Texture);
+	GUI_Actor guiBot3(&bot3, squareDisplaySize, &guiMap, sf::Color::Blue, &bot1Texture);
+	GUI_Actor guiBot4(&bot4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &bot1Texture);
 
-	GUI_Actor guiPlayer(&player, &playerRect, squareDisplaySize, &guiMap, sf::Color::White, &bot1Texture);
+	GUI_Actor guiPlayer(&player, squareDisplaySize, &guiMap, sf::Color::White, &bot1Texture);
 
 	sf::Clock clock;
 	// 
