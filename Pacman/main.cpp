@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <string>
 #include <chrono>
 #include <thread>
 
@@ -301,6 +300,8 @@ int main()
 			}
 			else if (gameStatus == -1 && !messagePrinted)
 			{
+				window.clear();
+
 				std::cout << "YOU LOSE" << std::endl;
 				messagePrinted = 1;
 				endingMessage.setString("YOU LOSE");
@@ -314,12 +315,22 @@ int main()
 
 				guiPlayer.draw(window);
 
+				scoreString = std::to_string(player.getScore());
+				score.setString("SCORE: " + scoreString);
+				window.draw(score);
+
+				livesString = std::to_string(player.getLives());
+				remainingLives.setString("LIVES: " + livesString);
+				window.draw(remainingLives);
+
 				window.draw(endingMessage);
 
 				window.display();
 			}
 			else if (gameStatus == 1 && !messagePrinted)
 			{
+				window.clear();
+
 				std::cout << "YOU WIN" << std::endl;
 				messagePrinted = 1;
 				endingMessage.setString("YOU WIN");
@@ -334,6 +345,14 @@ int main()
 				guiPlayer.draw(window);
 
 				window.draw(endingMessage);
+
+				scoreString = std::to_string(player.getScore());
+				score.setString("SCORE: " + scoreString);
+				window.draw(score);
+
+				livesString = std::to_string(player.getLives());
+				remainingLives.setString("LIVES: " + livesString);
+				window.draw(remainingLives);
 
 				window.display();
 			}

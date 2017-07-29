@@ -109,10 +109,6 @@ int GUI_Actor::move()
 			{
 				shape.setFillColor(sf::Color(128, 128, 128));
 			}
-			else if (bot->getVulnerabilityTimer() >= (gc::VTimer / 10) * gc::blinkingTimer)
-			{
-				shape.setFillColor(sf::Color(128, 64, 0));
-			}
 			else if (bot->getIsVulnerable())
 			{
 				shape.setFillColor(sf::Color(128, 0, 128));
@@ -121,9 +117,21 @@ int GUI_Actor::move()
 			{
 				shape.setFillColor(defaultColor);
 			}
-			bot->setCheckMe(0);
+				bot->setCheckMe(0);
 			// changes the bot's appearance according to his status
 			//
+
+				if (bot->getVulnerabilityTimer() >= (gc::VTimer / 10) * gc::blinkingTimer)
+				{
+					if ((bot->getVulnerabilityTimer() / gc::blinkingFrequency) % 2 == 0)
+					{
+						shape.setFillColor(sf::Color(128, 64, 0));
+					}
+					else
+					{
+						shape.setFillColor(defaultColor);
+					}
+				}
 		}
 	}
 	else

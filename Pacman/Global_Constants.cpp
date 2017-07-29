@@ -64,4 +64,5 @@ namespace gc
 	const int gameSpeed = 60;
 	const int VTimer = 5000 / gameSpeed; // about 4.5 real life seconds, independent of gameSpeed
 	const int blinkingTimer = 7;
+	const int blinkingFrequency = 5;
 }
