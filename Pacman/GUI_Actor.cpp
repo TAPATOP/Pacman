@@ -10,7 +10,7 @@ GUI_Actor::GUI_Actor()
 GUI_Actor::GUI_Actor(Actor * actor, int squareDisplaySize, GUI_Map* map, sf::Color defaultColor, sf::Texture* texture)
 {
 	this->actor = actor;
-	this->shape = sf::RectangleShape(sf::Vector2f(squareDisplaySize, squareDisplaySize));
+	this->shape = sf::RectangleShape(sf::Vector2f((float)squareDisplaySize, (float)squareDisplaySize));
 	this->squareDisplaySize = squareDisplaySize;
 	guiMap = map;
 	allGUIActors[allGUIActorsCount++] = this;

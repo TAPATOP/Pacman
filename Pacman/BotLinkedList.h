@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 
-#include"mapNode.h"
+#include"mapNode.cpp"
 
 
 class BotLinkedList

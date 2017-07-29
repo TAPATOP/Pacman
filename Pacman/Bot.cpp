@@ -25,14 +25,14 @@ Bot::Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicate
 
 	findRouteToDedicatedPoint();
 
-	//if (botID == 1)
+	if (botID < 4)
 	{
 		botBehaviour = &Bot::seekingBehaviour;
 	}
-	//else
-	//{
-	//	botBehaviour = &Bot::defaultBehaviour;
-	//}
+	else
+	{
+		botBehaviour = &Bot::defaultBehaviour;
+	}
 }
 // CONSTRUCTORS above
 //
@@ -112,7 +112,11 @@ ItskoVector2i Bot::move()
 	{
 		if (vulnerabilityTimer >= gc::VTimer)
 		{
-			setIsVulnerable(0); // the timer resets itself in that function
+			if (getMovementProgress() == 0)
+			{
+				setIsVulnerable(0); // the timer resets itself in that function
+				return emergencyExecute();
+			}
 		}
 		else
 		{
@@ -130,7 +134,7 @@ ItskoVector2i Bot::move()
 		{
 			if (isGhost)
 			{
-				ghostBehaviour();
+				ghostBehaviour(); // when a bot becomes a ghost, he dumps his own commandStack
 			}
 			else
 			{
@@ -150,9 +154,9 @@ ItskoVector2i Bot::move()
 				setDX(command.getX() - getX());
 				setDY(command.getY() - getY());
 				return executeMoving();
-				// pops stack and executes
-				//
 			}
+			// pops stack and executes
+			//
 
 			if (getX() == map->getGhostHouseX() && getY() == map->getGhostHouseY())
 			{
@@ -164,23 +168,10 @@ ItskoVector2i Bot::move()
 
 			if (getMovementProgress() == 0 && commandStack->isEmpty())// && !isGhost)
 			{
-				deleteStack();
-				setDX(0);
-				setDY(0);
-				(this->*botBehaviour)();
-
-				if (commandStack != nullptr && !commandStack->isEmpty())
-				{
-					ItskoVector2i command = commandStack->topNpop();
-					setDX(command.getX() - getX());
-					setDY(command.getY() - getY());
-					return executeMoving();
-				}
-				// pops stack and executes
-				//
+				return emergencyExecute();
 			}
-			// deletes the stack, the reason this isnt in the above 'if' is because if it was, 
-			// it would only work correctly for traversing after bot's death
+			// checks if the commandStack is empty and if it is-> fills it up
+			// according to bot's allocated behaviour
 			//
 		}
 		// this else is responsible for extracting the commandStack
@@ -344,7 +335,30 @@ void Bot::ghostBehaviour()
 
 void Bot::vulnerableBehaviour()
 {
+	if (isVulnerable)
+	{
+		defaultBehaviour();
+	}
+}
+
+ItskoVector2i Bot::emergencyExecute()
+{
+	deleteStack();
+	setDX(0);
+	setDY(0);
+	(this->*botBehaviour)();
+
+	if (commandStack != nullptr && !commandStack->isEmpty())
+	{
+		ItskoVector2i command = commandStack->topNpop();
+		setDX(command.getX() - getX());
+		setDY(command.getY() - getY());
+		return executeMoving();
+	}
+	// pops stack and executes
+	//
 	defaultBehaviour();
+	return executeMoving();
 }
 
 void Bot::findRouteToDestination(int destinationY, int destinationX)

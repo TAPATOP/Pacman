@@ -4,8 +4,8 @@
 
 #include"BotLinkedList.h"
 #include"BotStack.h"
-#include"Global_Constants.h"
-#include"mapNode.h"
+#include"Global_Constants.cpp"
+#include"mapNode.cpp"
 
 class Map
 {

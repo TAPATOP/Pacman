@@ -4,7 +4,7 @@
 
 #include "Actor.h"
 #include "Bot.h"
-#include "Global_Constants.h"
+#include "Global_Constants.cpp"
 #include "GUI_Actor.h"
 #include "GUI_Map.h"
 #include "Map.h"

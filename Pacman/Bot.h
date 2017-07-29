@@ -43,6 +43,8 @@ private:
 	void ghostBehaviour();
 	void vulnerableBehaviour();
 
+	ItskoVector2i emergencyExecute();
+
 public: void findRouteToDestination(int destinationY, int destinationX);
 
 private:

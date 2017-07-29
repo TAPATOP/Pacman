@@ -1,5 +1,5 @@
 #pragma once
-#include "Global_Constants.h"
+#include "Global_Constants.cpp"
 
 struct mapNode
 {
@@ -7,7 +7,6 @@ struct mapNode
 	{
 		return Gcost + Hcost; // calculate it each time instead of storing it in yet another variable
 	}
-	~mapNode() {}
 
 	char walkable = '.'; // walkable, wall or gate
 	char logical = 0; // if it's a knot/ gate/ house or not

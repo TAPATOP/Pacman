@@ -7,7 +7,7 @@
 #include<iostream>
 #include<SFML/Graphics/Vertex.hpp>
 
-#include"Global_Constants.h"
+#include"Global_Constants.cpp"
 #include"ItskoVector2i.h"
 #include"Map.h"
 

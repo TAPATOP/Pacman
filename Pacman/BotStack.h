@@ -6,7 +6,7 @@
 #pragma once
 #include<iostream>
 
-#include"Global_Constants.h"
+#include"Global_Constants.cpp"
 #include"ItskoVector2i.h"
 
 class BotStack
