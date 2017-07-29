@@ -176,8 +176,10 @@ int main()
 	Bot bot2(2, 9, 8, 0, 0, 1, 18, 4, &loadedMap, 1);
 	Bot bot3(3, 9, 10, 0, 0, 18, 1, 4, &loadedMap, 1);
 	Bot bot4(4, 8, 9, 0, 0, 18, 18, 4, &loadedMap, 1);
-	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3);
-	// y, x, dy, dx, speed, map, symbol, lives, keys
+	Player player(14, 9, 0, 0, 3, &loadedMap, gc::defaultPlayerDisplay, 3); // y, x, dy, dx, speed, map, symbol, lives, keys
+	// these are initialized like that just to not make the constructors huge,
+	// this issue can be avoided by hardcoding actors' positions in the map hash itself
+	//
 
 	sf::RenderWindow window(sf::VideoMode(gc::windowWidth, gc::windowHeight), "Pacman Open Beta!", sf::Style::Close);
 	sf::Event evnt;
@@ -185,24 +187,25 @@ int main()
 	sf::Vector2f squareSize((float)(squareDisplaySize), (float)(squareDisplaySize));
 
 	int offsetX = squareDisplaySize;
-	int offsetY = squareDisplaySize * 2;
+	int offsetY = squareDisplaySize * 2; // these are used to move the map around easily without borking everything
 
 	sf::Texture mapTexture;
 	mapTexture.loadFromFile("Textures/MapTiles.bmp");
 	
 	GUI_Map guiMap(loadedMap, squareSize, offsetY, offsetX, &mapTexture);
 	
-	sf::Texture bot1Texture, texture;
-	bot1Texture.loadFromFile("Textures/SpurdoDefault.png");
+	sf::Texture botTexture;
+	botTexture.loadFromFile("Textures/SpurdoDefault.png");
 
-	GUI_Actor guiBot1(&bot1, squareDisplaySize, &guiMap, sf::Color::Cyan, &bot1Texture);
-	GUI_Actor guiBot2(&bot2, squareDisplaySize, &guiMap, sf::Color::Red, &bot1Texture);
-	GUI_Actor guiBot3(&bot3, squareDisplaySize, &guiMap, sf::Color::Blue, &bot1Texture);
-	GUI_Actor guiBot4(&bot4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &bot1Texture);
+	GUI_Actor guiBot1(&bot1, squareDisplaySize, &guiMap, sf::Color::Cyan, &botTexture);
+	GUI_Actor guiBot2(&bot2, squareDisplaySize, &guiMap, sf::Color::Red, &botTexture);
+	GUI_Actor guiBot3(&bot3, squareDisplaySize, &guiMap, sf::Color::Blue, &botTexture);
+	GUI_Actor guiBot4(&bot4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &botTexture);
 
-	GUI_Actor guiPlayer(&player, squareDisplaySize, &guiMap, sf::Color::White, &bot1Texture);
+	GUI_Actor guiPlayer(&player, squareDisplaySize, &guiMap, sf::Color::White, &botTexture);
 
-	sf::Clock clock;
+	sf::Clock clock; // used to simulate very primitive delta timing- kind- of- thing
+
 	// 
 	// Text initialization below
 
@@ -237,7 +240,7 @@ int main()
 
 	int gameStatus = 0;
 	bool messagePrinted = 0;
-	char lastButton = 'p';
+	char lastButton = gc::pause;
 
 
 	while (window.isOpen())
