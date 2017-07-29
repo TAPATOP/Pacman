@@ -48,7 +48,6 @@ void Bot::setIsVulnerable(bool isVulnerable)
 		deleteStack();
 	}
 }
-
 void Bot::setIsGhost(bool isGhost)
 {
 	this->isGhost = isGhost;
@@ -66,9 +65,6 @@ void Bot::setIsGhost(bool isGhost)
 		findRouteToDedicatedPoint();
 	}
 }
-// sets isGhost, sets isVulnerable to 0, raises the checkMe flag and deletes the commandStack
-//
-
 void Bot::setID(int botID)
 {
 	this->botID = botID;
@@ -85,7 +81,6 @@ bool Bot::getIsVulnerable()
 {
 	return isVulnerable;
 }
-
 bool Bot::getIsGhost()
 {
 	return isGhost;
@@ -141,7 +136,7 @@ ItskoVector2i Bot::move()
 				(this->*botBehaviour)();
 			}
 		}
-		// this if is executed if the stack has been destroyed or hasn't been initialized yet
+		// this 'if' is executed if the stack has been destroyed or hasn't been initialized yet
 		// e.g. default(comandless) bot behavior, e.g. what the bot does after he's out of commands
 		// E.G. THIS FILLS UP THE STACK WITH COMMANDS
 		//
@@ -202,6 +197,7 @@ Bot::~Bot()
 {
 }
 
+
 void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 {
 	if (map->getLogical(getY(), getX()) == gc::ghostHouse || map->getLogical(getY(), getX()) == gc::ghostHouseCenter)
@@ -239,9 +235,6 @@ void Bot::pickRandomDirection(bool mustBeOppositeToOldDXDY)
 		}
 	} while (!canMove() || (getDX() == origDX && getDY() == origDY));
 }
-// Picks random DX and DY, making sure they're not the opposite of the previous ones, unless
-// explicitly told not to make that check by giving a boolean value mustBeOppositeToOldDXDY = 0
-//
 
 void Bot::cornerSolver()
 {
@@ -255,16 +248,13 @@ void Bot::cornerSolver()
 		reverseDirection();
 	}
 }
-// adjusts DX and DY in such way so the bot will traverse corners properly
-//
 
 void Bot::reverseDirection()
 {
 	setDY(-getDY());
 	setDX(-getDX());
 }
-// reverses DX and DY, so the bot moves backwards
-//
+
 
 void Bot::resetPosition()
 {
@@ -306,8 +296,6 @@ void Bot::defaultBehaviour()
 		}
 	}
 }
-// pretty much random movement
-//
 
 void Bot::seekingBehaviour()
 {

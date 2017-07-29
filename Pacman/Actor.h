@@ -43,7 +43,7 @@ public:
 	virtual ItskoVector2i move() = 0;
 	// pure virtual function
 	virtual void die() = 0;
-	// pure virtual function
+	// pure virtual function, sends the Actor back to his startingX and startingY and sets movementProgress to 0
 	virtual void resetPosition();
 
 	virtual ~Actor(); 
