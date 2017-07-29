@@ -8,25 +8,44 @@ BotLinkedList::BotLinkedList()
 	current = first;
 }
 
-BotLinkedList::BotLinkedList(BotLinkedList & oldList)
-{
-	deleteEverything();
-
-	BotLinkedList* newOne = new BotLinkedList();
-	newOne = &oldList;
-
-	this->current = newOne->current;
-	this->first = newOne->first;
-}
-
-
 BotLinkedList::BotLinkedList(mapNode* mnode)
 {
 	first = new listNode();
 	first->mapnode = mnode;
 	current = first;
-	//last = current;
 }
+
+BotLinkedList::BotLinkedList(BotLinkedList & oldList)
+{
+	if (oldList.first == nullptr)
+	{
+		first = nullptr;
+		current = first;
+		return;
+	}
+
+	listNode* newListNode = new listNode();
+
+	first = newListNode;
+	current = first;
+
+	current->mapnode = oldList.current->mapnode;
+
+
+	while (oldList.current->next != nullptr)
+	{
+		oldList.current = oldList.current->next;
+
+		newListNode = new listNode();
+
+		current->next = newListNode;
+		current = current->next;
+		current->mapnode = oldList.current->mapnode;
+	}
+	oldList.resetCurrent();
+}
+// CONSTRUCTORS above
+//
 
 BotLinkedList & BotLinkedList::operator=(BotLinkedList & oldList)
 {
@@ -52,8 +71,6 @@ BotLinkedList & BotLinkedList::operator=(BotLinkedList & oldList)
 	resetCurrent();
 	return *this;
 }
-// WARNING: Untested
-//
 
 void BotLinkedList::enqueue(mapNode* addMe)
 {
@@ -173,19 +190,6 @@ bool BotLinkedList::isNodeQueued(mapNode * checkMe)
 	return 0;
 }
 
-void BotLinkedList::deleteEverything()
-{
-	resetCurrent();
-
-	while (current != nullptr && current->next != nullptr)
-	{
-		listNode* nextNode = current->next;
-		delete current->mapnode;
-		delete current;
-		current = nextNode;
-	}
-	resetCurrent(); // double reset, just in case
-}
 
 BotLinkedList::~BotLinkedList()
 {
@@ -202,10 +206,23 @@ bool BotLinkedList::moveCurrent()
 	return 0;
 }
 
-
 void BotLinkedList::resetCurrent()
 {
 	current = first;
 }
 
-// TO DO: Copy Constructor and = operator
+void BotLinkedList::deleteEverything()
+{
+	resetCurrent();
+
+	while (current != nullptr && current->next != nullptr)
+	{
+		listNode* nextNode = current->next;
+
+		delete current;
+		current = nextNode;
+	}
+	resetCurrent(); // double reset, just in case
+}
+// mapNodes MUST NOT BE DELETED
+//

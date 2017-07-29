@@ -11,7 +11,7 @@ class Bot :
 public:
 	Bot();
 	Bot(int botID, unsigned int y, unsigned int x, int dy, int dx, int dedicatedY, int dedicatedX, unsigned int movementSpeed, Map* map, char displayChar);
-	
+
 	void setIsVulnerable(bool);
 	void setIsGhost(bool);
 	void setID(int);

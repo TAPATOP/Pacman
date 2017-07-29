@@ -14,6 +14,19 @@
 
 int main()
 {
+	mapNode m;
+	m.x = 10;
+	while (true)
+	{
+		BotLinkedList a(&m);
+		BotLinkedList b(a);
+		BotLinkedList c(b);
+		BotLinkedList d(b);
+		BotLinkedList e(b);
+		BotLinkedList f(b);
+		BotLinkedList r;
+		r = f;
+	}
 	const unsigned int mapHeight = 20;
 	const unsigned int mapWidth = 20;
 

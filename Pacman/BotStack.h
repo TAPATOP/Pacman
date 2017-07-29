@@ -16,6 +16,8 @@ public:
 	BotStack(unsigned int size);
 	BotStack(BotStack&);
 
+	BotStack& operator=(BotStack const & otherOne);
+
 	void push(int y, int x);
 
 	bool pop();
@@ -24,14 +26,10 @@ public:
 
 	void visualize() const;
 	bool isEmpty();
-	//void flushStack();
-
-	BotStack& operator=(BotStack const & Other);
 
 	~BotStack();
 private:
 	void copyBotStack(BotStack const & other);
-	// void resize();
 private:
 	struct coords
 	{

@@ -21,11 +21,11 @@ public:
 	bool isEmpty();
 	bool isNodeQueued(mapNode*);
 
-	void deleteEverything();
 	~BotLinkedList();
 private:
 	bool moveCurrent();
 	void resetCurrent();
+	void deleteEverything();
 private:
 	struct listNode
 	{
@@ -33,6 +33,7 @@ private:
 		{
 			next = nullptr;
 		}
+		~listNode(){}
 
 		mapNode* mapnode;
 		listNode* next;

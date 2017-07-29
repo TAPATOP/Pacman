@@ -23,10 +23,10 @@ GUI_Actor::GUI_Actor(Actor * actor, sf::RectangleShape * shape, int squareDispla
 	unsigned int textureSizeX = texture->getSize().x / 4;
 	unsigned int textureSizeY = texture->getSize().y;
 
-	movingRight = new sf::IntRect(0, 0, textureSizeX, textureSizeY);
-	movingLeft = new sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY);
-	movingUp = new sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY);
-	movingDown = new sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY);
+	movingRight = sf::IntRect(0, 0, textureSizeX, textureSizeY);
+	movingLeft = sf::IntRect(textureSizeX, 0, textureSizeX, textureSizeY);
+	movingUp = sf::IntRect(textureSizeX * 2, 0, textureSizeX, textureSizeY);
+	movingDown = sf::IntRect(textureSizeX * 3, 0, textureSizeX, textureSizeY);
 
 	setShapePositionByOffset(map->getXOffset(), map->getYOffset());	
 
@@ -79,7 +79,7 @@ int GUI_Actor::move()
 	}
 	else
 	{
-		shape->setTextureRect(*movingRight);
+		shape->setTextureRect(movingRight);
 	}
 
 	if (movement.getStateCode() == gc::playerDied)
@@ -169,26 +169,22 @@ void GUI_Actor::setTextureByDirection(ItskoVector2i& movementVector)
 
 	if (actor->getDX() > 0 && actor->getDY() == 0)
 	{
-		shape->setTextureRect(*movingRight);
+		shape->setTextureRect(movingRight);
 	}
 	else if (actor->getDX() < 0 && actor->getDY() == 0)
 	{
-		shape->setTextureRect(*movingLeft);
+		shape->setTextureRect(movingLeft);
 	}
 	else if (actor->getDX() == 0 && actor->getDY() > 0)
 	{
-		shape->setTextureRect(*movingDown);
+		shape->setTextureRect(movingDown);
 	}
 	else if (actor->getDX() == 0 && actor->getDY() < 0)
 	{
-		shape->setTextureRect(*movingUp);
+		shape->setTextureRect(movingUp);
 	}
 }
 
 GUI_Actor::~GUI_Actor()
 {
-	delete movingLeft;
-	delete movingDown;
-	delete movingRight;
-	delete movingUp;
 }

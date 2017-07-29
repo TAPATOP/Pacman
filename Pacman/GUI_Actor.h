@@ -33,10 +33,10 @@ private:
 	sf::Color defaultColor;
 
 	sf::Texture* actorTexture;
-	sf::IntRect* movingUp;
-	sf::IntRect* movingDown;
-	sf::IntRect* movingLeft;
-	sf::IntRect* movingRight;
+	sf::IntRect movingUp;
+	sf::IntRect movingDown;
+	sf::IntRect movingLeft;
+	sf::IntRect movingRight;
 
 	int squareDisplaySize;
 	int xOffset = 0;

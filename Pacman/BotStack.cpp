@@ -84,12 +84,6 @@ bool BotStack::isEmpty()
 	return stackSize == 0;
 }
 
-//void BotStack::flushStack()
-//{
-//	delete[] coordinates;
-//	stackSize = 0;
-//}
-
 void BotStack::copyBotStack(BotStack const &other)
 {
 	delete[] coordinates;
@@ -106,21 +100,6 @@ void BotStack::copyBotStack(BotStack const &other)
 }
 // WARNING: Untested
 //
-
-//void BotStack::resize()
-//{
-//	MAX *= 2;
-//
-//	ItskoVector2i* replacer = new ItskoVector2i[MAX];
-//
-//	for (int i = 0; i < stackSize; i++)
-//	{
-//		replacer[i] = data[i];
-//	}
-//
-//	delete[] data;
-//	data = replacer;
-//}
 
 
 BotStack::~BotStack()
