@@ -25,6 +25,8 @@ public:
 	void draw(sf::RenderWindow&);
 	void resetPosition();
 	void setTextureByDirection(ItskoVector2i& movementVector);
+	
+	void resetActors();
 
 	~GUI_Actor();
 private:
