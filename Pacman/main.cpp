@@ -13,6 +13,7 @@
 
 #include"BotLinkedList.h"
 
+
 int main()
 {
 	unsigned int mapHeight = 20;
@@ -197,12 +198,15 @@ int main()
 	sf::Texture botTexture;
 	botTexture.loadFromFile("Textures/SpurdoDefault.png");
 
-	GUI_Actor guiBot1(&bot1, squareDisplaySize, &guiMap, sf::Color::Cyan, &botTexture);
+	sf::Texture playerTexture;
+	playerTexture.loadFromFile("Textures/SonicChu.png");
+
+	GUI_Actor guiBot1(&bot1, squareDisplaySize, &guiMap, sf::Color(255, 128, 0), &botTexture);
 	GUI_Actor guiBot2(&bot2, squareDisplaySize, &guiMap, sf::Color::Red, &botTexture);
 	GUI_Actor guiBot3(&bot3, squareDisplaySize, &guiMap, sf::Color::Blue, &botTexture);
 	GUI_Actor guiBot4(&bot4, squareDisplaySize, &guiMap, sf::Color(255, 0, 255), &botTexture);
 
-	GUI_Actor guiPlayer(&player, squareDisplaySize, &guiMap, sf::Color::White, &botTexture);
+	GUI_Actor guiPlayer(&player, squareDisplaySize, &guiMap, sf::Color::White, &playerTexture);
 
 	sf::Clock clock; // used to simulate very primitive delta timing- kind- of- thing
 

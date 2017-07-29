@@ -125,7 +125,7 @@ int GUI_Actor::move()
 				{
 					if ((bot->getVulnerabilityTimer() / gc::blinkingFrequency) % 2 == 0)
 					{
-						shape.setFillColor(sf::Color(128, 64, 0));
+						shape.setFillColor(sf::Color(128, 0, 128));
 					}
 					else
 					{
